@@ -10,13 +10,13 @@
 #mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/quick_search_mpi "data/data_for_test.txt" 15
 
 #param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-#mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/ES_Matrix_ompi_nocom 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test.txt"
+#mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/ES_Matrix_ompi_nocom 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test"
 
 #param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-#mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/ES_Matrix_ompi_p2p 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test.txt"
+#mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/ES_Matrix_ompi_p2p 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test"
 
 #param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-#mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/ES_Matrix_ompi_cocom 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test.txt"
+#mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/ES_Matrix_ompi_cocom 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test"
 
 #param list :process_num pernum hostfile thread_num cluster_num filename outfilename
-#mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/Cluster_KMeans_ompi 4 10 "data/ES_Matrix_test.txt" "data/Cluster_result_test.txt"
+#mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/Cluster_KMeans_ompi 4 10 "data/ES_Matrix_test" "data/Cluster_result_test.txt"
