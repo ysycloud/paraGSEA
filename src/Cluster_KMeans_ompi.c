@@ -9,9 +9,12 @@
 #include "RandomChange.h"
 #include "GSEA.h"
 #include "IO.h"
+
+#define MAXITER 3000
  
 void split_data(int size, int n, int rank, int* begin, int* end, int* local_n); 
 int cmpset(int *set1,int *set2,int n);
+int isInSet(int **set1,int *set2,int n,int iter);
 
 int main(int argc,char *argv[])
 {	
@@ -33,6 +36,9 @@ int main(int argc,char *argv[])
 	int *cluster_center;
 	int isbreak=0;
 	int iternum=0;
+	
+	int leave,global_begin;
+	int **cluster_centers_history;
 		
 	int corenum = atoi(argv[1]);
 	int cluster_center_num = atoi(argv[2]);
@@ -50,9 +56,17 @@ int main(int argc,char *argv[])
 	
 	MPI_Barrier(MPI_COMM_WORLD); 
 	if(my_rank == 0){
+		
+		//max iteration correspond to a cluster centers set
+		cluster_centers_history = (int **)malloc(MAXITER*sizeof(int*));
+		for(i=0;i<MAXITER;i++)
+			cluster_centers_history[i] = (int *)malloc(cluster_center_num*sizeof(int));
+		
 		printf("Matrix is Loading...!\n");
 		GET_TIME(start);
 	}
+	
+
 	
 	char myfile[128];
 	sprintf(myfile,"%s_%d.txt",argv[3],my_rank);
@@ -60,6 +74,13 @@ int main(int argc,char *argv[])
 	//read file parameters in all processes
 	ReadMatrixFilePara(myfile, &local_profilenum, &profilenum, &linelen);
 	//printf("%d\t%d\t%d\n",local_profilenum,profilenum,linelen);
+	
+	//calculate the global begin line of profiles in each process
+	leave = profilenum % p;
+	if(my_rank < leave)
+		global_begin = my_rank * local_profilenum;
+	else
+		global_begin = my_rank * local_profilenum + leave;
 	
 	//allocate memory for ES Matrix
 	local_ES_Matrix = (float**)malloc(local_profilenum*sizeof(float *));
@@ -108,6 +129,11 @@ int main(int argc,char *argv[])
 	
 	while(!isbreak)
 	{
+		if(my_rank==0)
+		{	
+			memcpy(cluster_centers_history[iternum],cluster_center,cluster_center_num*sizeof(int));	
+		}
+		
 		iternum++;
 		/***************************paral split the class***********************************/
 		#pragma omp parallel num_threads(corenum)
@@ -118,17 +144,24 @@ int main(int argc,char *argv[])
 			int flag;
 			int threadID = omp_get_thread_num();
 			
-			// compute the local size 、up boundary and down boundary for every thread in dataset2
+			// compute the local size、up boundary and down boundary for every thread in dataset2
 			split_data(local_profilenum, corenum, threadID, &begin_t, &end_t, &local_t);
 			
 			// compute the part of the local_classflag vector
 			for(k=begin_t;k<end_t;k++)
 			{
 				flag = 0;		
-				for(t=1;t<cluster_center_num;t++)					
+				for(t=1;t<cluster_center_num;t++)
+				{
+					if((global_begin+k)==cluster_center[t]) //if the center is current profile ,break directly.
+					{						
+						flag = t;  
+						break;
+					}
 					if(local_ES_Matrix[k][cluster_center[t]] > local_ES_Matrix[k][cluster_center[flag]])
 						//biger ES，more similar，shorter distance
 						flag = t;
+				}									
 				local_classflag[k] = cluster_center[flag];
 			}				
 		}
@@ -241,7 +274,7 @@ int main(int argc,char *argv[])
 				printf("%d->%d--%f\t",i,global_classflag[i],global_avesimilar[i]);
 			printf("\n");
 			*/
-			
+						
 			int *indexClass = (int *)malloc(profilenum*sizeof(int));//the num of class x
 			float *maxsimilar = (float *)malloc(cluster_center_num*sizeof(float));// ith cluster's max average similarity
 			int *cluster_center_new = (int *)malloc(cluster_center_num*sizeof(int));
@@ -251,11 +284,10 @@ int main(int argc,char *argv[])
 				indexClass[cluster_center[i]] = i;
 			
 			//init the tmp memory
-			//只把memset置0，千万不要赋其他值，它会把那么长的每个内存单元全部赋那个值
 			//memset(maxsimilar,-1,cluster_center_num*sizeof(float));
 			for(i=0;i<cluster_center_num;i++)
-				maxsimilar[i] = -1;
-			memcpy(cluster_center_new,cluster_center,cluster_center_num*sizeof(int));
+				maxsimilar[i] = -2;
+		//	memcpy(cluster_center_new,cluster_center,cluster_center_num*sizeof(int));
 		
 			int cluster_num;
 			for(i=0;i<profilenum;i++)
@@ -273,7 +305,7 @@ int main(int argc,char *argv[])
 				printf("%d ",cluster_center_new[i]);
 			printf("\n");
 			
-			if(cmpset(cluster_center,cluster_center_new,cluster_center_num)){
+			if(isInSet(cluster_centers_history,cluster_center_new,cluster_center_num,iternum)||iternum>=MAXITER){
 				isbreak = 1;
 			}
 			memcpy(cluster_center,cluster_center_new,cluster_center_num*sizeof(int));	
@@ -292,6 +324,12 @@ int main(int argc,char *argv[])
 	}
 	
 	//free the memory
+	if(my_rank == 0)
+	{
+		for(i=0;i<MAXITER;i++)
+			free(cluster_centers_history[i]);
+		free(cluster_centers_history);
+	}	
 	free(loc_avesimilar);	
 	free(global_avesimilar);
 	for(i=0;i<local_profilenum;i++)
@@ -325,4 +363,14 @@ int cmpset(int *set1,int *set2,int n)
 		if(set1[i]!=set2[i])
 			return 0;
 	return 1;
+}
+
+//is set2 in set1
+int isInSet(int **set1,int *set2,int n,int iter)
+{
+	int i;
+	for(i=iter-1;i>=0;i--)
+		if(cmpset(set1[i],set2,n)==1)
+			return 1;
+	return 0;
 }
