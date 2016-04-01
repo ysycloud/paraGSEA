@@ -61,7 +61,7 @@ int main(int argc,char *argv[])
 		gsea_result = (struct GSEA_RESULT*)malloc(profilenum*sizeof(struct GSEA_RESULT));
 	}
 			
-	// compute the local size „ÄÅ up boundary and down boundary for every process	
+	// compute the local size „Ä?up boundary and down boundary for every process	
 	local_n = profilenum / p;  
 	leave = profilenum % p;
 	int begin,end;
@@ -195,19 +195,19 @@ int main(int argc,char *argv[])
 	
 		
 	//free the memory allocate dyn.
-	if(my_rank == 0)
-		free(gsea_result);
-	free(local_gsea);
-	for(i=0; i<local_n; i++){
-		free(profileSet[i]);
-		free(indexSet[i]);
-	}
-	free(profileSet);
-	free(indexSet);
-	for(i=0; i<profilenum; i++){
-		free(tmp_global_profile[i]);
-	}
-	free(tmp_global_profile);
+//	if(my_rank == 0)
+//		free(gsea_result);
+//	free(local_gsea);
+//	for(i=0; i<local_n; i++){
+//		free(profileSet[i]);
+//		free(indexSet[i]);
+//	}
+//	free(profileSet);
+//	free(indexSet);
+//	for(i=0; i<profilenum; i++){
+//		free(tmp_global_profile[i]);
+//	}
+//	free(tmp_global_profile);
 
 }
 

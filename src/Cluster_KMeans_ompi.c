@@ -125,8 +125,8 @@ int main(int argc,char *argv[])
 			for(k=begin_t;k<end_t;k++)
 			{
 				flag = 0;		
-				for(t=1;t<cluster_center_num;t++)
-					if(local_ES_Matrix[k][cluster_center[t]]>local_ES_Matrix[k][cluster_center[flag]])
+				for(t=1;t<cluster_center_num;t++)					
+					if(local_ES_Matrix[k][cluster_center[t]] > local_ES_Matrix[k][cluster_center[flag]])
 						//biger ES，more similar，shorter distance
 						flag = t;
 				local_classflag[k] = cluster_center[flag];
