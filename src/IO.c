@@ -58,13 +58,12 @@ int ReadFile(char path[],int LineLength,int BeginLine,int EndLine,int profilenum
 	} 
 	fgets(StrLine,256,fp);
 	line = BeginLine;
-	//不能因为前面取LineLength是strlen就以为有\0,这里+1，每行的后面本来也没有\0
 	fseek(fp,BeginLine*(LineLength),SEEK_CUR); 
 	while (!feof(fp)) 
     { 
 		fgets(StrLine,LineLength+1,fp);  //read one line
 		col = 0;
-		if( line<profilenum && col< genelen )   //防止有些空行或多余后列导致超界
+		if( line<profilenum && col< genelen )  
 			profileSet[line][col++] = atoi(strtok_r(StrLine,c,&saveptr));
 			//profileSet[line][col++] = atoi(strsep(&StrLine,c));
 		char *p = strtok_r(NULL,c,&saveptr);
@@ -190,13 +189,12 @@ int ReadMatrixFile(char path[],int LineLength,int BeginLine,int EndLine,int prof
 	} 
 	fgets(StrLine,256,fp);
 	line = BeginLine;
-	//不能因为前面取LineLength是strlen就以为有\0,这里+1，每行的后面本来也没有\0
 	fseek(fp,BeginLine*(LineLength),SEEK_CUR); 
 	while (!feof(fp)) 
     { 
 		fgets(StrLine,LineLength+1,fp);  //read one line
 		col = 0;
-		if( line<profilenum1 && col< profilenum2 )   //防止有些空行或多余后列导致超界
+		if( line<profilenum1 && col< profilenum2 )  
 			Matrix[line][col++] = atof(strtok_r(StrLine,c,&saveptr));
 		char *p = strtok_r(NULL,c,&saveptr);
 		while(p)
