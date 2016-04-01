@@ -18,8 +18,13 @@ I will update the tools as they become available.
 #### Setting the MATLAB path:
 Enter the "pathtool" command, click "Add with Subfolders...", and select the directory ParaGSEA/matlab_for_parse.
 
+#### using by command line:
+After you set the MATLAB path, you should enter "matlab" in shell to start matlab environment.
+Then, you can set the input and output file path in runPreGSEA.m and enter "runPreGSEA" to parse the data.
+
 #### Tools:
-* [**PreGSEA.m**] : Setting Parameters、extract the gene profile sets、finish pre-sorting and write to .txt file.
+* [**runPreGSEA.m**] : Setting Parameters and execute the PreGSEA.
+* [**PreGSEA.m**] : extract the gene profile sets、finish pre-sorting and write to .txt file.
 
 
 ### C Tools: c/
@@ -43,7 +48,7 @@ Enter the "pathtool" command, click "Add with Subfolders...", and select the dir
 * [**runParalESLinux.sh**]: run Executable files in Linux.
 
 #### Note:
- * compileParalES.sh will carry out a makefile file which is finish in current directory.
+ * compileParalES.sh will carry out a makefile file which is finished in current directory.
  * runParalESLinux.sh annotate a list of execution case of C tools. Removing the annotation, you can using it easily.
  * the parameter list of each C tools can be seen in runParalESLinux.sh
 

@@ -1,6 +1,5 @@
-file_name = '../data/data_for_test.txt';  %out file name
-file_name_cid = '../data/data_for_test_cid.txt';  %out file name  
-ds = parse_gctx('../data/modzs_n272x978.gctx');
+
+ds = parse_gctx(file_input);
 
 mat = ds.mat;
 cid = ds.cid;
