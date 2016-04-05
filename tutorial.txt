@@ -155,3 +155,21 @@ At the same time, we provided good interfaces to call these tools.
 				1)you'd better keep the formula correct : process_num = pernum * number of IP(Hostname) list in hostfile
 				2)input matrix should include the same identity of rows and columns, which means stage 2 is supposed to use same two file as its input
 				3)the first three parameters(process_num,pernum,hostfile) should not be changed compare with stage 2, so that the program can find all the distributed ES_Matrix file in all nodes
+	
+	2¡¢Cluster_KMeans++_ompi£º 
+		role: read the ES_Matrix file ¡¢complete a general clustering algorithm like K-Means by MPI/OpenMP.
+				but let the distance between initial cluster centers far as possible.
+		cmd example:  mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/Cluster_KMeans_ompi 4 10 "data/ES_Matrix_test" "data/Cluster_result_test.txt"
+		param list :
+				-n process_num : Total number of processes.
+				-ppn pernum: the number of processes in each node
+				-hostfile hostfile:  list the IP or Hostname of nodes
+				thread_num: the number of threads in per process_num
+				cluster_num: the number of clusters we want to get 
+				filename1: distributed ES_Matrix file we get from stage 2(Compare Profiles)
+				filename2: output class flags file of every profiles in root node
+		note:  
+				1)you'd better keep the formula correct : process_num = pernum * number of IP(Hostname) list in hostfile
+				2)input matrix should include the same identity of rows and columns, which means stage 2 is supposed to use same two file as its input
+				3)the first three parameters(process_num,pernum,hostfile) should not be changed compare with stage 2, so that the program can find all the distributed ES_Matrix file in all nodes
+				4)this version may get better results, but in determining the initial clustering center needs more overhead.
