@@ -1,6 +1,6 @@
 #programs,flags,etc.
 INCLUDE	=	-I include
-TARGET	=	bin/quick_search_serial bin/quick_search_omp bin/quick_search_mpi bin/ES_Matrix_ompi_nocom bin/ES_Matrix_ompi_p2p bin/ES_Matrix_ompi_cocom bin/Cluster_KMeans_ompi
+TARGET	=	bin/quick_search_serial bin/quick_search_omp bin/quick_search_mpi bin/ES_Matrix_ompi_nocom bin/ES_Matrix_ompi_p2p bin/ES_Matrix_ompi_cocom bin/Cluster_KMeans_ompi bin/Cluster_KMeans++_ompi
 
 #ALL Phony Targets
 .PHONY:	everything	clean	all
@@ -52,3 +52,9 @@ bin/Cluster_KMeans_ompi:	src/Cluster_KMeans_ompi.c	\
 			src/RandomChange.c include/RandomChange.h	\
 			src/IO.c include/IO.h
 	mpicc $(INCLUDE) -g -fopenmp -o bin/Cluster_KMeans_ompi src/Cluster_KMeans_ompi.c src/GSEA.c src/RandomChange.c src/IO.c
+
+bin/Cluster_KMeans++_ompi:	src/Cluster_KMeans++_ompi.c	\
+			src/GSEA.c include/GSEA.h	\
+			src/RandomChange.c include/RandomChange.h	\
+			src/IO.c include/IO.h
+	mpicc $(INCLUDE) -g -fopenmp -o bin/Cluster_KMeans++_ompi src/Cluster_KMeans++_ompi.c src/GSEA.c src/RandomChange.c src/IO.c

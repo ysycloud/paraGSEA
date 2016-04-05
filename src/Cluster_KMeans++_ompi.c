@@ -25,6 +25,8 @@ int main(int argc,char *argv[])
 	float **local_ES_Matrix;		//part of the ES_Matrix in this process
 	int *local_classflag;
 	int *global_classflag;
+	float *local_leastcenter;
+	float *global_leastcenter;
 	float *loc_avesimilar;
 	float *global_avesimilar;
 	int	my_rank;   /* My process rank           */
@@ -66,6 +68,7 @@ int main(int argc,char *argv[])
 		GET_TIME(start);
 	}
 	
+	
 	char myfile[128];
 	sprintf(myfile,"%s_%d.txt",argv[3],my_rank);
 	
@@ -91,6 +94,8 @@ int main(int argc,char *argv[])
 	//prework for memory malloc
 	local_classflag = (int *)malloc(local_profilenum*sizeof(int));
 	global_classflag = (int *)malloc(profilenum*sizeof(int));
+	local_leastcenter = (float *)malloc(local_profilenum*sizeof(float));	
+	global_leastcenter = (float *)malloc(profilenum*sizeof(float));
 	loc_avesimilar = (float *)malloc(local_profilenum*sizeof(float));
 	global_avesimilar = (float *)malloc(profilenum*sizeof(float));
 
@@ -101,21 +106,117 @@ int main(int argc,char *argv[])
 		duration = finish-start;     
 		printf("loading IO and prework time : %.4f s\n",duration);
 
-		printf("Paral KMeans compute the Cluster Centers is Starting...!\n");
+		printf("Paral KMeans++ compute the Cluster Centers is Starting...!\n");
 		GET_TIME(start);
 	}
 
-	//generate the init cluster center
+	/****************generate the init cluster center*****************************************/
 	cluster_center = (int *)malloc(cluster_center_num*sizeof(int));
-	if(my_rank == 0){		
-		float* tmp = (float *)malloc(cluster_center_num*sizeof(float));
-		GetRandomSequence(profilenum, cluster_center_num ,tmp);
+	int currentInitCenterNum = 0;
+	int currentInitCenter;
+	if(my_rank==0)
+	{
+		//generate the first center
+		float tmp;
+		GetRandomSequence(profilenum,1,&tmp);
 		//adjust the center num,because GetRandomSequence function get the seq from 1-total,but we need 0-total-1
-		for(i=0;i<cluster_center_num;i++)
-			cluster_center[i] = (int)tmp[i]-1;
-		free(tmp);
+		currentInitCenter = (int)tmp-1;
 	}
-	MPI_Bcast(cluster_center, cluster_center_num, MPI_INT, 0 ,MPI_COMM_WORLD);
+		
+	for(; currentInitCenterNum<cluster_center_num; currentInitCenterNum++)
+	{
+		//bcast the current center to all processes
+		MPI_Bcast(&currentInitCenter, 1 , MPI_INT, 0 ,MPI_COMM_WORLD);
+		cluster_center[currentInitCenterNum] = currentInitCenter;
+		
+		if(currentInitCenterNum==(cluster_center_num-1))
+			break;
+		
+		/******************paral split the each data to compute the least center***********************************/
+		#pragma omp parallel num_threads(corenum)
+		{
+			int k,t;
+			int local_t;	
+			int begin_t,end_t;
+			float least;
+			int threadID = omp_get_thread_num();
+			
+			// compute the local size、up boundary and down boundary for every thread in dataset2
+			split_data(local_profilenum, corenum, threadID, &begin_t, &end_t, &local_t);
+			
+			// compute the part of the least center vector
+			for(k=begin_t;k<end_t;k++)
+			{
+				least = -1;	 //init  a most far distance	
+				for(t=0;t<=currentInitCenterNum;t++)
+				{
+					if((global_begin+k)==cluster_center[t])
+					//if the center is current profile ,break and set the least dis is 1,
+					//stop it be choosed as center again						
+					{
+						least = 1;
+						break;
+					}						
+					if(local_ES_Matrix[k][cluster_center[t]] > least)
+						//biger ES，more similar，shorter distance
+						least = local_ES_Matrix[k][cluster_center[t]];
+				}									
+				local_leastcenter[k] = least;
+			}				
+		}
+		
+		/*****************gather local_leastcenter to root process**************/
+		if(profilenum % p == 0){ //can split blanced
+			MPI_Gather(local_leastcenter,local_profilenum,MPI_FLOAT,global_leastcenter,local_profilenum,MPI_FLOAT,0,MPI_COMM_WORLD);
+		}else{	//can not split blanced 
+			if(my_rank == 0){
+				/*****************gather local_leastcenter in process0**************/
+				int leave = profilenum % p;
+				//tmp memory for processes before leave
+				float *tmp1 = (float *)malloc(local_profilenum*sizeof(float));
+				//tmp memory for processes after leave
+				float *tmp2 = (float *)malloc((local_profilenum-1)*sizeof(float));
+				//copy local_leastcenter vector in process0 to global_leastcenter vector 
+				memcpy(global_leastcenter,local_leastcenter,local_profilenum*sizeof(float));
+				/********receive and copy local_leastcenter vector in other processes to global_leastcenter vector******/
+				for(i=1; i<p; i++){
+					if(i < leave){
+						MPI_Recv(tmp1 , local_profilenum, MPI_FLOAT, i, tag, MPI_COMM_WORLD, &status);
+						memcpy(&global_leastcenter[i*local_profilenum],tmp1,local_profilenum*sizeof(float));
+					}else{
+						MPI_Recv(tmp2 , local_profilenum-1, MPI_FLOAT, i, tag, MPI_COMM_WORLD, &status);
+						memcpy(&global_leastcenter[i*(local_profilenum-1)+leave],tmp2,(local_profilenum-1)*sizeof(float));
+					}	
+				}
+				free(tmp1);
+				free(tmp2);							
+			}else{
+				MPI_Send(local_leastcenter, local_profilenum, MPI_FLOAT, 0, tag, MPI_COMM_WORLD);
+			}
+		}
+		
+		/*****************generate the current init center**************/
+		if(my_rank==0)
+		{
+			float far = 1;
+			currentInitCenter = 0;
+			//find the farest least center
+			for(i=0;i<profilenum;i++)
+			{
+				if(global_leastcenter[i]<far)
+				{
+					far = global_leastcenter[i];
+					currentInitCenter = i;
+				}
+			}			
+		}
+	}
+		
+	free(local_leastcenter);
+	free(global_leastcenter);
+	/**************************generate the init cluster center END************************************/
+	MPI_Barrier(MPI_COMM_WORLD);
+	
 	
 	if(my_rank == 0)
 	{
@@ -125,11 +226,12 @@ int main(int argc,char *argv[])
 		printf("\n");
 	}
 	
+	
 	while(!isbreak)
 	{
 		if(my_rank==0)
 		{	
-			memcpy(cluster_centers_history[iternum],cluster_center,cluster_center_num*sizeof(int));	
+			memcpy(cluster_centers_history[iternum],cluster_center,cluster_center_num*sizeof(int));				
 		}
 		
 		iternum++;
@@ -318,7 +420,7 @@ int main(int argc,char *argv[])
 		GET_TIME(finish);
 		//compute the Write time
 		duration = finish-start;     
-		printf("Paral KMeans compute the Cluster Centers Spent: %.4f s\n",duration);
+		printf("Paral KMeans++ compute the Cluster Centers Spent: %.4f s\n",duration);
 	}
 	
 	//free the memory
