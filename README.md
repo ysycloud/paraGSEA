@@ -41,8 +41,8 @@ Then, you can set the input and output file path in runPreGSEA.m and enter "runP
 * [**ES_Matrix_ompi_nocom.c**] read the .txt file 、complete parallel computing ES_Matrix and write out the result by MPI/OpenMP with no communication in distributing second file of input.
 * [**ES_Matrix_ompi_p2p.c**] read the .txt file 、complete parallel computing ES_Matrix and write out the result by MPI/OpenMP with p2p communication in distributing second file of input.
 * [**ES_Matrix_ompi_cocom.c**] read the .txt file 、complete parallel computing ES_Matrix and write out the result by MPI/OpenMP with collective communication in distributing second file of input.
-* [**Cluster_KMeans_ompi.c**] read the ES_Matrix file 、complete a general clustering algorithm like K-Means by MPI/OpenMP.
-* [**Cluster_KMeans++_ompi.c**] read the ES_Matrix file 、complete a general clustering algorithm like K-Means by MPI/OpenMP, but let the distance between initial cluster centers far as possible.
+* [**Cluster_KMediods_ompi.c**] read the ES_Matrix file 、complete a general clustering algorithm like K-Mediods by MPI/OpenMP.
+* [**Cluster_KMediods++_ompi.c**] read the ES_Matrix file 、complete a general clustering algorithm like K-Mediods by MPI/OpenMP, but let the distance between initial cluster centers far as possible.
 
 #### Demo:
 * [**compileParalES.sh**]: compile the C source code to Executable files.

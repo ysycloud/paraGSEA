@@ -140,8 +140,8 @@ At the same time, we provided good interfaces to call these tools.
 	class flags file of every profiles 
 
 --->Interfaces:	
-	1¡¢Cluster_KMeans_ompi£º 
-		role: read the ES_Matrix file ¡¢complete a general clustering algorithm like K-Means by MPI/OpenMP.
+	1¡¢Cluster_KMediods_ompi£º 
+		role: read the ES_Matrix file ¡¢complete a general clustering algorithm like K-Mediods by MPI/OpenMP.
 		cmd example:  mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/Cluster_KMeans_ompi 4 10 "data/ES_Matrix_test" "data/Cluster_result_test.txt"
 		param list :
 				-n process_num : Total number of processes.
@@ -156,8 +156,8 @@ At the same time, we provided good interfaces to call these tools.
 				2)input matrix should include the same identity of rows and columns, which means stage 2 is supposed to use same two file as its input
 				3)the first three parameters(process_num,pernum,hostfile) should not be changed compare with stage 2, so that the program can find all the distributed ES_Matrix file in all nodes
 	
-	2¡¢Cluster_KMeans++_ompi£º 
-		role: read the ES_Matrix file ¡¢complete a general clustering algorithm like K-Means by MPI/OpenMP.
+	2¡¢Cluster_KMediods++_ompi£º 
+		role: read the ES_Matrix file ¡¢complete a general clustering algorithm like K-Mediods by MPI/OpenMP.
 				but let the distance between initial cluster centers far as possible.
 		cmd example:  mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/Cluster_KMeans_ompi 4 10 "data/ES_Matrix_test" "data/Cluster_result_test.txt"
 		param list :

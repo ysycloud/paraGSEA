@@ -101,7 +101,7 @@ int main(int argc,char *argv[])
 		duration = finish-start;     
 		printf("loading IO and prework time : %.4f s\n",duration);
 
-		printf("Paral KMeans compute the Cluster Centers is Starting...!\n");
+		printf("Paral KMediods compute the Cluster Centers is Starting...!\n");
 		GET_TIME(start);
 	}
 
@@ -318,7 +318,7 @@ int main(int argc,char *argv[])
 		GET_TIME(finish);
 		//compute the Write time
 		duration = finish-start;     
-		printf("Paral KMeans compute the Cluster Centers Spent: %.4f s\n",duration);
+		printf("Paral KMediods	compute the Cluster Centers Spent: %.4f s\n",duration);
 	}
 	
 	//free the memory

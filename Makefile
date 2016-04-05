@@ -1,6 +1,6 @@
 #programs,flags,etc.
 INCLUDE	=	-I include
-TARGET	=	bin/quick_search_serial bin/quick_search_omp bin/quick_search_mpi bin/ES_Matrix_ompi_nocom bin/ES_Matrix_ompi_p2p bin/ES_Matrix_ompi_cocom bin/Cluster_KMeans_ompi bin/Cluster_KMeans++_ompi
+TARGET	=	bin/quick_search_serial bin/quick_search_omp bin/quick_search_mpi bin/ES_Matrix_ompi_nocom bin/ES_Matrix_ompi_p2p bin/ES_Matrix_ompi_cocom bin/Cluster_KMediods_ompi bin/Cluster_KMediods++_ompi
 
 #ALL Phony Targets
 .PHONY:	everything	clean	all
@@ -47,14 +47,14 @@ bin/ES_Matrix_ompi_cocom:	src/ES_Matrix_ompi_cocom.c	\
 			src/IO.c include/IO.h
 	mpicc $(INCLUDE) -g -fopenmp -o bin/ES_Matrix_ompi_cocom src/ES_Matrix_ompi_cocom.c src/GSEA.c src/RandomChange.c src/IO.c
 	
-bin/Cluster_KMeans_ompi:	src/Cluster_KMeans_ompi.c	\
+bin/Cluster_KMediods_ompi:	src/Cluster_KMediods_ompi.c	\
 			src/GSEA.c include/GSEA.h	\
 			src/RandomChange.c include/RandomChange.h	\
 			src/IO.c include/IO.h
-	mpicc $(INCLUDE) -g -fopenmp -o bin/Cluster_KMeans_ompi src/Cluster_KMeans_ompi.c src/GSEA.c src/RandomChange.c src/IO.c
+	mpicc $(INCLUDE) -g -fopenmp -o bin/Cluster_KMediods_ompi src/Cluster_KMediods_ompi.c src/GSEA.c src/RandomChange.c src/IO.c
 
-bin/Cluster_KMeans++_ompi:	src/Cluster_KMeans++_ompi.c	\
+bin/Cluster_KMediods++_ompi:	src/Cluster_KMediods++_ompi.c	\
 			src/GSEA.c include/GSEA.h	\
 			src/RandomChange.c include/RandomChange.h	\
 			src/IO.c include/IO.h
-	mpicc $(INCLUDE) -g -fopenmp -o bin/Cluster_KMeans++_ompi src/Cluster_KMeans++_ompi.c src/GSEA.c src/RandomChange.c src/IO.c
+	mpicc $(INCLUDE) -g -fopenmp -o bin/Cluster_KMediods++_ompi src/Cluster_KMediods++_ompi.c src/GSEA.c src/RandomChange.c src/IO.c
