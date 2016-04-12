@@ -1,15 +1,25 @@
 Tutorial Process
 
-
 ----------------------------------------------------
-1.Get the software repository from github
+1.Get the software repository from github and install the software
 you must install the GitHub Command Line Tools first.
 then enter the local path you want to store it and clone it.
 
 command line example:
-cd /usr/local
-git clone https://github.com/ysycloud/paraGSEA.git
+#cd /usr/local
+#git clone https://github.com/ysycloud/paraGSEA.git
 
+Then,you can install the software easilly.
+
+command line example:
+#make all
+#make install
+
+If you want to clean the Intermediate files When you finished the work above,
+you can use this command:
+#make clean
+
+At this time, you have finished all works before you can use the software.
 
 ----------------------------------------------------
 2.Pretreatment

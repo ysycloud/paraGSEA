@@ -10,6 +10,8 @@ everything:	$(TARGET)
 clean:	
 	rm -f $(TARGET)
 all:	clean everything
+install: 
+	install bin/* /usr/bin/
 
 bin/quick_search_serial:	src/quick_search_serial.c	\
 			src/GSEA.c include/GSEA.h	\
