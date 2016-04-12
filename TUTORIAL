@@ -12,6 +12,7 @@ command line example:
 Then,you can install the software easilly.
 
 command line example:
+#cd paraGSEA
 #make all
 #make install
 
