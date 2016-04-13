@@ -438,6 +438,9 @@ int main(int argc,char *argv[])
 	free(local_classflag);
 	free(global_classflag);
 	free(cluster_center);
+	
+	MPI_Finalize();
+	return 0;
 }
 
 void split_data(int size, int n, int my_rank, int* begin, int* end, int* local_n)

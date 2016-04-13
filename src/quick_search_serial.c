@@ -108,5 +108,7 @@ int main(int argc,char *argv[])
 	}
 	free(profileSet);
 	free(indexSet);
+	
+	return 0;
 
 }
