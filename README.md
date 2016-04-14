@@ -49,8 +49,8 @@ PreGSEA
 
 | File | Description | Format|
 | ---- | ----------- |--------|
-| data_for_test.txt | ranked profile file | first line : profile_number	profile_Length |
---------------------|---------------------| next profile_number lines : a ranked profile file included profile_Length elements |
+| data_for_test.txt | ranked profile file | first line : profile_number	profile_Length
+											next profile_number lines : a ranked profile file included profile_Length elements |
 | data_for_test_cid.txt | cid file | each line : a cid string corresponding to the last outputfile last profile_number lines |
 
 
