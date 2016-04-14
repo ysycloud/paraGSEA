@@ -54,7 +54,7 @@ PreGSEA
 1. MPI
 2. gcc compiler supports OpenMP
 
-#### Install:
+#### INSTALL:
 * [**install.sh**]: shell script for Installing all C tools.
 
 Or, you can use the shell script below easily.
@@ -123,13 +123,14 @@ mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matr
 | modzs_n272x978.gctx | original profile file from LINCS Dataset| HDF5 |
 | data_for_test.txt | ranked profile file | first line : profile_number	profile_Length ; next profile_number lines : a ranked profile file included profile_Length elements |
 | data_for_test_cid.txt | cid file | each line : a cid string corresponding to the last profile_number lines first outputfile  |
-| ES_Matrix_test_*.txt | ES Matrix file stored in distributed way (‘*’ will be replaced by process id)| first line : row_number	column_number ; next row_number lines : a Enrichment scores vector included column_number elements |
+| ES_Matrix_test_*.txt | ES Matrix file stored in distributed way ( ‘*’ will be replaced by process id )| first line : row_number	column_number ; next row_number lines : a Enrichment scores vector included column_number elements |
 | Cluster_result_test.txt | cluster flag vector file | each line : a cluster flag corresponding to each profile  |
 
 ## Using Problem
-1. MPI
-2. when we want to excute the Clustering operator, we must note that input matrix should include the same identity of rows and columns, which means the program that calculates ES Matrix is supposed to use same two file as its input. Only in this way can we get the similarity of each profile pair.
-3. 
+1. Because of the inefficient IO of Matlab, when the original profile file(.gctx) is too large, the pretreatment operation may take a long time, and it does not support parallel. You may need to be patient. 
+2. When we want to excute the Cluster operator, we must note that input matrix should include the same identity of rows and columns, which means the program that calculates ES Matrix is supposed to use same two file as its input. Only in this way can we get the similarity of each profile pair.
+3. When we want to excute the Cluster operator, we must also note that the MPI Settings and hostfile should not be changed compared to the program that calculates ES Matrix. Because the ES_Matrix is stored in distributed way, if you change these settings, each process can not find the right ES matrix blocks.
+4. If you set the number of clusters too big, clustering algorithm may not converge quickly.
 
 
 ## The LINCS Dataset
