@@ -127,9 +127,10 @@ mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matr
 | Cluster_result_test.txt | cluster flag vector file | each line : a cluster flag corresponding to each profile  |
 
 ## Using Problem
-1.
-2.when we want to excute the Clustering operator, we must note that input matrix should include the same identity of rows and columns, which means the program that calculates ES Matrix is supposed to use same two file as its input. Only in this way can we get the similarity of each profile pair.
-3.
+1. MPI
+2. when we want to excute the Clustering operator, we must note that input matrix should include the same identity of rows and columns, which means the program that calculates ES Matrix is supposed to use same two file as its input. Only in this way can we get the similarity of each profile pair.
+3. 
+
 
 ## The LINCS Dataset
 
