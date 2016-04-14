@@ -27,7 +27,7 @@ After you set the MATLAB path, you should enter "matlab" in shell to start matla
 Then, you can set the input and output file path in runPreGSEA.m and enter "runPreGSEA" to parse the data.
 Or, you can the using the matlab scripts below.
 
-```matlab Demo
+```matlab
 % setting input file name（ .gctx ----original gene dataset）
 file_input = '../data/modzs_n272x978.gctx'; 
 
