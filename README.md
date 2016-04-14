@@ -1,7 +1,7 @@
 # ParaGSEA
 Gene set Enrichment analysis(GSEA) Tools for Lincs data in a parallel manner
 
-## Tools
+## Analysis Tools
 
 A brief description of the tools is given below. The tools implement the function of parallel compute GSEA in multi-core environment.I used the 1ktools(https://github.com/cmap/l1ktools) tools to parse the .gctx file which stored gene profile data defined by Lincs(CMap) based on HDF5 file format.I used Matlab to parse the .gctx file、extract the gene profile sets and write to .txt file. C will read the file 、complete parallel GSEA and write out the result in a suitable file. 
 Typically, in our work, we first implemented GSEA approach in efficient parallel strategy with MPI and OpenMP.In this part, on the one hand, we reduced the computational overhead of standard procedure to calculate the Enrichment Score by pre-sorting, indexing and removing the prefix sum. On the other hand, we will take a global permutation method to wipe off the redundant overhead of estimation of significance level step and multiple hypothesis testing step. 
