@@ -1,29 +1,22 @@
 #!/bin/bash
 
-read -p "Please enter total number of processes:" -t 30 n
-ppn=3
-thread_num=4
-siglen=50
-cluster_num=12
-inputfile="data/data_for_test.txt"
-outputfile="data/Cluster_result_test.txt"
+read -p "Please enter total number of processes:" n
+read -p "Please enter the number of processes in per node:" ppn
+read -p "Please enter the number of threads in per process:" thread_num
+read -p "Please enter the length of gene signature:" siglen
+read -p "Please enter the number of clusters:" cluster_num
+read -p "Please enter the input profiles file:" inputfile
+read -p "Please enter the output cluster flag vector file:" outputfile
+read -p "Please enter the way to calculate the ES_Matrix(0_nocom,1_p2p,2_cocom):" matrix_way
+read -p "Please enter the way to excute clustering(0_KMediods,1_KMediods++):" cluster_way
 
-mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_cocom $thread_num $siglen $inputfile $inputfile "data/ES_Matrix_tmp"
+case "$matrix_way" in
+	0) mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_nocom $thread_num $siglen $inputfile $inputfile "data/ES_Matrix_tmp";;
+	1)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_p2p $thread_num $siglen $inputfile $inputfile "data/ES_Matrix_tmp";;
+	2)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_cocom $thread_num $siglen $inputfile $inputfile "data/ES_Matrix_tmp";;
+esac
 
-mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods++_ompi $thread_num $cluster_num "data/ES_Matrix_tmp" $outputfile
-
-
-#param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-#mpirun -n 2 -ppn 2 -hostfile hostfile ES_Matrix_ompi_nocom 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test"
-
-#param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-#mpirun -n 2 -ppn 2 -hostfile hostfile ES_Matrix_ompi_p2p 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test"
-
-#param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-#mpirun -n 2 -ppn 2 -hostfile hostfile ES_Matrix_ompi_cocom 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test"
-
-#param list :process_num pernum hostfile thread_num cluster_num filename outfilename
-#mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods_ompi 4 12 "data/ES_Matrix_test" "data/Cluster_result_test.txt"
-
-#param list :process_num pernum hostfile thread_num cluster_num filename outfilename
-#mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matrix_test" "data/Cluster_result_test.txt"
+case "$cluster_way" in
+	0) mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods_ompi $thread_num $cluster_num "data/ES_Matrix_tmp" $outputfile;;
+	1)mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods++_ompi $thread_num $cluster_num "data/ES_Matrix_tmp" $outputfile;;
+esac

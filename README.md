@@ -83,6 +83,7 @@ make clean
 
 #### Demo:
 * [**runParalESLinux.sh**]: run Executable files in Linux.
+* [**cluster_demo.sh**]: a shell script to excute a whole cluster process include ES_Matrix and cluster.
 
 the detail usage of each C Tools is shown below.
 ```shell
@@ -114,7 +115,31 @@ mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matr
 #### Note:
  * runParalESLinux.sh annotate a list of execution case of C tools. Removing the annotation, you can using it easily.
  * the details of parameter list of each C tools can be seen in runParalESLinux.sh or the TUTORIAL.
+ * cluster_demo.sh executes a whole cluster process to avoid inputfile and MPI Settings mismatched error, but there are some parameters must be inputed by hand.
+ 
+ the detail of this script is shown below.
+```shell
+read -p "Please enter total number of processes:" n
+read -p "Please enter the number of processes in per node:" ppn
+read -p "Please enter the number of threads in per process:" thread_num
+read -p "Please enter the length of gene signature:" siglen
+read -p "Please enter the number of clusters:" cluster_num
+read -p "Please enter the input profiles file:" inputfile
+read -p "Please enter the output cluster flag vector file:" outputfile
+read -p "Please enter the way to calculate the ES_Matrix(0_nocom,1_p2p,2_cocom):" matrix_way
+read -p "Please enter the way to excute clustering(0_KMediods,1_KMediods++):" cluster_way
 
+case "$matrix_way" in
+	0) mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_nocom $thread_num $siglen $inputfile $inputfile "data/ES_Matrix_tmp";;
+	1)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_p2p $thread_num $siglen $inputfile $inputfile "data/ES_Matrix_tmp";;
+	2)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_cocom $thread_num $siglen $inputfile $inputfile "data/ES_Matrix_tmp";;
+esac
+
+case "$cluster_way" in
+	0) mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods_ompi $thread_num $cluster_num "data/ES_Matrix_tmp" $outputfile;;
+	1)mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods++_ompi $thread_num $cluster_num "data/ES_Matrix_tmp" $outputfile;;
+esac
+```
  
 ### Description of Files appeared in examples
 
@@ -129,7 +154,7 @@ mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matr
 ## Using Problem
 1. Because of the inefficient IO of Matlab, when the original profile file(.gctx) is too large, the pretreatment operation may take a long time, and it does not support parallel. You may need to be patient. 
 2. When we want to excute the Cluster operator, we must note that input matrix should include the same identity of rows and columns, which means the program that calculates ES Matrix is supposed to use same two file as its input. Only in this way can we get the similarity of each profile pair.
-3. When we want to excute the Cluster operator, we must also note that the MPI Settings and hostfile should not be changed compared to the program that calculates ES Matrix. Because the ES_Matrix is stored in distributed way, if you change these settings, each process can not find the right ES matrix blocks.
+3. When we want to excute the Cluster operator, we must also note that the MPI Settings and hostfile should not be changed compared to the program that calculates ES Matrix. Because the ES_Matrix is stored in distributed way, if you change these settings, each process can not find the right ES matrix blocks. Therefore, if you want to avoid problem 2 and problem 3, you can easily execute the cluster_demo.sh.
 4. If you set the number of clusters too big, clustering algorithm may not converge quickly.
 
 
