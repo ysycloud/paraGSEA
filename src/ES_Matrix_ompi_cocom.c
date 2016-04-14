@@ -10,6 +10,7 @@
 #include "GSEA.h"
 #include "IO.h"
 
+void Usage(char prog_name[]);
 void Build_derived_type(
 		struct Profile_triple* m_ptr, 			 /*  in  */
 		MPI_Datatype* triple_mpi_t_ptr 		 /*  out  */);
@@ -34,10 +35,9 @@ int main(int argc,char *argv[])
 	int local_P;	//the data number of each processes must hand
 	int begin,end;
 	int begin_d2,end_d2,local_P_d2;
-	
-	int corenum = atoi(argv[1]);
-	int siglen = atoi(argv[2]);
-
+	int corenum;
+	int siglen;
+	int parameternum;
 	double start,finish,duration;
 	
 	/* Let the system do what it needs to start up MPI */
@@ -49,6 +49,22 @@ int main(int argc,char *argv[])
     /* Find out how many processes are being used */
     MPI_Comm_size(MPI_COMM_WORLD, &p);
 	
+	/* check parameter*/
+	if(my_rank == 0)
+	{
+		parameternum = argc;
+		if(parameternum!=6)
+			Usage(argv[0]);
+	}
+	MPI_Bcast(&parameternum, 1, MPI_INT, 0, MPI_COMM_WORLD);
+	if(parameternum!=6)
+	{
+		MPI_Finalize();
+		exit(0);
+	}
+	
+	corenum = atoi(argv[1]);
+	siglen = atoi(argv[2]);
 	//barrier all processes to compute time
 	MPI_Barrier(MPI_COMM_WORLD); 
 	if(my_rank == 0){
@@ -197,6 +213,13 @@ int main(int argc,char *argv[])
 	MPI_Finalize();
 	return 0;
 }
+
+void Usage(char prog_name[]) {
+	fprintf(stderr, "usage: <total_process_num> <per_num_in_each_process> <hostfile> %s\n", prog_name);
+	fprintf(stderr, " <thread_num>  <Expression Signature Length>\n");
+	fprintf(stderr, " <inputfile1>  <inputfile2>\n");
+	fprintf(stderr, " <outputfile(ES_Matrix)>\n");
+}  /* Usage */
 
 void split_data(int size, int n, int my_rank, int* begin, int* end, int* local_n)
 {

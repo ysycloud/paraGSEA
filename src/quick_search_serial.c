@@ -10,6 +10,8 @@
 
 float global_ES[Global_ES_SIZE];
 
+void Usage(char prog_name[]);
+
 int main(int argc,char *argv[])
 {	
 	int i,j,profilenum,genelen,linelen,siglen;
@@ -17,9 +19,14 @@ int main(int argc,char *argv[])
 	short **indexSet;
 	short gs[MAX_GENESET];
 	char gsStr[1024];
-	struct GSEA_RESULT *gsea_result;
-	
+	struct GSEA_RESULT *gsea_result;	
 	double start,finish,duration;
+	
+	if(argc!=3)
+	{
+		Usage(argv[0]);
+		exit(0);
+	}
 	
 	int	TopN = atoi(argv[2]);
 				
@@ -110,5 +117,8 @@ int main(int argc,char *argv[])
 	free(indexSet);
 	
 	return 0;
-
 }
+
+void Usage(char prog_name[]) {
+	fprintf(stderr, "usage:  %s <inputfile> <TopN>\n", prog_name);
+}  /* Usage */

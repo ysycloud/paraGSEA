@@ -11,6 +11,7 @@
 
 float global_ES[Global_ES_SIZE];
 
+void Usage(char prog_name[]);
 
 int main(int argc,char *argv[])
 {	
@@ -22,6 +23,12 @@ int main(int argc,char *argv[])
 	struct GSEA_RESULT *gsea_result;
 	
 	double start,finish,duration;
+	
+	if(argc!=5)
+	{
+		Usage(argv[0]);
+		exit(0);
+	}
 
 	int thread_count = atoi(argv[2]);
 	int	TopN = atoi(argv[3]);
@@ -171,3 +178,8 @@ int main(int argc,char *argv[])
 	
 	return 0;
 }
+
+void Usage(char prog_name[]) {
+	fprintf(stderr, "usage:  %s <inputfile> <TopN> <Thread_num> <ParaWay>\n", prog_name);
+	fprintf(stderr, " <ParaWay>: 0->split data in balance load way by ourselves; 1->using #pragma omp for\n");
+}  /* Usage */

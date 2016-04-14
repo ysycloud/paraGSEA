@@ -9,6 +9,7 @@
 #include "GSEA.h"
 #include "IO.h"
 
+void Usage(char prog_name[]);
 void Build_derived_type(
 		struct GSEA_RESULT* m_ptr, 			 /*  in  */
 		MPI_Datatype* gsea_mpi_t_ptr 		 /*  out  */);
@@ -31,9 +32,8 @@ int main(int argc,char *argv[])
     MPI_Status  status;
 	int local_n;	//the data number of each processes must hand
 	int leave;		//the leave data number come from the data can not be divided totally by process number
-
-	int	TopN = atoi(argv[2]);
-	
+	int	TopN;	
+	int parameternum;
 	double start,finish,duration;
 	
 	/* Let the system do what it needs to start up MPI */
@@ -45,6 +45,21 @@ int main(int argc,char *argv[])
     /* Find out how many processes are being used */
     MPI_Comm_size(MPI_COMM_WORLD, &p);
 	
+	/* check parameter*/
+	if(my_rank == 0)
+	{
+		parameternum = argc;
+		if(parameternum!=3)
+			Usage(argv[0]);
+	}
+	MPI_Bcast(&parameternum, 1, MPI_INT, 0, MPI_COMM_WORLD);
+	if(parameternum!=3)
+	{
+		MPI_Finalize();
+		exit(0);
+	}
+	
+	TopN = atoi(argv[2]);	
 	//barrier all processes to compute time
 	MPI_Barrier(MPI_COMM_WORLD); 
 	if(my_rank == 0){
@@ -213,6 +228,13 @@ int main(int argc,char *argv[])
 	return 0;
 
 }
+
+void Usage(char prog_name[]) {
+	fprintf(stderr, "usage: <total_process_num> <per_num_in_each_process> <hostfile> %s\n" , prog_name);
+	fprintf(stderr, " <thread_num>  <Expression Signature Length>\n");
+	fprintf(stderr, " <inputfile1>  <inputfile2>\n");
+	fprintf(stderr, " <outputfile(ES_Matrix)>\n");
+}  /* Usage */
 
 void Build_derived_type(
 		struct GSEA_RESULT* m_ptr, 	 /*  in  */

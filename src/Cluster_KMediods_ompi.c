@@ -12,6 +12,7 @@
 
 #define MAXITER 3000
  
+void Usage(char prog_name[]);
 void split_data(int size, int n, int rank, int* begin, int* end, int* local_n); 
 int cmpset(int *set1,int *set2,int n);
 int isInSet(int **set1,int *set2,int n,int iter);
@@ -39,9 +40,9 @@ int main(int argc,char *argv[])
 	
 	int leave,global_begin;
 	int **cluster_centers_history;
-		
-	int corenum = atoi(argv[1]);
-	int cluster_center_num = atoi(argv[2]);
+	int parameternum;
+	int corenum;
+	int cluster_center_num;
 
 	double start,finish,duration;
 	
@@ -54,6 +55,22 @@ int main(int argc,char *argv[])
     /* Find out how many processes are being used */
     MPI_Comm_size(MPI_COMM_WORLD, &p);
 	
+	/* check parameter*/
+	if(my_rank == 0)
+	{
+		parameternum = argc;
+		if(parameternum!=5)
+			Usage(argv[0]);
+	}
+	MPI_Bcast(&parameternum, 1, MPI_INT, 0, MPI_COMM_WORLD);
+	if(parameternum!=5)
+	{
+		MPI_Finalize();
+		exit(0);
+	}
+
+	corenum = atoi(argv[1]);
+	cluster_center_num = atoi(argv[2]);
 	MPI_Barrier(MPI_COMM_WORLD); 
 	if(my_rank == 0){
 		
@@ -340,6 +357,13 @@ int main(int argc,char *argv[])
 	MPI_Finalize();
 	return 0;
 }
+
+void Usage(char prog_name[]) {
+	fprintf(stderr, "usage: <total_process_num> <per_num_in_each_process> <hostfile> %s\n" , prog_name);
+	fprintf(stderr, " <thread_num>  <Cluster_num>\n");
+	fprintf(stderr, " <inputfile(ES_Matrix)>\n");
+	fprintf(stderr, " <outputfile(cluster_flag_vector)>\n");
+}  /* Usage */
 
 void split_data(int size, int n, int my_rank, int* begin, int* end, int* local_n)
 {
