@@ -14,20 +14,6 @@ Third, we clustered the gene profile based on the Enrichment Score matrix which 
 
 I will update the tools as they become available.
 
-### Install:
-* [**install.sh**]: shell script for Installing all C tools.
-Or, you can use the shell script below easily.
-```shell
-#git clone
-git clone https://github.com/ysycloud/paraGSEA.git
-cd paraGSEA
-#make
-make all
-#install
-make install
-#clean
-make clean
-```
 
 ### Matlab Tools: matlab_for_parse/
 
@@ -61,19 +47,28 @@ PreGSEA
 * [**runPreGSEA.m**] : Setting Parameters and execute the PreGSEA.
 * [**PreGSEA.m**] : extract the gene profile sets、finish pre-sorting and write to .txt file.
 
-#### Description of Matlab Outputs
-
-| File | Description | Format|
-| ---- | ----------- |--------|
-| data_for_test.txt | ranked profile file | first line : profile_number	profile_Length ; next profile_number lines : a ranked profile file included profile_Length elements |
-| data_for_test_cid.txt | cid file | each line : a cid string corresponding to the last profile_number lines first outputfile  |
-
-
 ### C Tools: src/
 
 #### Requirements:
 
-1. MPI and gcc compiler supports OpenMP
+1. MPI
+2. gcc compiler supports OpenMP
+
+#### Install:
+* [**install.sh**]: shell script for Installing all C tools.
+
+Or, you can use the shell script below easily.
+```shell
+#git clone
+git clone https://github.com/ysycloud/paraGSEA.git
+cd paraGSEA
+#make
+make all
+#install
+make install
+#clean
+make clean
+```
 
 #### Tools:
 
@@ -90,7 +85,7 @@ PreGSEA
 * [**runParalESLinux.sh**]: run Executable files in Linux.
 
 the detail usage of each C Tools is shown below.
-```c
+```JAVAA
 #param list :filename topn
 quick_search_serial "data/data_for_test.txt" 10
 
@@ -120,6 +115,14 @@ mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matr
  * runParalESLinux.sh annotate a list of execution case of C tools. Removing the annotation, you can using it easily.
  * the details of parameter list of each C tools can be seen in runParalESLinux.sh or the TUTORIAL.
 
+ 
+### Description of Files
+
+| File | Description | Format|
+| ---- | ----------- |--------|
+| modzs_n272x978.gctx | original profile file from LINCS Dataset| HDF5 |
+| data_for_test.txt | ranked profile file | first line : profile_number	profile_Length ; next profile_number lines : a ranked profile file included profile_Length elements |
+| data_for_test_cid.txt | cid file | each line : a cid string corresponding to the last profile_number lines first outputfile  |
 
 ## The LINCS Dataset
 
