@@ -50,7 +50,7 @@ PreGSEA
 | File | Description | Format|
 | ---- | ----------- |--------|
 | data_for_test.txt | ranked profile file | first line : profile_number	profile_Length ; next profile_number lines : a ranked profile file included profile_Length elements |
-| data_for_test_cid.txt | cid file | each line : a cid string corresponding to the last outputfile last profile_number lines |
+| data_for_test_cid.txt | cid file | each line : a cid string corresponding to the last profile_number lines first outputfile  |
 
 
 ### C Tools: src/
@@ -72,6 +72,33 @@ PreGSEA
 
 #### Demo:
 * [**runParalESLinux.sh**]: run Executable files in Linux.
+
+the detail usage of each C Tools is shown below.
+```shell
+#param list :filename topn
+quick_search_serial "data/data_for_test.txt" 10
+
+#param list :filename thread_num topn paraway(0/1)
+quick_search_omp "data/data_for_test.txt" 4 10 1
+
+#param list :process_num pernum hostfile filename topn
+mpirun -n 2 -ppn 2 -hostfile hostfile quick_search_mpi "data/data_for_test.txt" 15
+
+#param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
+mpirun -n 2 -ppn 2 -hostfile hostfile ES_Matrix_ompi_nocom 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test"
+
+#param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
+mpirun -n 2 -ppn 2 -hostfile hostfile ES_Matrix_ompi_p2p 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test"
+
+#param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
+mpirun -n 2 -ppn 2 -hostfile hostfile ES_Matrix_ompi_cocom 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test"
+
+#param list :process_num pernum hostfile thread_num cluster_num filename outfilename
+mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods_ompi 4 12 "data/ES_Matrix_test" "data/Cluster_result_test.txt"
+
+#param list :process_num pernum hostfile thread_num cluster_num filename outfilename
+mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matrix_test" "data/Cluster_result_test.txt"
+```
 
 #### Note:
  * runParalESLinux.sh annotate a list of execution case of C tools. Removing the annotation, you can using it easily.
