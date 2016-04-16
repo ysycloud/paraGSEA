@@ -130,7 +130,7 @@ mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matr
 * [**quick_search_demo.sh**]: a shell script example to execute a whole quick_search process includes parses original data 
 , select quick search way and quick search.
 * [**cluster_demo.sh**]: a shell script example to execute a whole cluster process includes parses original data 
-, select ES_Matrix & cluster way and execute ES_Matrix and cluster.
+, select ES_Matrix & cluster way and execute ES_Matrix & cluster.
  
 ### Description of Files appeared in examples
 
