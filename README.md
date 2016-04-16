@@ -27,8 +27,14 @@ Run `cd paraGSEA/matlab_for_parse` or enter the `pathtool` command, click "Add w
 #### using by command line:
 After you set the MATLAB path, you should enter `matlab` in shell to start matlab environment.
 Then, you can set the input and output file path in `runPreGSEA.m` and enter `runPreGSEA` to parse the data.
-Or, you can use the matlab script below.
+Or, you can use the shell script below to start matlab environment and parse original data after set the 
+input and output file path in `runPreGSEA.m`.
 
+```shell
+% execute matlab script to parse the data  
+matlab -nodesktop -nosplash - nojvm -r "runPreGSEA; quit;"
+```
+##### Note: the example of setting input and output file path in `runPreGSEA.m` is shown below.
 ```matlab
 % setting input file name（ .gctx ----original gene dataset）
 file_input = '../data/modzs_n272x978.gctx'; 
@@ -41,6 +47,7 @@ file_name_cid = '../data/data_for_test_cid.txt';
 
 % excuting the PreAnalysis in GSEA for C Tools
 PreGSEA
+
 ```
 
 #### Tools:
