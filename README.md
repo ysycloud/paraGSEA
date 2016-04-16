@@ -25,8 +25,8 @@ I will update the tools as they become available.
 Run `cd paraGSEA/matlab_for_parse` or enter the `pathtool` command, click "Add with Subfolders...", and select the directory `paraGSEA/matlab_for_parse`.
 
 #### using by command line:
-After you set the MATLAB path, you should enter "matlab" in shell to start matlab environment.
-Then, you can set the input and output file path in runPreGSEA.m and enter "runPreGSEA" to parse the data.
+After you set the MATLAB path, you should enter `matlab` in shell to start matlab environment.
+Then, you can set the input and output file path in `runPreGSEA.m` and enter `runPreGSEA` to parse the data.
 Or, you can use the matlab script below.
 
 ```matlab
