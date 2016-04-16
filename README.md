@@ -34,7 +34,7 @@ input and output file path in `runPreGSEA.m`.
 % execute matlab script to parse the data  
 matlab -nodesktop -nosplash - nojvm -r "runPreGSEA; quit;"
 ```
-##### Note: the example of setting input and output file path in `runPreGSEA.m` is shown below.
+**Note:** the example of setting input and output file path in `runPreGSEA.m` is shown below.
 ```matlab
 % setting input file name（ .gctx ----original gene dataset）
 file_input = '../data/modzs_n272x978.gctx'; 
@@ -163,8 +163,3 @@ esac
 2. When we want to excute the Cluster operator, we must note that input matrix should include the same identity of rows and columns, which means the program that calculates ES Matrix is supposed to use same two file as its input. Only in this way can we get the similarity of each profile pair.
 3. When we want to excute the Cluster operator, we must also note that the MPI Settings and hostfile should not be changed compared to the program that calculates ES Matrix. Because the ES_Matrix is stored in distributed way, if you change these settings, each process can not find the right ES matrix blocks. Therefore, if you want to avoid problem 2 and problem 3, you can easily execute the cluster_demo.sh.
 4. If you set the number of clusters too big, clustering algorithm may not converge quickly.
-
-
-## The LINCS Dataset
-
-The CMAP Cloud API offers programmatic access to annotations and perturbational signatures in [the LINCS L1000 dataset](http://lincscloud.org/) via a collection of HTTP-based RESTful web services. You can get the .gctx file stored gene profile data by the Website.

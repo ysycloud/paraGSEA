@@ -1,27 +1,26 @@
 #!/bin/bash
-read -p "Please enter total number of processes:" n
-read -p "Please enter the number of processes in per node:" ppn
-read -p "Please enter the number of threads in per process:" thread_num
-read -p "Please enter the length of gene signature:" siglen
-read -p "Please enter the number of clusters:" cluster_num
-read -p "Please enter the input profiles file（default by no enter）:" inputfile
-read -p "Please enter the output cluster flag vector file:" outputfile
 read -p "Please enter the way to calculate the ES_Matrix(0_nocom,1_p2p,2_cocom):" matrix_way
-read -p "Please enter the way to excute clustering(0_KMediods,1_KMediods++):" cluster_way
+read -p "Please enter the way to execute clustering(0_KMediods,1_KMediods++):" cluster_way
 
-if["$inputfile"=""];then
-	inputfile = "../data/data_for_test.txt"
-exit
-fi
+# execute matlab script to parse the data  
+matlab -nodesktop -nosplash -nojvm -r "file_input='../data/modzs_n272x978.gctx'; file_name='../data/data_for_test.txt'; file_name_cid='../data/data_for_test_cid.txt'; PreGSEA; quit;"
 
+outputfile="../data/Cluster_result_test.txt"
+n=3
+ppn=3
+thread_num=5
+siglen=50
+cluster_num=8
 
+#calculate the similarity(ES) matrix
 case "$matrix_way" in
-	0) mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_nocom $thread_num $siglen $inputfile $inputfile "data/ES_Matrix_tmp";;
-	1)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_p2p $thread_num $siglen $inputfile $inputfile "data/ES_Matrix_tmp";;
-	2)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_cocom $thread_num $siglen $inputfile $inputfile "data/ES_Matrix_tmp";;
+	0)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_nocom $thread_num $siglen "../data/data_for_test.txt" "../data/data_for_test.txt" "../data/ES_Matrix_tmp";;
+	1)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_p2p $thread_num $siglen "../data/data_for_test.txt" "../data/data_for_test.txt" "../data/ES_Matrix_tmp";;
+	2)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_cocom $thread_num $siglen "../data/data_for_test.txt" "../data/data_for_test.txt" "../data/ES_Matrix_tmp";;
 esac
 
+#cluster
 case "$cluster_way" in
-	0) mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods_ompi $thread_num $cluster_num "data/ES_Matrix_tmp" $outputfile;;
-	1)mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods++_ompi $thread_num $cluster_num "data/ES_Matrix_tmp" $outputfile;;
+	0) mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods_ompi $thread_num $cluster_num "../data/ES_Matrix_tmp" $outputfile;;
+	1)mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods++_ompi $thread_num $cluster_num "../data/ES_Matrix_tmp" $outputfile;;
 esac
