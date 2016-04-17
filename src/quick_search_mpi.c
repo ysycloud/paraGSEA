@@ -123,7 +123,7 @@ int main(int argc,char *argv[])
 	
 	if(my_rank == 0){		
 		//get the geneset , split by space
-		printf("input the GeneSet(split by space):\n");
+		printf("input the GeneSet( a integer[1-genelen] string split by space ):\n");
 		scanf("%[^\n]",gsStr);
 		getchar();
 	}

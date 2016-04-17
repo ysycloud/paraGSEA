@@ -31,7 +31,7 @@ Or, you can use the shell script below to start matlab environment and parse ori
 
 ```shell
 % execute matlab script to parse the data  
-matlab -nodesktop -nosplash -nojvm -r "file_input='../data/modzs_n272x978.gctx'; file_name='../data/data_for_test.txt'; file_name_cid='../data/data_for_test_cid.txt'; PreGSEA; quit;"
+matlab -nodesktop -nosplash -nojvm -r "file_input='../data/modzs_n272x978.gctx'; file_name='../data/data_for_test.txt'; file_name_cid='../data/data_for_test_cid.txt'; file_name_rid='../data/data_for_test_rid.txt'; PreGSEA; quit;"
 ```
 **Note:** the example of setting input and output file path in matlab script and parse original data is shown below.
 ```matlab
@@ -41,8 +41,11 @@ file_input = '../data/modzs_n272x978.gctx';
 % setting the out file name of profiles
 file_name = '../data/data_for_test.txt';  
 
-% setting out file name of profiles' cids 
-file_name_cid = '../data/data_for_test_cid.txt';   
+% setting out file name of profiles' cids(profiles)
+file_name_cid = '../data/data_for_test_cid.txt';
+
+% setting out file name of profiles' rids(genes) 
+file_name_rid='../data/data_for_test_rid.txt';   
 
 % excuting the PreAnalysis in GSEA for C Tools
 PreGSEA
@@ -138,12 +141,14 @@ mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matr
 | ---- | ----------- |--------|
 | modzs_n272x978.gctx | original profile file from LINCS Dataset| HDF5 |
 | data_for_test.txt | ranked profile file | first line : profile_number	profile_Length ; next profile_number lines : a ranked profile file included profile_Length elements |
-| data_for_test_cid.txt | cid file | each line : a cid string corresponding to the last profile_number lines first outputfile  |
+| data_for_test_cid.txt | cid( profile identification ) file | each line : a cid( profile identification ) string corresponding to the last profile_number lines of the `data_for_test.txt` |
+| data_for_test_rid.txt | rid( gene identification ) file | each line : a rid( gene identification ) string corresponding to the rid attribute of `modzs_n272x978.gctx` |
 | ES_Matrix_test_*.txt | ES Matrix file stored in distributed way ( ‘*’ will be replaced by process id )| first line : row_number	column_number ; next row_number lines : a Enrichment scores vector included column_number elements |
 | Cluster_result_test.txt | cluster flag vector file | each line : a cluster flag corresponding to each profile  |
 
 ## Using Problem
 1. Because of the inefficient IO of Matlab, when the original profile file(.gctx) is too large, the pretreatment operation may take a long time, and it does not support parallel. You may need to be patient. 
-2. When we want to execute the Cluster operator, we must note that input matrix should include the same identity of rows and columns, which means the program that calculates ES Matrix is supposed to use same two file as its input. Only in this way can we get the similarity of each profile pair.
-3. When we want to execute the Cluster operator, we must also note that the MPI Settings and hostfile should not be changed compared to the program that calculates ES Matrix. Because the ES_Matrix is stored in distributed way, if you change these settings, each process can not find the right ES matrix blocks. Therefore, if you want to avoid problem 2 and problem 3, you can easily execute the `example/cluster_demo.sh`.
-4. If you set the number of clusters too big, clustering algorithm may not converge quickly.
+2. the program needs a GeneSet as an input in quick_search part after loading the file. You should input a integer string split by space. Each integer in this string represents a gene which you can query in `data_for_test_rid.txt`.
+3. When we want to execute the Cluster operator, we must note that input matrix should include the same identity of rows and columns, which means the program that calculates ES Matrix is supposed to use same two file as its input. Only in this way can we get the similarity of each profile pair.
+4. When we want to execute the Cluster operator, we must also note that the MPI Settings and hostfile should not be changed compared to the program that calculates ES Matrix. Because the ES_Matrix is stored in distributed way, if you change these settings, each process can not find the right ES matrix blocks. Therefore, if you want to avoid problem 2 and problem 3, you can easily execute the `example/cluster_demo.sh`.
+5. If you set the number of clusters too big, clustering algorithm may not converge quickly.

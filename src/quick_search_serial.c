@@ -64,7 +64,7 @@ int main(int argc,char *argv[])
 	
 	
 	//get the geneset , split by space
-	printf("input the GeneSet(split by space):\n");
+	printf("input the GeneSet( a integer[1-genelen] string split by space ):\n");
 	scanf("%[^\n]",gsStr);	
 	//gets(gsStr);
 	while(strcmp(gsStr,"exit")!=0)
