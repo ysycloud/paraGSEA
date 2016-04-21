@@ -6,6 +6,7 @@ which will complete parallel GSEA in a multiprocesses way by MPI and
 show the topN results.
 
 There are several parameters should be setted in command line example.
+
 | parameter name | Parameter function |
 | -------------- | -------------------|
 | -n process_num | Total number of processes |

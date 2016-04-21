@@ -5,6 +5,7 @@ This tool implemented original GSEA approach with GeneSet and Profiles
 which will complete GSEA and show the topN results in a serial way.
 
 There are several parameters should be setted in command line example.
+
 | parameter name | Parameter function |
 | -------------- | -------------------|
 | filename | a parsed profiles's file from pretreatment stage |

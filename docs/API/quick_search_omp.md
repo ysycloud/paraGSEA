@@ -6,6 +6,7 @@ will complete parallel GSEA in a multithreads way by OpenMP and show the topN
 results.
 
 There are several parameters should be setted in command line example.
+
 | parameter name | Parameter function |
 | -------------- | -------------------|
 | filename | a parsed profiles's file from pretreatment stage |
