@@ -30,9 +30,13 @@ localhost
 ```
 
 However, there is some thing we must notice:
+
 1. you'd better keep the formula `process_num = pernum * number of IP(Hostname) list in hostfile` correct.
+
 2. When we want to execute the Cluster operator, we must note that input matrix should include the same identity of rows and columns, which means the program that calculates ES Matrix is supposed to use same two file as its input. Only in this way can we get the similarity of each profile pair.
+
 3. When we want to execute the Cluster operator, we must also note that the MPI Settings and hostfile should not be changed compared to the program that calculates ES Matrix. Because the ES_Matrix is stored in distributed way, if you change these settings, each process can not find the right ES matrix blocks.
+
 4. If you set the number of clusters too big, clustering algorithm may not converge quickly.
 
 It may will produce the following output:
