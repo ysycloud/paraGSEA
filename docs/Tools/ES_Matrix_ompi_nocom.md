@@ -2,7 +2,7 @@
 # ES_Matrix_ompi_nocom #
 
 This tool Compares two gene profile sets to get an Enrichment Score matrix 
-of every gene profile pairs and write out the result by MPI/OpenMP with p2p
+of every gene profile pairs and write out the result by MPI/OpenMP with no
 communication.
 
 There are several parameters should be setted in command line example.

@@ -153,7 +153,7 @@ At the same time, we provided good interfaces to call these tools.
 --->Interfaces:	
 	1¡¢Cluster_KMediods_ompi£º 
 		role: read the ES_Matrix file ¡¢complete a general clustering algorithm like K-Mediods by MPI/OpenMP.
-		cmd example:  mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/Cluster_KMeans_ompi 4 10 "data/ES_Matrix_test" "data/Cluster_result_test.txt"
+		cmd example:  mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/Cluster_KMediods_ompi 4 10 "data/ES_Matrix_test" "data/Cluster_result_test.txt"
 		param list :
 				-n process_num : Total number of processes.
 				-ppn pernum: the number of processes in each node
@@ -170,7 +170,7 @@ At the same time, we provided good interfaces to call these tools.
 	2¡¢Cluster_KMediods++_ompi£º 
 		role: read the ES_Matrix file ¡¢complete a general clustering algorithm like K-Mediods by MPI/OpenMP.
 				but let the distance between initial cluster centers far as possible.
-		cmd example:  mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/Cluster_KMeans_ompi 4 10 "data/ES_Matrix_test" "data/Cluster_result_test.txt"
+		cmd example:  mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/Cluster_KMediods++_ompi 4 10 "data/ES_Matrix_test" "data/Cluster_result_test.txt"
 		param list :
 				-n process_num : Total number of processes.
 				-ppn pernum: the number of processes in each node
