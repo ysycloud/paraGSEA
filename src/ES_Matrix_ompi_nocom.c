@@ -100,7 +100,7 @@ int main(int argc,char *argv[])
 		GET_TIME(finish);
 		//compute the IO time
 		duration = finish-start;     
-		printf("loading IO and prework time : %.4f s\n",duration);
+		printf("loading IO and prework time in no communication way: %.4f s\n",duration);
 
 		printf("Paral compute the ES_Matrix is Starting...!\n");
 		GET_TIME(start);
@@ -144,7 +144,7 @@ int main(int argc,char *argv[])
 		GET_TIME(finish);
 		//compute the compute time
 		duration = finish-start;     
-		printf("Paral compute the ES_Matrix time in no communication: %.4f s\n",duration);
+		printf("Paral compute the ES_Matrix time: %.4f s\n",duration);
 		
 		printf("Writing file is Starting...!\n");
 		GET_TIME(start);

@@ -97,7 +97,7 @@ At the same time, we provided good interfaces to call these tools.
 
 --->Interfaces:		
 	1¡¢ES_Matrix_ompi_nocom£º 
-		role: complete parallel computing ES_Matrix and write out the result by MPI/OpenMP with no communication in distributing second file of input
+		role: complete parallel computing ES_Matrix and write out the result by MPI/OpenMP with no communication.
 		cmd example:  mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/ES_Matrix_ompi_nocom 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test"
 		param list :
 				-n process_num : Total number of processes.
@@ -111,7 +111,7 @@ At the same time, we provided good interfaces to call these tools.
 		note:  you'd better keep the formula correct : process_num = pernum * number of IP(Hostname) list in hostfile
 
 	2¡¢ES_Matrix_ompi_p2p£º 
-		role: complete parallel computing ES_Matrix and write out the result by MPI/OpenMP with p2p communication in distributing second file of input
+		role: complete parallel computing ES_Matrix and write out the result by MPI/OpenMP with p2p communication.
 		cmd example:  mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/ES_Matrix_ompi_p2p 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test"
 		param list :
 				-n process_num : Total number of processes.
@@ -125,7 +125,7 @@ At the same time, we provided good interfaces to call these tools.
 		note:  you'd better keep the formula correct : process_num = pernum * number of IP(Hostname) list in hostfile
 		
 	3¡¢ES_Matrix_ompi_cocom£º 
-		role: complete parallel computing ES_Matrix and write out the result by MPI/OpenMP with collective communication in distributing second file of input.
+		role: complete parallel computing ES_Matrix and write out the result by MPI/OpenMP with collective communication.
 		cmd example:  mpirun -n 2 -ppn 2 -hostfile hostfile ./bin/ES_Matrix_ompi_cocom 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test"
 		param list :
 				-n process_num : Total number of processes.
