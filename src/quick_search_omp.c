@@ -103,10 +103,7 @@ int main(int argc,char *argv[])
 	while(strcmp(gsStr,"exit")!=0)
 	{
 		//get the geneset
-		getGeneSet(gs,&siglen,gsStr);	 
-		for(i=0;i<siglen;i++)
-			printf("%d\t",gs[i]);
-		printf("\n");
+		getGeneSet(gs,&siglen,gsStr);
 		
 		GET_TIME(start);
 		/********************run the GSEA algorithm by openmp*****************************/
