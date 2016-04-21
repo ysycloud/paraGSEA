@@ -4,7 +4,8 @@
 This tool read the ES_Matrix file in a distributed way and 
 cluster the gene profiles based on the Enrichment Score matrix 
 which can be seemed as the similarity Matrix of gene profiles
-by MPI/OpenMP.
+by MPI/OpenMP. However, let the distance between initial cluster
+centers far as possible
 
 There are several parameters should be setted in command line example.
 
