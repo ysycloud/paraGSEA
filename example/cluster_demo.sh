@@ -2,8 +2,9 @@
 read -p "Please enter the way to calculate the ES_Matrix(0_nocom,1_p2p,2_cocom):" matrix_way
 read -p "Please enter the way to execute clustering(0_KMediods,1_KMediods++):" cluster_way
 
-# execute matlab script to parse the data  
-matlab -nodesktop -nosplash -nojvm -r "file_input='../data/modzs_n272x978.gctx'; file_name='../data/data_for_test.txt'; file_name_cid='../data/data_for_test_cid.txt'; file_name_rid='../data/data_for_test_rid.txt'; PreGSEA; quit;"
+# execute matlab script to parse the data(pre_treatment)
+runPreGSEAbyMatlab.sh
+#runparaPreGSEAbyMatlab.sh
 
 outputfile="../data/Cluster_result_test.txt"
 n=3

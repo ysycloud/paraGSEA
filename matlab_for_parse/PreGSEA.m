@@ -1,5 +1,5 @@
-ds = parse_gctx(file_input);
 
+ds = parse_gctx(file_input);
 mat = ds.mat;
 cid = ds.cid;
 rid = ds.rid;
@@ -18,7 +18,6 @@ o=ones(m,2);
 for i = 1:n
     o = [mat(:,i),probe];
     o = sortrows(o,1);
-    mat(:,i)=o(:,2);
     for j = 1:m-1
          fprintf(fid1,'%5g\t',o(j,2));
     end

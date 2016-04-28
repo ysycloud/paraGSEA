@@ -1,8 +1,9 @@
 #!/bin/bash
 read -p "Please enter the way to execute the quick_search(0_serial,1_openmp,2_mpi):" quick_search_way
 
-# execute matlab script to parse the data  
-matlab -nodesktop -nosplash -nojvm -r "file_input='../data/modzs_n272x978.gctx'; file_name='../data/data_for_test.txt'; file_name_cid='../data/data_for_test_cid.txt'; file_name_rid='../data/data_for_test_rid.txt'; PreGSEA; quit;"
+# execute matlab script to parse the data(pre_treatment)
+runPreGSEAbyMatlab.sh
+#runparaPreGSEAbyMatlab.sh
 
 #quick_search
 case "$quick_search_way" in
