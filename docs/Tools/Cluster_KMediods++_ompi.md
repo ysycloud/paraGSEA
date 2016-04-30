@@ -30,7 +30,7 @@ the example hostfile just has one record as below:
 localhost
 ```
 
-However, there is some thing we must notice:
+However, there is some things we must notice:
 
 1. you'd better keep the formula `process_num = pernum * number of IP(Hostname) list in hostfile` correct.
 

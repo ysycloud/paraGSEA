@@ -66,8 +66,7 @@ cat ../data/data_for_test_cid.txt_* >> ../data/data_for_test_cid.txt
 rm -f ../data/data_for_test.txt_* ../data/data_for_test_cid.txt_*
 ```
 
-**Note:**the number of cores must be smaller than the actual core number in your system. 
-And after the parse work, you shoul merge every parts of output file into a whole file like the shell script shown above
+**Note:** the number of cores must be smaller than the actual core number in your system. And after the parse work, you shoul merge every parts of output file into a whole file like the shell script shown above.
 
 #### Tools:
 * [**PreGSEA.m**] : extract the gene profile sets、finish pre-sorting and write to .txt file.
@@ -160,11 +159,11 @@ mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matr
 | File | Description | Format|
 | ---- | ----------- |--------|
 | modzs_n272x978.gctx | original profile file from LINCS Dataset| HDF5 |
-| data_for_test.txt | ranked profile file | first line : profile_number	profile_Length ; next profile_number lines : a ranked profile file included profile_Length elements |
+| data_for_test.txt | ranked profile file in a index format | first line : profile_number & profile_Length ; next profile_number lines : a ranked profile file included profile_Length elements |
 | data_for_test_cid.txt | cid( profile identification ) file | each line : a cid( profile identification ) string corresponding to the last profile_number lines of the `data_for_test.txt` |
-| data_for_test_rid.txt | rid( gene identification ) file | each line : a rid( gene identification ) string corresponding to the rid attribute of `modzs_n272x978.gctx` |
+| data_for_test_rid.txt | rid( gene identification ) file | each line : a rid( gene identification ) string corresponding to the rid attribute of `modzs_n272x978.gctx` and its index corresponding to the ranked profile file |
 | ES_Matrix_test_*.txt | ES Matrix file stored in distributed way ( ‘*’ will be replaced by process id )| first line : row_number	column_number ; next row_number lines : a Enrichment scores vector included column_number elements |
-| Cluster_result_test.txt | cluster flag vector file | each line : a cluster flag corresponding to each profile  |
+| Cluster_result_test.txt | cluster flag vector file | each line : a cluster flag corresponding to each profile |
 
 ## Using Problem
 1. Because of the inefficient IO of Matlab, when the original profile file(.gctx) is too large, the pretreatment operation may take a long time, and it does not support parallel. You may need to be patient. Moreover, Once parsed, it can be used many times.
