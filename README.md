@@ -66,9 +66,8 @@ cat ../data/data_for_test_cid.txt_* >> ../data/data_for_test_cid.txt
 rm -f ../data/data_for_test.txt_* ../data/data_for_test_cid.txt_*
 ```
 
-#### Note:
- * the number of cores must be smaller than the actual core number in your system. 
- * after the parse work, you shoul merge every parts of output file into a whole file like the shell script shown above
+**Note:**the number of cores must be smaller than the actual core number in your system. 
+And after the parse work, you shoul merge every parts of output file into a whole file like the shell script shown above
 
 #### Tools:
 * [**PreGSEA.m**] : extract the gene profile sets、finish pre-sorting and write to .txt file.
