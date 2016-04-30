@@ -33,6 +33,7 @@ Or, you can use the shell script below to start matlab environment and parse ori
 % execute matlab script to parse the data  
 matlab -nodesktop -nosplash -nojvm -r "file_input='../data/modzs_n272x978.gctx'; file_name='../data/data_for_test.txt'; file_name_cid='../data/data_for_test_cid.txt'; file_name_rid='../data/data_for_test_rid.txt'; PreGSEA; quit;"
 ```
+
 **Note:** the example of setting input and output file path in matlab script and parse original data is shown below.
 ```matlab
 % setting input file name（ .gctx ----original gene dataset）
@@ -49,14 +50,34 @@ file_name_rid='../data/data_for_test_rid.txt';
 
 % excuting the PreAnalysis in GSEA for C Tools
 PreGSEA
-
 ```
+
+By the way, there are another more efficent script provided to parse the original data in a parallel manner.
+To use this script, you are supposed to make sure that you have a multicores system first, and except the input and output file path you must set in matlab environment like the last script, the number of cores are also should be setted. Then you
+can enter `paraPreGSEA` to parse original data.
+Or, you can use the shell script below to start matlab environment and parse original data in a parallel manner.
+
+```shell
+# execute matlab script to parallel parse the data  
+matlab -nodesktop -nosplash -nojvm -r "file_input='../data/modzs_n272x978.gctx'; file_name='../data/data_for_test.txt'; file_name_cid='../data/data_for_test_cid.txt'; file_name_rid='../data/data_for_test_rid.txt'; cores = 2; paraPreGSEA; quit;"
+
+cat ../data/data_for_test.txt_* >> ../data/data_for_test.txt
+cat ../data/data_for_test_cid.txt_* >> ../data/data_for_test_cid.txt
+rm -f ../data/data_for_test.txt_* ../data/data_for_test_cid.txt_*
+```
+
+####Note:
+	** the number of cores must be smaller than the actual core number in your system. 
+	** after the parse work, you shoul merge every parts of output file into a whole file like the shell script shown above
 
 #### Tools:
 * [**PreGSEA.m**] : extract the gene profile sets、finish pre-sorting and write to .txt file.
+* [**paraPreGSEA.m**] : extract the gene profile sets、finish pre-sorting and write to .txt file in a parallel manner.
 * [**parse_gctx.m**] : parse .gctx file which is provided by 1ktools.
 
-**Note:** the example of executing matlab script to parse the data is provided by `example/runPreGSEAbyMatlab.sh`
+#### Note:
+	* the example of executing shell script to parse the data is provided by `example/runPreGSEAbyMatlab.sh`
+	* the example of executing shell script to parse the data in a parallel manner is provided by `example/runparaPreGSEAbyMatlab.sh`
 
 ### C Tools: src/
 
