@@ -14,15 +14,17 @@ There are several parameters should be setted in command line example.
 | file_name_rid | output | rid( gene identification ) file, each line is a rid( gene identification ) string corresponding to the rid attribute of input file and its index corresponding to the ranked profile file |
 | cores | input | the number of cores you want to use in the parse work |
 
-A example of how to set these parameters is given in this script, and a 
+An example of how to set these parameters is given in this script, and a 
 .gctx file is provided in `data/` directory. you can easily change them 
 in your need.
 
 However, there are some things we must notice:
 
-1. the number of cores must be smaller than the actual core number in your system. 
+1. you are supposed to make sure that you have a multicores system first.
 
-2. after the parse work, you shoul merge every parts of output file into a whole file like the shell script shown.
+2. the number of cores must be smaller than the actual core number in your system. 
+
+3. after the parse work, you shoul merge every parts of output file into a whole file like the shell script shown.
 ```shell
 cat ../data/data_for_test.txt_* >> ../data/data_for_test.txt
 cat ../data/data_for_test_cid.txt_* >> ../data/data_for_test_cid.txt

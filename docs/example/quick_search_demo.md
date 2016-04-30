@@ -1,13 +1,18 @@
-#!/bin/bash
-read -p "Please enter the way to execute the quick_search(0_serial,1_openmp,2_mpi):" quick_search_way
+<a name="quick_search_demo.doc"></a>
+# quick_search_demo #
 
-# execute matlab script to parse the data(pre_treatment)
-runPreGSEAbyMatlab.sh
-#runparaPreGSEAbyMatlab.sh
+This shell script uses `runPreGSEAbyMatlab.sh` or `runparaPreGSEAbyMatlab.sh` to parse original profile 
+data first, then, three C Tools, which you can chose, of Quick_Search implemented original GSEA approach 
+with GeneSet and Profiles and show the topN results will be used. 
 
-#quick_search
-case "$quick_search_way" in
-	0)quick_search_serial "../data/data_for_test.txt" 10;;
-	1)quick_search_omp "../data/data_for_test.txt" 4 10 1;;
-	2)mpirun -n 2 -ppn 2 -hostfile hostfile quick_search_mpi "../data/data_for_test.txt" 10;;
-esac
+There is one parameter you should notice to input when execute the script.
+
+| parameter name | Parameter function |
+| -------------- | ------------------ |
+| quick_search_way | which Tool do you chose to complete the GSEA analysis(0_serial,1_openmp,2_mpi) |
+
+which tools to be chosen is decided by your need. However, there are still some parameters should be setted 
+in command line example when you use these tools. An example of how to set these parameters is given in this script. 
+you can easily change them in your need.
+
+The detailed usage of these tools is described in `docs\Tools\quick_search_*.md`.

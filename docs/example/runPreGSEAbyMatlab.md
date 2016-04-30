@@ -13,7 +13,7 @@ There are several parameters should be setted in command line example.
 | file_name_cid | output | cid( profile identification ) file, each line is a cid( profile identification ) string  |
 | file_name_rid | output | rid( gene identification ) file, each line is a rid( gene identification ) string corresponding to the rid attribute of input file and its index corresponding to the ranked profile file |
 
-A example of how to set these parameters is given in this script, and a 
+An example of how to set these parameters is given in this script, and a 
 .gctx file is provided in `data/` directory. you can easily change them 
 in your need.
 
