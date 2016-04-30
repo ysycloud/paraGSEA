@@ -4,7 +4,7 @@
 This shell script uses `runPreGSEAbyMatlab.sh` or `runparaPreGSEAbyMatlab.sh` to parse original profile 
 data first, then, three C Tools, which you can chose, of ES_Matrix which compare two gene profile sets 
 to get an Enrichment Score matrix of every gene profile pairs and write out an ES Matrix in a distributed 
-way will be used. Finally, two C Tools, which you can chose, of cluster using ES Matrix as an input  
+way will be used. Finally, two C Tools, which you can chose, of cluster using ES Matrix as an input 
 and write out a clustering flag vector in the root node will be used.
 
 There are two parameters you should notice to input when execute the script.
