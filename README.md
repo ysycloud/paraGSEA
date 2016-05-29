@@ -3,17 +3,38 @@ Gene Set Enrichment Analysis (GSEA) Tools for LINCS data in a parallel manner
 
 ## Description
 
-paraGSEA implements MPI and OpenMP-Based parallel GSEA algorithm for multi-core or cluster architecture.The [1ktools](https://github.com/cmap/l1ktools) tools to parse the .gctx file which stored gene profile data defined by Lincs(CMap) based on HDF5 file format.I used Matlab to parse the .gctx file、extract the gene profile sets and write to .txt file. C will read the file 、complete parallel GSEA and write out the result in a suitable file.
+paraGSEA implements MPI and OpenMP-Based parallel GSEA algorithm for multi-core or cluster architecture. TODO add more intro here.
 
-### General Function:
-In our work, we first implemented GSEA approach in efficient parallel strategy with MPI and OpenMP.In this part, on the one hand, we reduced the computational overhead of standard procedure to calculate the Enrichment Score by pre-sorting, indexing and removing the prefix sum. On the other hand, we will take a global permutation method to wipe off the redundant overhead of estimation of significance level step and multiple hypothesis testing step. 
+## Implementation Details
+Several optimizations are implemented in paraGSEA.
 
-Second, we expanded GSEA’s application to quickly compare two gene profile sets to get an Enrichment Score matrix of every gene profile pairs. In this part, in addition to using the previous optimization strategies, our implementation also allows to generate a second level of parallelization by creating several threads per MPI process.
+1. TODO In our work, we first implemented GSEA approach in efficient parallel strategy with MPI and OpenMP.In this part, on the one hand, we reduced the computational overhead of standard procedure to calculate the Enrichment Score by pre-sorting, indexing and removing the prefix sum. On the other hand, we will take a global permutation method to wipe off the redundant overhead of estimation of significance level step and multiple hypothesis testing step.
 
-Third, we clustered the gene profile based on the Enrichment Score matrix which we can get by the second part. In this part, Enrichment Score is served as the metric to measure the similarity between two gene profiles. We implemented a general clustering algorithm like K-Mediods which is an improved version of K-Means. The algorithm can quickly converge and then output the corresponding results.
+2. TODO Second, we expanded GSEA’s application to quickly compare two gene profile sets to get an Enrichment Score matrix of every gene profile pairs. In this part, in addition to using the previous optimization strategies, our implementation also allows to generate a second level of parallelization by creating several threads per MPI process.
 
-I will update the tools as they become available.
+3. TODO Third, we clustered the gene profile based on the Enrichment Score matrix which we can get by the second part. In this part, Enrichment Score is served as the metric to measure the similarity between two gene profiles. We implemented a general clustering algorithm like K-Mediods which is an improved version of K-Means. The algorithm can quickly converge and then output the corresponding results.
 
+## Benchmark
+
+TODO, compare the performance of paraGSEA and looped GSEA
+
+## Install
+
+### Prerequisites
+* [1ktools](https://github.com/cmap/l1ktools) is used to parse the .gctx file which stored gene profile data defined by LINCS and Connectivity Map (CMap) in HDF5 file format.
+* Matlab to parse the .gctx file、extract the gene profile sets and export to plain text file, which will be taken as input of C code of parallel GSEA.
+* MPICH2
+* GCC compiler supports the OpenMP v2.5, v4.0?? specification MPI and gcc compiler supports OpenMP and write out the result in a suitable file.
+
+### Download and setup
+
+TODO
+
+### Test
+
+TODO
+
+## Description of Files
 
 ### Matlab Tools: matlab_for_parse/
 
@@ -37,7 +58,7 @@ matlab -nodesktop -nosplash -nojvm -r "file_input='../data/modzs_n272x978.gctx';
 **Note:** the example of setting input and output file path in matlab script and parse original data is shown below.
 ```matlab
 % setting input file name（ .gctx ----original gene dataset）
-file_input = '../data/modzs_n272x978.gctx'; 
+file_input = '../data/modzs_n272x978.gctx';
 
 % setting the out file name of profiles
 file_name = '../data/data_for_test.txt';  
@@ -45,7 +66,7 @@ file_name = '../data/data_for_test.txt';
 % setting out file name of profiles' cids(profiles)
 file_name_cid = '../data/data_for_test_cid.txt';
 
-% setting out file name of profiles' rids(genes) 
+% setting out file name of profiles' rids(genes)
 file_name_rid='../data/data_for_test_rid.txt';   
 
 % excuting the PreAnalysis in GSEA for C Tools
@@ -149,12 +170,12 @@ mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matr
 
 ### Example
 * [**runPreGSEAbyMatlab.sh**]: a shell script example to execute pretreatment of parse the original .gctx.
-* [**quick_search_demo.sh**]: a shell script example to execute a whole quick_search process includes parses original data 
+* [**quick_search_demo.sh**]: a shell script example to execute a whole quick_search process includes parses original data
 , select quick search way and quick search.
-* [**cluster_demo.sh**]: a shell script example to execute a whole cluster process includes parses original data 
+* [**cluster_demo.sh**]: a shell script example to execute a whole cluster process includes parses original data
 , select ES_Matrix & cluster way and execute ES_Matrix & cluster.
- 
-### Description of Files appeared in examples
+
+### Datasets in examples
 
 | File | Description | Format|
 | ---- | ----------- |--------|
@@ -165,8 +186,8 @@ mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matr
 | ES_Matrix_test_*.txt | ES Matrix file stored in distributed way ( ‘*’ will be replaced by process id )| first line : row_number	column_number ; next row_number lines : a Enrichment scores vector included column_number elements |
 | Cluster_result_test.txt | cluster flag vector file | each line : a cluster flag corresponding to each profile |
 
-## Using Problem
-1. Because of the inefficient IO of Matlab, when the original profile file(.gctx) is too large, the pretreatment operation may take a long time, and it does not support parallel. You may need to be patient. Moreover, Once parsed, it can be used many times.
+## Notes
+1. Because of the inefficient IO of Matlab, when the original profile file(.gctx) is too large, the pretreatment operation may take a long time, and it does not support parallel. You may need to be patient. Moreover, Once parsed, it can be reused many times.
 2. the program needs a GeneSet as an input in quick_search part after loading the file. You should input a integer string split by space. Each integer in this string represents a gene which you can query in `data_for_test_rid.txt`.
 3. When we want to execute the Cluster operator, we must note that input matrix should include the same identity of rows and columns, which means the program that calculates ES Matrix is supposed to use same two file as its input. Only in this way can we get the similarity of each profile pair.
 4. When we want to execute the Cluster operator, we must also note that the MPI Settings and hostfile should not be changed compared to the program that calculates ES Matrix. Because the ES_Matrix is stored in distributed way, if you change these settings, each process can not find the right ES matrix blocks. Therefore, if you want to avoid problem 2 and problem 3, you can easily execute the `example/cluster_demo.sh`.
