@@ -116,9 +116,9 @@ rm -f ../data/data_for_test.txt_* ../data/data_for_test_cid.txt_*
 2. GCC compiler supports the OpenMP v2.5, v4.0 specification
 
 #### INSTALL:
-* [**install.sh**](install.sh): shell script for Installing all C tools.
+* [**install.sh**](install.sh): shell script for Installing all C tools. However, you may need root authority to execute the whole script.
 
-Or, you can use the shell script below easily.
+Or, you can use the shell script below easily. Also, you need root authority to run `make install`.
 ```shell
 #git clone
 git clone https://github.com/ysycloud/paraGSEA.git
@@ -203,3 +203,9 @@ mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matr
 3. When we want to execute the Cluster operator, we must note that input matrix should include the same identity of rows and columns, which means the program that calculates ES Matrix is supposed to use same two file as its input. Only in this way can we get the similarity of each profile pair.
 4. When we want to execute the Cluster operator, we must also note that the MPI Settings and hostfile should not be changed compared to the program that calculates ES Matrix. Because the ES_Matrix is stored in distributed way, if you change these settings, each process can not find the right ES matrix blocks. Therefore, if you want to avoid problem 2 and problem 3, you can easily execute the `example/cluster_demo.sh`.
 5. If you set the number of clusters too big, clustering algorithm may not converge quickly.
+
+## Connect
+Any Question could be sent to the following E-mails:
+
+pittacus@gmail.com, pengshaoliang1979@163.com, cloudysy109@126.com
+
