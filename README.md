@@ -204,7 +204,7 @@ mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matr
 4. When we want to execute the Cluster operator, we must also note that the MPI Settings and hostfile should not be changed compared to the program that calculates ES Matrix. Because the ES_Matrix is stored in distributed way, if you change these settings, each process can not find the right ES matrix blocks. Therefore, if you want to avoid problem 2 and problem 3, you can easily execute the `example/cluster_demo.sh`.
 5. If you set the number of clusters too big, clustering algorithm may not converge quickly.
 
-## Connect
+## Contact
 Any Question could be sent to the following E-mails:
 
 pittacus@gmail.com, pengshaoliang1979@163.com, cloudysy109@126.com
