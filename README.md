@@ -3,16 +3,16 @@ Gene Set Enrichment Analysis (GSEA) Tools for LINCS data in a parallel manner
 
 ## Description
 
-paraGSEA implements MPI and OpenMP-Based parallel GSEA algorithm for multi-core or cluster architecture. TODO add more intro here.
+paraGSEA implements MPI and OpenMP-Based parallel GSEA algorithm for multi-core or cluster architecture. I used the 1ktools(https://github.com/cmap/l1ktools) tools to parse the .gctx file which stored gene profile data defined by Lincs(CMap) based on HDF5 file format.I used Matlab to parse the .gctx file、extract the gene profile sets and write to .txt file. C will read the file 、complete parallel GSEA and write out the result in a suitable file.
 
 ## Implementation Details
 Several optimizations are implemented in paraGSEA.
 
-1. TODO In our work, we first implemented GSEA approach in efficient parallel strategy with MPI and OpenMP.In this part, on the one hand, we reduced the computational overhead of standard procedure to calculate the Enrichment Score by pre-sorting, indexing and removing the prefix sum. On the other hand, we will take a global permutation method to wipe off the redundant overhead of estimation of significance level step and multiple hypothesis testing step.
+1. In our work, we first implemented GSEA approach in efficient parallel strategy with MPI and OpenMP.In this part, on the one hand, we reduced the computational overhead of standard procedure to calculate the Enrichment Score by pre-sorting, indexing and removing the prefix sum. On the other hand, we will take a global permutation method to wipe off the redundant overhead of estimation of significance level step and multiple hypothesis testing step.
 
-2. TODO Second, we expanded GSEA’s application to quickly compare two gene profile sets to get an Enrichment Score matrix of every gene profile pairs. In this part, in addition to using the previous optimization strategies, our implementation also allows to generate a second level of parallelization by creating several threads per MPI process.
+2. Second, we expanded GSEA’s application to quickly compare two gene profile sets to get an Enrichment Score matrix of every gene profile pairs. In this part, in addition to using the previous optimization strategies, our implementation also allows to generate a second level of parallelization by creating several threads per MPI process.
 
-3. TODO Third, we clustered the gene profile based on the Enrichment Score matrix which we can get by the second part. In this part, Enrichment Score is served as the metric to measure the similarity between two gene profiles. We implemented a general clustering algorithm like K-Mediods which is an improved version of K-Means. The algorithm can quickly converge and then output the corresponding results.
+3. Third, we clustered the gene profile based on the Enrichment Score matrix which we can get by the second part. In this part, Enrichment Score is served as the metric to measure the similarity between two gene profiles. We implemented a general clustering algorithm like K-Mediods which is an improved version of K-Means. The algorithm can quickly converge and then output the corresponding results.
 
 ## Benchmark
 
@@ -24,15 +24,21 @@ TODO, compare the performance of paraGSEA and looped GSEA
 * [1ktools](https://github.com/cmap/l1ktools) is used to parse the .gctx file which stored gene profile data defined by LINCS and Connectivity Map (CMap) in HDF5 file format.
 * Matlab to parse the .gctx file、extract the gene profile sets and export to plain text file, which will be taken as input of C code of parallel GSEA.
 * MPICH2
-* GCC compiler supports the OpenMP v2.5, v4.0?? specification MPI and gcc compiler supports OpenMP and write out the result in a suitable file.
+* GCC compiler supports the OpenMP v2.5, v4.0 specification.
 
 ### Download and setup
 
-TODO
+1. You can use the command line `git clone https://github.com/ysycloud/paraGSEA.git` to download the software easily.
+
+2. Configure `Matlab Tools`: you may need to set `paraGSEA/matlab_for_parse` as the `Matlab path` to parse the original file first.
+
+3. Install and configure `C Tools`: In order to install the `C Tools`, you must enter the `paraGSEA` directory first. Then, you can compile and install the Tools in current `bin` directory using command line `make all` so that you can use these tools in this directory. if you want to use the tools in every places of this system, you should run `make install`. However, you may need root authority to execute this operation. And, if you finshed this operation, you can run `make clean` to clean the local Tools in `bin` directory.
 
 ### Test
 
-TODO
+You can test any Tools we provided with some simple datas in `data` directory easily. For example , run `quick_search_serial "data/data_for_test.txt" 10` to test the `Serial Quick Search Tools` in single node. Also, Some typical test sample is provided in [runParaGSEALinux.sh](runParaGSEALinux.sh) shell script. 
+
+The whole install and test process is provided in [install.sh](install.sh) shell script
 
 ## Description of Files
 
@@ -102,8 +108,8 @@ rm -f ../data/data_for_test.txt_* ../data/data_for_test_cid.txt_*
 
 #### Requirements:
 
-1. MPI
-2. gcc compiler supports OpenMP
+1. MPICH2
+2. GCC compiler supports the OpenMP v2.5, v4.0 specification
 
 #### INSTALL:
 * [**install.sh**]: shell script for Installing all C tools.
