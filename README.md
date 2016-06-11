@@ -96,13 +96,13 @@ rm -f ../data/data_for_test.txt_* ../data/data_for_test_cid.txt_*
 **Note:** the number of cores must be smaller than the actual core number in your system. And after the parse work, you shoul merge every parts of output file into a whole file like the shell script shown above.
 
 #### Tools:
-* [**PreGSEA.m**] : extract the gene profile sets、finish pre-sorting and write to .txt file.
-* [**paraPreGSEA.m**] : extract the gene profile sets、finish pre-sorting and write to .txt file in a parallel manner.
-* [**parse_gctx.m**] : parse .gctx file which is provided by 1ktools.
+* [**PreGSEA.m**](matlab_for_parse/PreGSEA.m) : extract the gene profile sets、finish pre-sorting and write to .txt file.
+* [**paraPreGSEA.m**] (matlab_for_parse/paraPreGSEA.m): extract the gene profile sets、finish pre-sorting and write to .txt file in a parallel manner.
+* [**parse_gctx.m**] (matlab_for_parse/parse_gctx.m): parse .gctx file which is provided by 1ktools.
 
 #### Note:
- * the example of executing shell script to parse the data is provided by `example/runPreGSEAbyMatlab.sh`
- * the example of executing shell script to parse the data in a parallel manner is provided by `example/runparaPreGSEAbyMatlab.sh`
+ * the example of executing shell script to parse the data is provided by [example/runPreGSEAbyMatlab.sh](docs/example/runPreGSEAbyMatlab.md)
+ * the example of executing shell script to parse the data in a parallel manner is provided by [example/runparaPreGSEAbyMatlab.sh](docs/example/runparaPreGSEAbyMatlab.md)
 
 ### C Tools: src/
 
@@ -112,7 +112,7 @@ rm -f ../data/data_for_test.txt_* ../data/data_for_test_cid.txt_*
 2. GCC compiler supports the OpenMP v2.5, v4.0 specification
 
 #### INSTALL:
-* [**install.sh**]: shell script for Installing all C tools.
+* [**install.sh**](install.sh): shell script for Installing all C tools.
 
 Or, you can use the shell script below easily.
 ```shell
@@ -129,17 +129,17 @@ make clean
 
 #### Tools:
 
-* [**quick_search_serial.c**] read the .txt file 、complete GSEA and show the topN results in a serial way.
-* [**quick_search_omp.c**] read the .txt file 、complete parallel GSEA by OpenMP and show the topN results.
-* [**quick_search_mpi.c**] read the .txt file 、complete parallel GSEA by MPI and show the topN results.
-* [**ES_Matrix_ompi_nocom.c**] read the .txt file 、complete parallel computing ES_Matrix and write out the result by MPI/OpenMP with no communication in distributing second file of input.
-* [**ES_Matrix_ompi_p2p.c**] read the .txt file 、complete parallel computing ES_Matrix and write out the result by MPI/OpenMP with p2p communication in distributing second file of input.
-* [**ES_Matrix_ompi_cocom.c**] read the .txt file 、complete parallel computing ES_Matrix and write out the result by MPI/OpenMP with collective communication in distributing second file of input.
-* [**Cluster_KMediods_ompi.c**] read the ES_Matrix file 、complete a general clustering algorithm like K-Mediods by MPI/OpenMP.
-* [**Cluster_KMediods++_ompi.c**] read the ES_Matrix file 、complete a general clustering algorithm like K-Mediods by MPI/OpenMP, but let the distance between initial cluster centers far as possible.
+* [**quick_search_serial.c**](docs/Tools/quick_search_serial.md) read the .txt file 、complete GSEA and show the topN results in a serial way.
+* [**quick_search_omp.c**](docs/Tools/quick_search_omp.md) read the .txt file 、complete parallel GSEA by OpenMP and show the topN results.
+* [**quick_search_mpi.c**](docs/Tools/quick_search_mpi.md) read the .txt file 、complete parallel GSEA by MPI and show the topN results.
+* [**ES_Matrix_ompi_nocom.c**](docs/Tools/ES_Matrix_ompi_nocom.md) read the .txt file 、complete parallel computing ES_Matrix and write out the result by MPI/OpenMP with no communication in distributing second file of input.
+* [**ES_Matrix_ompi_p2p.c**](docs/Tools/ES_Matrix_ompi_p2p.md) read the .txt file 、complete parallel computing ES_Matrix and write out the result by MPI/OpenMP with p2p communication in distributing second file of input.
+* [**ES_Matrix_ompi_cocom.c**](docs/Tools/ES_Matrix_ompi_cocom.md) read the .txt file 、complete parallel computing ES_Matrix and write out the result by MPI/OpenMP with collective communication in distributing second file of input.
+* [**Cluster_KMediods_ompi.c**](docs/Tools/Cluster_KMediods_ompi.md) read the ES_Matrix file 、complete a general clustering algorithm like K-Mediods by MPI/OpenMP.
+* [**Cluster_KMediods++_ompi.c**](docs/Tools/Cluster_KMediods++_ompi.md) read the ES_Matrix file 、complete a general clustering algorithm like K-Mediods by MPI/OpenMP, but let the distance between initial cluster centers far as possible.
 
 #### Demo:
-* [**runParalESLinux.sh**]: run Executable files in Linux.
+* [**runParalESLinux.sh**](runParaGSEALinux.sh): run Executable files in Linux.
 
 the detail usage of each C Tools is shown below.
 ```shell
@@ -175,10 +175,11 @@ mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matr
 
 
 ### Example
-* [**runPreGSEAbyMatlab.sh**]: a shell script example to execute pretreatment of parse the original .gctx.
-* [**quick_search_demo.sh**]: a shell script example to execute a whole quick_search process includes parses original data
+* [**runPreGSEAbyMatlab.sh**](docs/example/runPreGSEAbyMatlab.md): a shell script example to execute pretreatment of parse the original .gctx.
+* [**runparaPreGSEAbyMatlab.sh**](docs/example/runparaPreGSEAbyMatlab.md): a shell script example to execute pretreatment of parse the original .gctx in a parallel manner.
+* [**quick_search_demo.sh**](docs/example/quick_search_demo.md): a shell script example to execute a whole quick_search process includes parses original data
 , select quick search way and quick search.
-* [**cluster_demo.sh**]: a shell script example to execute a whole cluster process includes parses original data
+* [**cluster_demo.sh**](docs/example/cluster_demo.md): a shell script example to execute a whole cluster process includes parses original data
 , select ES_Matrix & cluster way and execute ES_Matrix & cluster.
 
 ### Datasets in examples
