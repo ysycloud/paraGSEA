@@ -5,13 +5,29 @@
 #include "time.h"
 #include <sys/time.h> 
 #include <omp.h>
+#include <unistd.h> 
+#include <getopt.h> 
 #include "RandomChange.h"
 #include "GSEA.h"
 #include "IO.h"
 
+#define ERRM "quick search error:"
+
+char *USAGE =
+"\n"
+"Usage:"
+"  quick_search_omp [options]\n"
+"\n"
+"  general options:\n"
+"	 -t --thread: the number of threads\n"
+"    -n --topn: The first and last N GSEA records ordered by ES\n"
+"\n"
+"  input/output options \n"
+"    -i --input: input file/a parsed profiles's file from pretreatment stage. \n";
+
 float global_ES[Global_ES_SIZE];
 
-void Usage(char prog_name[]);
+void Usage();
 
 int main(int argc,char *argv[])
 {	
@@ -24,21 +40,120 @@ int main(int argc,char *argv[])
 	
 	double start,finish,duration;
 	
-	if(argc!=5)
+	
+	int	paral_way = 1;
+	
+	// Unset flags (value -1).
+	int TopN = -1;
+	int thread_count = -1;
+    // Unset options (value 'UNSET').
+	char * const UNSET = "unset";
+    char * input   = UNSET;
+
+	
+	if (argc == 1) 
 	{
-		Usage(argv[0]);
+		Usage();
 		exit(0);
+    }
+	
+	int c;
+	while (1) {
+		int option_index = 0;
+		static struct option long_options[] = {
+			{"thread",            required_argument,        0, 't'},
+			{"topn",              required_argument,        0, 'n'},
+			{"input",             required_argument,        0, 'i'},
+			{0, 0, 0, 0}
+		};
+
+		c = getopt_long(argc, argv, "n:i:t:",
+            long_options, &option_index);
+	
+		if(c==-1)	break;
+		
+		switch (c) {
+		
+		case 0:
+			// A flag was set. //
+			break;
+
+		case 'i':
+			if (input == UNSET) 
+			{
+				input = optarg;
+			}
+			else 
+			{
+				fprintf(stderr, "%s --input set more than once\n", ERRM);
+				Usage();
+				exit(0);
+			}
+			break;
+		
+		case 'n':
+			if (TopN < 0) {
+				TopN = atoi(optarg);
+				if (TopN < 1) {
+					fprintf(stderr, "%s --topn must be a positive integer\n", ERRM);
+					Usage();
+					exit(0);
+				}
+			}
+			else {
+				fprintf(stderr,"%s --topn set more " "than once\n", ERRM);
+				Usage();
+				exit(0);
+			}
+			break;
+			
+		case 't':
+			if (thread_count < 0) {
+				thread_count = atoi(optarg);
+				if (thread_count < 1) {
+					fprintf(stderr, "%s --thread must be a positive integer\n", ERRM);
+					Usage();
+					exit(0);
+				}
+			}
+			else {
+				fprintf(stderr,"%s --thread set more " "than once\n", ERRM);
+				Usage();
+				exit(0);
+			}
+			break;
+			
+		default:
+			// Cannot parse. //
+			Usage();
+			exit(0);
+		}		
 	}
 
-	int thread_count = atoi(argv[2]);
-	int	TopN = atoi(argv[3]);
-	int	paral_way = atoi(argv[4]);
+	//check the parameters
+	if(TopN==-1)
+	{
+		fprintf(stderr,"Not Set TopN parameter!\n");
+		exit(0);
+	}
+	
+	if(thread_count==-1)
+	{
+		fprintf(stderr,"Not Set Thread parameter!\n");
+		exit(0);
+	}
 		
 	printf("Profile Set is Loading...!\n");
 	
 	GET_TIME(start);
 	//read file parameters
-	ReadFilePara(argv[1], &profilenum, &genelen, &linelen);	
+	ReadFilePara(input, &profilenum, &genelen, &linelen);	
+	
+	if( profilenum <= 0 || genelen <= 0)
+	{
+		fprintf(stderr,"this file is not exist!\n");
+		exit(0);
+	}
 	
 	printf("profilenum:%d\t genelen:%d\n",profilenum,genelen);
 	
@@ -62,7 +177,7 @@ int main(int argc,char *argv[])
 		if(paral_way == 1){
 			#pragma omp for
 			for( k=0; k<profilenum; k++){
-				ReadFile(argv[1], linelen, k, k+1, profilenum, genelen, profileSet);
+				ReadFile(input, linelen, k, k+1, profilenum, genelen, profileSet);
 				getIndex(profileSet[k],indexSet[k],genelen);
 			}
 		}else{
@@ -82,7 +197,7 @@ int main(int argc,char *argv[])
 			end = begin + local_n;
 		
 			//para read the file to global profileSet memory
-			ReadFile(argv[1], linelen, begin, end, profilenum, genelen, profileSet);
+			ReadFile(input, linelen, begin, end, profilenum, genelen, profileSet);
 		
 			//para compute the index for profile sets
 			for(k=begin; k<end; k++)
@@ -176,7 +291,6 @@ int main(int argc,char *argv[])
 	return 0;
 }
 
-void Usage(char prog_name[]) {
-	fprintf(stderr, "usage:  %s <inputfile> <TopN> <Thread_num> <ParaWay>\n", prog_name);
-	fprintf(stderr, " <ParaWay>: 0->split data in balance load way by ourselves; 1->using #pragma omp for\n");
+void Usage() {
+	fprintf(stderr, "%s\n", USAGE);
 }  /* Usage */

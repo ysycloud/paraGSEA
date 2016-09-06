@@ -4,12 +4,32 @@
 #include <math.h> 
 #include "time.h"
 #include <sys/time.h> 
+#include <unistd.h> 
+#include <getopt.h> 
 #include "mpi.h"
 #include "RandomChange.h"
 #include "GSEA.h"
 #include "IO.h"
 
-void Usage(char prog_name[]);
+#define ERRM "quick search error:"
+
+char *USAGE =
+"\n"
+"Usage:"
+"  quick_search_mpi [options]\n"
+"\n"
+"  general options before command by MPI:\n"
+"	 -n process_num : Total number of processes\n"
+"	 -ppn pernum: the number of processes in each node\n"
+"	 -hostfile hostfile:  list the IP or Hostname of nodes"
+"\n"
+"  general options:\n"
+"    -n --topn: The first and last N GSEA records ordered by ES\n"
+"\n"
+"  input/output options \n"
+"    -i --input: input file/a parsed profiles's file from pretreatment stage. \n";
+
+void Usage();
 void Build_derived_type(
 		struct GSEA_RESULT* m_ptr, 			 /*  in  */
 		MPI_Datatype* gsea_mpi_t_ptr 		 /*  out  */);
@@ -32,7 +52,6 @@ int main(int argc,char *argv[])
     MPI_Status  status;
 	int local_n;	//the data number of each processes must hand
 	int leave;		//the leave data number come from the data can not be divided totally by process number
-	int	TopN;	
 	int parameternum;
 	double start,finish,duration;
 	
@@ -49,17 +68,97 @@ int main(int argc,char *argv[])
 	if(my_rank == 0)
 	{
 		parameternum = argc;
-		if(parameternum!=3)
-			Usage(argv[0]);
+		if(parameternum == 1)
+			Usage();
 	}
 	MPI_Bcast(&parameternum, 1, MPI_INT, 0, MPI_COMM_WORLD);
-	if(parameternum!=3)
+	if(parameternum == 1)
 	{
 		MPI_Finalize();
 		exit(0);
 	}
 	
-	TopN = atoi(argv[2]);	
+
+	// Unset flags (value -1).
+	int TopN = -1;
+    // Unset options (value 'UNSET').
+	char * const UNSET = "unset";
+    char * input   = UNSET;
+	
+	int c;
+	while (1) {
+		int option_index = 0;
+		static struct option long_options[] = {
+			{"topn",              required_argument,        0, 'n'},
+			{"input",             required_argument,        0, 'i'},
+			{0, 0, 0, 0}
+		};
+
+		c = getopt_long(argc, argv, "n:i:",
+            long_options, &option_index);
+	
+		if(c==-1)	break;
+		
+		switch (c) {
+		
+		case 0:
+			// A flag was set. //
+			break;
+
+		case 'i':
+			if (input == UNSET) 
+			{
+				input = optarg;
+			}
+			else 
+			{
+				if(my_rank==0)
+				{
+					fprintf(stderr, "%s --input set more than once\n", ERRM);
+					Usage();
+				}				
+				exit(0);
+			}
+			break;
+		
+		case 'n':
+			if (TopN < 0) {
+				TopN = atoi(optarg);
+				if (TopN < 1) {
+					if(my_rank==0)
+					{
+						fprintf(stderr, "%s --topn must be a positive integer\n", ERRM);
+						Usage();
+					}				
+					exit(0);
+				}
+			}
+			else {
+				if(my_rank==0)
+				{
+					fprintf(stderr,"%s --topn set more " "than once\n", ERRM);
+					Usage();
+				}		
+				exit(0);
+			}
+			break;
+			
+		default:
+			// Cannot parse. //
+			if(my_rank==0)
+				Usage();
+			exit(0);
+		}		
+	}
+
+	//check the parameters
+	if(TopN==-1)
+	{
+		if(my_rank==0)
+			fprintf(stderr,"Not Set TopN parameter!\n");
+		exit(0);
+	}
+
 	//barrier all processes to compute time
 	MPI_Barrier(MPI_COMM_WORLD); 
 	if(my_rank == 0){
@@ -68,7 +167,14 @@ int main(int argc,char *argv[])
 	}
 	
 	//read file parameters in all processes
-	ReadFilePara(argv[1], &profilenum, &genelen, &linelen);	
+	ReadFilePara(input, &profilenum, &genelen, &linelen);	
+	
+	if( profilenum <= 0 || genelen <= 0)
+	{
+		if(my_rank==0)
+			fprintf(stderr,"this file is not exist!\n");
+		exit(0);
+	}
 	
 	if(my_rank == 0){
 		printf("profilenum:%d\t genelen:%d\n",profilenum,genelen);
@@ -76,7 +182,7 @@ int main(int argc,char *argv[])
 		gsea_result = (struct GSEA_RESULT*)malloc(profilenum*sizeof(struct GSEA_RESULT));
 	}
 			
-	// compute the local size ã€?up boundary and down boundary for every process	
+	// compute the local size ¡¢up boundary and down boundary for every process	
 	local_n = profilenum / p;  
 	leave = profilenum % p;
 	int begin,end;
@@ -104,7 +210,7 @@ int main(int argc,char *argv[])
 	
 	/********************para load profile dataset by openmp******************************/
 	//para read the file to local profileSet memory
-	ReadFile(argv[1], linelen, begin, end, profilenum, genelen, tmp_global_profile);
+	ReadFile(input, linelen, begin, end, profilenum, genelen, tmp_global_profile);
 	for(i=0; i<local_n; i++)
 		memcpy(profileSet[i],tmp_global_profile[i+begin],genelen*sizeof(short));
 	
@@ -229,13 +335,6 @@ int main(int argc,char *argv[])
 
 }
 
-void Usage(char prog_name[]) {
-	fprintf(stderr, "usage: <total_process_num> <per_num_in_each_process> <hostfile> %s\n" , prog_name);
-	fprintf(stderr, " <thread_num>  <Expression Signature Length>\n");
-	fprintf(stderr, " <inputfile1>  <inputfile2>\n");
-	fprintf(stderr, " <outputfile(ES_Matrix)>\n");
-}  /* Usage */
-
 void Build_derived_type(
 		struct GSEA_RESULT* m_ptr, 	 /*  in  */
 		MPI_Datatype* gsea_mpi_t_ptr /*  out  */)
@@ -271,3 +370,7 @@ void Build_derived_type(
 	MPI_Type_struct(4,block_lengths,displacements,typelist,gsea_mpi_t_ptr);
 	MPI_Type_commit(gsea_mpi_t_ptr);
 }
+
+void Usage() {
+	fprintf(stderr, "%s\n", USAGE);
+}  /* Usage */
