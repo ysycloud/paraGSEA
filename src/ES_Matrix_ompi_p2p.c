@@ -25,7 +25,7 @@ char *USAGE =
 "	 -hostfile hostfile:  list the IP or Hostname of nodes"
 "\n"
 "  general options:\n"
-"    -t --thread_num: the number of threads in per process_num\n"
+"    -t --thread: the number of threads in per process_num\n"
 "	 -l	--siglen: the length of Gene Expression Signature\n"
 "\n"
 "  input/output options \n"
@@ -250,6 +250,7 @@ int main(int argc,char *argv[])
 	ReadFilePara(input1, &profilenum1, &genelen, &linelen1);
 	ReadFilePara(input2, &profilenum2, &genelen, &linelen2);
 	
+	//input file check
 	if( profilenum1 <= 0 || genelen <= 0)
 	{
 		if(my_rank==0)
@@ -366,7 +367,7 @@ int main(int argc,char *argv[])
 	*/
 	
 	char Res[128];
-	sprintf(Res,"%s_%d.txt",output,my_rank);
+	sprintf(Res, "%s_%d.txt", output, my_rank);
 	WritetxtResult(0, local_P, profilenum2, Res, local_ES_Matrix);
 	
 	MPI_Barrier(MPI_COMM_WORLD);

@@ -6,11 +6,34 @@
 #include <sys/time.h> 
 #include "mpi.h"
 #include <omp.h>
+#include <unistd.h> 
+#include <getopt.h> 
 #include "RandomChange.h"
 #include "GSEA.h"
 #include "IO.h"
 
-void Usage(char prog_name[]);
+#define ERRM "ES Matrix error:"
+
+char *USAGE =
+"\n"
+"Usage:"
+"  ES_Matrix_ompi_cocom [options]\n"
+"\n"
+"  general options before command by MPI:\n"
+"	 -n process_num : Total number of processes\n"
+"	 -ppn pernum: the number of processes in each node\n"
+"	 -hostfile hostfile:  list the IP or Hostname of nodes"
+"\n"
+"  general options:\n"
+"    -t --thread: the number of threads in per process_num\n"
+"	 -l	--siglen: the length of Gene Expression Signature\n"
+"\n"
+"  input/output options \n"
+"    -1 --input1: a parsed profiles's file from pretreatment stage.\n"
+"    -2 --input2: another parsed profiles's file from pretreatment stage.\n"
+"	 -o --output: output file ,distributed in every nodes ,with ES Matrix\n";
+
+void Usage();
 void Build_derived_type(
 		struct Profile_triple* m_ptr, 			 /*  in  */
 		MPI_Datatype* triple_mpi_t_ptr 		 /*  out  */);
@@ -53,18 +76,169 @@ int main(int argc,char *argv[])
 	if(my_rank == 0)
 	{
 		parameternum = argc;
-		if(parameternum!=6)
-			Usage(argv[0]);
+		if(parameternum == 1)
+			Usage();
 	}
 	MPI_Bcast(&parameternum, 1, MPI_INT, 0, MPI_COMM_WORLD);
-	if(parameternum!=6)
+	if(parameternum == 1)
 	{
 		MPI_Finalize();
 		exit(0);
 	}
 	
-	corenum = atoi(argv[1]);
-	siglen = atoi(argv[2]);
+	// Unset flags (value -1).
+	corenum = -1;
+	siglen = -1;	
+    // Unset options (value 'UNSET').
+	char * const UNSET = "unset";
+    char * input1   = UNSET;
+	char * input2   = UNSET;
+	char * output   = UNSET;
+	
+	int c;
+	while (1) {
+		int option_index = 0;
+		static struct option long_options[] = {
+			{"thread",             required_argument,        0, 't'},
+			{"siglen",             required_argument,        0, 'l'},
+			{"input1",             required_argument,        0, '1'},
+			{"input2",             required_argument,        0, '2'},
+			{"output",             required_argument,        0, 'o'},
+			{0, 0, 0, 0}
+		};
+
+		c = getopt_long(argc, argv, "t:l:1:2:o:",
+            long_options, &option_index);
+	
+		if(c==-1)	break;
+		
+		switch (c) {
+		
+		case 0:
+			// A flag was set. //
+			break;
+
+		case '1':
+			if (input1 == UNSET) 
+			{
+				input1 = optarg;
+			}
+			else 
+			{
+				if(my_rank==0)
+				{
+					fprintf(stderr, "%s --input1 set more than once\n", ERRM);
+					Usage();
+				}				
+				exit(0);
+			}
+			break;
+		
+		case '2':
+			if (input2 == UNSET) 
+			{
+				input2 = optarg;
+			}
+			else 
+			{
+				if(my_rank==0)
+				{
+					fprintf(stderr, "%s --input2 set more than once\n", ERRM);
+					Usage();
+				}				
+				exit(0);
+			}
+			break;
+		
+		case 'o':
+			if (output == UNSET) 
+			{
+				output = optarg;
+			}
+			else 
+			{
+				if(my_rank==0)
+				{
+					fprintf(stderr, "%s --output set more than once\n", ERRM);
+					Usage();
+				}				
+				exit(0);
+			}
+			break;
+		
+		case 't':
+			if (corenum < 0) {
+				corenum = atoi(optarg);
+				if (corenum < 1) {
+					if(my_rank==0)
+					{
+						fprintf(stderr, "%s --thread must be a positive integer\n", ERRM);
+						Usage();
+					}				
+					exit(0);
+				}
+			}
+			else {
+				if(my_rank==0)
+				{
+					fprintf(stderr,"%s --thread set more " "than once\n", ERRM);
+					Usage();
+				}		
+				exit(0);
+			}
+			break;
+			
+		case 'l':
+			if (siglen < 0) {
+				siglen = atoi(optarg);
+				if (siglen < 1) {
+					if(my_rank==0)
+					{
+						fprintf(stderr, "%s --siglen must be a positive integer\n", ERRM);
+						Usage();
+					}				
+					exit(0);
+				}
+			}
+			else {
+				if(my_rank==0)
+				{
+					fprintf(stderr,"%s --siglen set more " "than once\n", ERRM);
+					Usage();
+				}		
+				exit(0);
+			}
+			break;
+			
+		default:
+			// Cannot parse. //
+			if(my_rank==0)
+				Usage();
+			exit(0);
+		}		
+	}
+
+	//check the parameters
+	if(corenum == -1)
+	{
+		if(my_rank==0)
+			fprintf(stderr,"Not Set thread parameter!\n");
+		exit(0);
+	}
+	if(siglen == -1)
+	{
+		if(my_rank==0)
+			fprintf(stderr,"Not Set siglen parameter!\n");
+		exit(0);
+	}
+	
+	if(output == UNSET)
+	{
+		if(my_rank==0)
+			fprintf(stderr,"Not Set output parameter!\n");
+		exit(0);
+	}
+	
 	//barrier all processes to compute time
 	MPI_Barrier(MPI_COMM_WORLD); 
 	if(my_rank == 0){
@@ -73,15 +247,30 @@ int main(int argc,char *argv[])
 	}
 	
 	//read file parameters in all processes
-	ReadFilePara(argv[3], &profilenum1, &genelen, &linelen1);
-	ReadFilePara(argv[4], &profilenum2, &genelen, &linelen2);
+	ReadFilePara(input1, &profilenum1, &genelen, &linelen1);
+	ReadFilePara(input2, &profilenum2, &genelen, &linelen2);
+	
+	//input file check
+	if( profilenum1 <= 0 || genelen <= 0)
+	{
+		if(my_rank==0)
+			fprintf(stderr,"this file input1 is not exist!\n");
+		exit(0);
+	}
+	
+	if( profilenum2 <= 0 || genelen <= 0)
+	{
+		if(my_rank==0)
+			fprintf(stderr,"this file input2 is not exist!\n");
+		exit(0);
+	}
 
 	// compute the local size 、up boundary and down boundary for every process in dataset1
 	split_data(profilenum1, p, my_rank, &begin, &end, &local_P);
 	
 	/*****read the local part file of dataset1 in every process and get their triples****************/
 	triples1 = (struct Profile_triple *)malloc(sizeof(struct Profile_triple)*local_P);	
-	getTriples(local_P, genelen, siglen, profilenum1, linelen1, begin, end, argv[3], triples1);
+	getTriples(local_P, genelen, siglen, profilenum1, linelen1, begin, end, input1, triples1);
 	Build_derived_type(&triples1[0],&triple_mpi_t);  //derive the new MPI Type
 	
 	// compute the local size 、up boundary and down boundary for every process in dataset2
@@ -89,7 +278,7 @@ int main(int argc,char *argv[])
 	
 	//allocate the triples memory for tmp local dataset2
 	struct Profile_triple* local_triples2 = (struct Profile_triple *)malloc(sizeof(struct Profile_triple)*local_P_d2);
-	getTriples(local_P_d2, genelen, siglen, profilenum2, linelen2, begin_d2, end_d2, argv[4], local_triples2);
+	getTriples(local_P_d2, genelen, siglen, profilenum2, linelen2, begin_d2, end_d2, input2, local_triples2);
 	
 	//allocate the triples memory for dataset2 in all process
 	triples2 = (struct Profile_triple *)malloc(sizeof(struct Profile_triple)*profilenum2);
@@ -192,7 +381,7 @@ int main(int argc,char *argv[])
 	}
 */	
 	char Res[128];
-	sprintf(Res,"%s_%d.txt",argv[5],my_rank);
+	sprintf(Res,"%s_%d.txt",output,my_rank);
 	WritetxtResult(0, local_P, profilenum2, Res, local_ES_Matrix);
 	
 	MPI_Barrier(MPI_COMM_WORLD);
@@ -213,13 +402,6 @@ int main(int argc,char *argv[])
 	MPI_Finalize();
 	return 0;
 }
-
-void Usage(char prog_name[]) {
-	fprintf(stderr, "usage: <total_process_num> <per_num_in_each_process> <hostfile> %s\n", prog_name);
-	fprintf(stderr, " <thread_num>  <Expression Signature Length>\n");
-	fprintf(stderr, " <inputfile1>  <inputfile2>\n");
-	fprintf(stderr, " <outputfile(ES_Matrix)>\n");
-}  /* Usage */
 
 void split_data(int size, int n, int my_rank, int* begin, int* end, int* local_n)
 {
@@ -321,3 +503,7 @@ void Build_derived_type(
 	MPI_Type_struct(4,block_lengths,displacements,typelist,triple_mpi_t_ptr);
 	MPI_Type_commit(triple_mpi_t_ptr);
 }
+
+void Usage() {
+	fprintf(stderr, "%s\n", USAGE);
+}  /* Usage */

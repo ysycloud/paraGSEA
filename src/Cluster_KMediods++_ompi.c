@@ -6,13 +6,36 @@
 #include <sys/time.h> 
 #include "mpi.h"
 #include <omp.h>
+#include <unistd.h> 
+#include <getopt.h> 
 #include "RandomChange.h"
 #include "GSEA.h"
 #include "IO.h"
 
 #define MAXITER 3000
 
-void Usage(char prog_name[]);
+#define ERRM "Cluster error:"
+
+char *USAGE =
+"\n"
+"Usage:"
+"  Cluster_KMediods_ompi [options]\n"
+"\n"
+"  general options before command by MPI:\n"
+"	 -n process_num : Total number of processes\n"
+"	 -ppn pernum: the number of processes in each node\n"
+"	 -hostfile hostfile:  list the IP or Hostname of nodes\n"
+"\n"
+"  general options:\n"
+"    -t --thread: the number of threads in per process_num\n"
+"	 -c	--cluster: the number of clusters we want to get\n"
+				
+"\n"
+"  input/output options \n"
+"    -i --input1: distributed ES_Matrix file we get from stage 2(Compare Profiles)\n"
+"	 -o --output: output class flags file of every profiles in root node\n";
+
+void Usage();
 void split_data(int size, int n, int rank, int* begin, int* end, int* local_n); 
 int cmpset(int *set1,int *set2,int n);
 int isInSet(int **set1,int *set2,int n,int iter);
@@ -61,18 +84,151 @@ int main(int argc,char *argv[])
 	if(my_rank == 0)
 	{
 		parameternum = argc;
-		if(parameternum!=5)
-			Usage(argv[0]);
+		if(parameternum==1)
+			Usage();
 	}
 	MPI_Bcast(&parameternum, 1, MPI_INT, 0, MPI_COMM_WORLD);
-	if(parameternum!=5)
+	if(parameternum==1)
 	{
 		MPI_Finalize();
 		exit(0);
 	}
 	
-	corenum = atoi(argv[1]);
-	cluster_center_num = atoi(argv[2]);
+	// Unset flags (value -1).
+	corenum = -1;
+	cluster_center_num = -1;	
+    // Unset options (value 'UNSET').
+	char * const UNSET = "unset";
+    char * input   = UNSET;
+	char * output   = UNSET;
+	
+	int c;
+	while (1) {
+		int option_index = 0;
+		static struct option long_options[] = {
+			{"thread",             required_argument,        0, 't'},
+			{"cluster",             required_argument,       0, 'c'},
+			{"input",             required_argument,         0, 'i'},
+			{"output",             required_argument,        0, 'o'},
+			{0, 0, 0, 0}
+		};
+
+		c = getopt_long(argc, argv, "t:c:i:o:",
+            long_options, &option_index);
+	
+		if(c==-1)	break;
+		
+		switch (c) {
+		
+		case 0:
+			// A flag was set. //
+			break;
+
+		case 'i':
+			if (input == UNSET) 
+			{
+				input = optarg;
+			}
+			else 
+			{
+				if(my_rank==0)
+				{
+					fprintf(stderr, "%s --input set more than once\n", ERRM);
+					Usage();
+				}				
+				exit(0);
+			}
+			break;
+		
+		case 'o':
+			if (output == UNSET) 
+			{
+				output = optarg;
+			}
+			else 
+			{
+				if(my_rank==0)
+				{
+					fprintf(stderr, "%s --output set more than once\n", ERRM);
+					Usage();
+				}				
+				exit(0);
+			}
+			break;
+		
+		case 't':
+			if (corenum < 0) {
+				corenum = atoi(optarg);
+				if (corenum < 1) {
+					if(my_rank==0)
+					{
+						fprintf(stderr, "%s --thread must be a positive integer\n", ERRM);
+						Usage();
+					}				
+					exit(0);
+				}
+			}
+			else {
+				if(my_rank==0)
+				{
+					fprintf(stderr,"%s --thread set more " "than once\n", ERRM);
+					Usage();
+				}		
+				exit(0);
+			}
+			break;
+			
+		case 'c':
+			if (cluster_center_num < 0) {
+				cluster_center_num = atoi(optarg);
+				if (cluster_center_num < 1) {
+					if(my_rank==0)
+					{
+						fprintf(stderr, "%s --cluster must be a positive integer\n", ERRM);
+						Usage();
+					}				
+					exit(0);
+				}
+			}
+			else {
+				if(my_rank==0)
+				{
+					fprintf(stderr,"%s --cluster set more " "than once\n", ERRM);
+					Usage();
+				}		
+				exit(0);
+			}
+			break;
+			
+		default:
+			// Cannot parse. //
+			if(my_rank==0)
+				Usage();
+			exit(0);
+		}		
+	}
+
+	//check the parameters
+	if(corenum == -1)
+	{
+		if(my_rank==0)
+			fprintf(stderr,"Not Set thread parameter!\n");
+		exit(0);
+	}
+	if(cluster_center_num == -1)
+	{
+		if(my_rank==0)
+			fprintf(stderr,"Not Set cluster num parameter!\n");
+		exit(0);
+	}
+	
+	if(output == UNSET)
+	{
+		if(my_rank==0)
+			fprintf(stderr,"Not Set output parameter!\n");
+		exit(0);
+	}
+	
 	MPI_Barrier(MPI_COMM_WORLD); 
 	if(my_rank == 0){
 		
@@ -87,11 +243,19 @@ int main(int argc,char *argv[])
 	
 	
 	char myfile[128];
-	sprintf(myfile,"%s_%d.txt",argv[3],my_rank);
+	sprintf(myfile,"%s_%d.txt",input,my_rank);
 	
 	//read file parameters in all processes
 	ReadMatrixFilePara(myfile, &local_profilenum, &profilenum, &linelen);
 	//printf("%d\t%d\t%d\n",local_profilenum,profilenum,linelen);
+	
+	//input file check
+	if( local_profilenum <= 0 || profilenum <= 0 || linelen<=0)
+	{
+		if(my_rank==0)
+			fprintf(stderr,"this file input is not exist!\n");
+		exit(0);
+	}
 	
 	//calculate the global begin line of profiles in each process
 	leave = profilenum % p;
@@ -433,7 +597,7 @@ int main(int argc,char *argv[])
 		
 	MPI_Barrier(MPI_COMM_WORLD);
 	if(my_rank == 0){
-		WritetxtClusterResult(global_classflag ,profilenum, argv[4]);
+		WritetxtClusterResult(global_classflag ,profilenum, output);
 		GET_TIME(finish);
 		//compute the Write time
 		duration = finish-start;     
@@ -459,13 +623,6 @@ int main(int argc,char *argv[])
 	MPI_Finalize();
 	return 0;
 }
-
-void Usage(char prog_name[]) {
-	fprintf(stderr, "usage: <total_process_num> <per_num_in_each_process> <hostfile> %s\n" , prog_name);
-	fprintf(stderr, " <thread_num>  <Cluster_num>\n");
-	fprintf(stderr, " <inputfile(ES_Matrix)>\n");
-	fprintf(stderr, " <outputfile(cluster_flag_vector)>\n");
-}  /* Usage */
 
 void split_data(int size, int n, int my_rank, int* begin, int* end, int* local_n)
 {
@@ -501,3 +658,7 @@ int isInSet(int **set1,int *set2,int n,int iter)
 			return 1;
 	return 0;
 }
+
+void Usage() {
+	fprintf(stderr, "%s\n", USAGE);
+}  /* Usage */
