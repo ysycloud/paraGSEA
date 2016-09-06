@@ -22,7 +22,7 @@ Several optimizations are implemented in paraGSEA for every stages.
 
 With all these optimizations, paraGSEA can attains a 50x speedup compared with original GSEA algorithm in calculating single Enrichment Score. Also, we adopted an global perturbation and random sampling strategy to manage computing expanses in calculate statistical metric of GSEA so that we improved the performance around 100 fold. Moreover, Because of the good data partitioning and communication strategy, the Tools obtained excellent scalability. If the amount of data is large enough, The Tools will keep near linear speedup as the increase of computing nodes.
 
-## Install
+## Compilation and installation
 
 ### Prerequisites
 * [1ktools](https://github.com/cmap/l1ktools) is used to parse the .gctx file which stored gene profile data defined by LINCS and Connectivity Map (CMap) in HDF5 file format.
@@ -44,7 +44,7 @@ You can test any Tools we provided with some simple datas in `data` directory ea
 
 The whole install and test process is provided in [install.sh](install.sh) shell script
 
-## Description of Files
+## Description of Tools
 
 ### Matlab Tools: matlab_for_parse/
 
@@ -115,7 +115,7 @@ rm -f ../data/data_for_test.txt_* ../data/data_for_test_cid.txt_*
 1. MPICH2
 2. GCC compiler supports the OpenMP v2.5, v4.0 specification
 
-#### INSTALL:
+#### Compilation and installation:
 * [**install.sh**](install.sh): shell script for Installing all C tools. However, you may need root authority to execute the whole script.
 
 Or, you can use the shell script below easily. Also, you need root authority to run `make install`.
@@ -145,31 +145,128 @@ make clean
 #### Demo:
 * [**runParalESLinux.sh**](runParaGSEALinux.sh): run Executable files in Linux.
 
+#### Running paraGSEA:
+
+paraGSEA runs on Linux and Mac.
+
+List of arguments:
+
+  > quick_search_* [options] [-i INPUT_FILE] [-n TOP_N_RECORDS] [-t THREAD_NUMBER]
+  
+  **-i or --input** *input file*
+
+     a parsed profiles's file from pretreatment stage as input.
+
+  **-t or --thread** *threads*
+
+     Defines the maximum number of parallel threads.
+	 must be a positive value
+
+  **-n or --topn** *top N*
+
+	 Define the first and last N GSEA records ordered by ES.
+	 must be a positive value
+	 
+
+  > mpirun [options] [-n PROCESS_NUM] [-ppn PERNUM] [-hostfile HOSTFILE] ES_Matrix_ompi_* [options] [-1 INPUT_FILE1] [-2 INPUT_FILE2] [-l SIGLEN] [-t THREAD_NUMBER] [-o OUTPUT_FILE]
+  
+  **-n** *mpi parameter*
+
+      Total number of processes.
+	   
+  **-ppn** *mpi parameter*
+
+     the number of processes in each node.
+
+  **-hostfile** *mpi parameter*
+
+     list the IP or Hostname of nodes
+
+	 you'd better keep the formula correct : process_num = pernum * number of IP(Hostname) list in hostfile
+  
+  **-1 or --input1** *input file1*
+
+     a parsed profiles's file from pretreatment stage as input1.
+	   
+  **-2 or --input2** *input file2*
+
+     a parsed profiles's file from pretreatment stage as input2.
+
+  **-t or --thread** *threads*
+
+     Defines the maximum number of parallel threads.
+	 must be a positive value
+
+  **-l or --siglen** *signature length*
+
+	 Define the length of Gene Expression Signature.
+	 must be a positive value	 
+	 
+  **-o or --output** *output file*
+  
+	 Define the output file ,distributed in every nodes ,with ES Matrix
+
+
+  > mpirun [options] [-n PROCESS_NUM] [-ppn PERNUM] [-hostfile HOSTFILE] Cluster_KMediods*_ompi [options] [-i INPUT_FILE] [-t THREAD_NUMBER] [-c CLUSTER_NUMBERS] [-o OUTPUT_FILE]
+  
+  **-n** *mpi parameter*
+
+      Total number of processes.
+	   
+  **-ppn** *mpi parameter*
+
+     the number of processes in each node.
+
+  **-hostfile** *mpi parameter*
+
+     list the IP or Hostname of nodes
+
+	 you'd better keep the formula correct : process_num = pernum * number of IP(Hostname) list in hostfile
+  
+  **-i or --input** *input file*
+
+     distributed ES_Matrix file we get from stage 2(Compare Profiles).
+
+  **-t or --thread** *threads*
+
+     Defines the maximum number of parallel threads.
+	 must be a positive value
+
+  **-c or --cluster** *cluster number*
+
+	 Define the number of clusters we want to get.
+	 must be a positive value	 
+	 
+  **-o or --output** *output file*
+  
+	 Define the output cluster result file of every profiles in root node
+
+
 the detail usage of each C Tools is shown below.
 ```shell
 #param list :filename topn
-quick_search_serial "data/data_for_test.txt" 10
+#quick_search_serial -i data/data_for_test.txt -n 10
 
-#param list :filename thread_num topn paraway(0/1)
-quick_search_omp "data/data_for_test.txt" 4 10 1
+#param list :filename thread_num topn
+#quick_search_omp -i data/data_for_test.txt -t 4 -n 10 
 
 #param list :process_num pernum hostfile filename topn
-mpirun -n 2 -ppn 2 -hostfile hostfile quick_search_mpi "data/data_for_test.txt" 15
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile quick_search_mpi -i data/data_for_test.txt -n 15
 
 #param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-mpirun -n 2 -ppn 2 -hostfile hostfile ES_Matrix_ompi_nocom 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test"
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_nocom -t 4 -l 50 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
 
 #param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-mpirun -n 2 -ppn 2 -hostfile hostfile ES_Matrix_ompi_p2p 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test"
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_p2p -t 4 -l 50 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
 
 #param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-mpirun -n 2 -ppn 2 -hostfile hostfile ES_Matrix_ompi_cocom 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test"
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_cocom -t 4 -l 50 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
 
 #param list :process_num pernum hostfile thread_num cluster_num filename outfilename
-mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods_ompi 4 12 "data/ES_Matrix_test" "data/Cluster_result_test.txt"
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile Cluster_KMediods_ompi -t 4 -c 10 -i data/ES_Matrix_test -o data/Cluster_result_test.txt
 
 #param list :process_num pernum hostfile thread_num cluster_num filename outfilename
-mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matrix_test" "data/Cluster_result_test.txt"
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile Cluster_KMediods++_ompi -t 4 -c 10 -i data/ES_Matrix_test -o data/Cluster_result_test.txt
 ```
 
 #### Note:
@@ -186,7 +283,7 @@ mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matr
 * [**cluster_demo.sh**](docs/example/cluster_demo.md): a shell script example to execute a whole cluster process includes parses original data
 , select ES_Matrix & cluster way and execute ES_Matrix & cluster.
 
-### Datasets in examples
+### Datasets in examples | File Formats
 
 | File | Description | Format|
 | ---- | ----------- |--------|
@@ -203,6 +300,13 @@ mpirun -n 2 -ppn 2 -hostfile hostfile Cluster_KMediods++_ompi 4 12 "data/ES_Matr
 3. When we want to execute the Cluster operator, we must note that input matrix should include the same identity of rows and columns, which means the program that calculates ES Matrix is supposed to use same two file as its input. Only in this way can we get the similarity of each profile pair.
 4. When we want to execute the Cluster operator, we must also note that the MPI Settings and hostfile should not be changed compared to the program that calculates ES Matrix. Because the ES_Matrix is stored in distributed way, if you change these settings, each process can not find the right ES matrix blocks. Therefore, if you want to avoid problem 2 and problem 3, you can easily execute the `example/cluster_demo.sh`.
 5. If you set the number of clusters too big, clustering algorithm may not converge quickly.
+
+
+##. License
+paraGSEA is licensed under the GNU General Public License, version 3
+(GPLv3), for more information read the LICENSE file or refer to:
+
+  http://www.gnu.org/licenses/
 
 ## Contact
 Any Question could be sent to the following E-mails:

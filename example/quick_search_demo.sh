@@ -5,9 +5,9 @@ read -p "Please enter the way to execute the quick_search(0_serial,1_openmp,2_mp
 runPreGSEAbyMatlab.sh
 #runparaPreGSEAbyMatlab.sh
 
-#quick_search
+#quick_search 
 case "$quick_search_way" in
-	0)quick_search_serial "../data/data_for_test.txt" 10;;
-	1)quick_search_omp "../data/data_for_test.txt" 4 10 1;;
-	2)mpirun -n 2 -ppn 2 -hostfile hostfile quick_search_mpi "../data/data_for_test.txt" 10;;
+	0)quick_search_serial -i "../data/data_for_test.txt" -n 10;;
+	1)quick_search_omp -i "../data/data_for_test.txt" -t 4 -n 10;;
+	2)mpirun -n 2 -ppn 2 -hostfile hostfile quick_search_mpi -i "../data/data_for_test.txt" -n 10;;
 esac

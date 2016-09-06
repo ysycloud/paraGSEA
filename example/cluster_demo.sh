@@ -15,13 +15,13 @@ cluster_num=8
 
 #calculate the similarity(ES) matrix
 case "$matrix_way" in
-	0)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_nocom $thread_num $siglen "../data/data_for_test.txt" "../data/data_for_test.txt" "../data/ES_Matrix_tmp";;
-	1)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_p2p $thread_num $siglen "../data/data_for_test.txt" "../data/data_for_test.txt" "../data/ES_Matrix_tmp";;
-	2)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_cocom $thread_num $siglen "../data/data_for_test.txt" "../data/data_for_test.txt" "../data/ES_Matrix_tmp";;
+	0)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_nocom -t $thread_num -l $siglen -1 "../data/data_for_test.txt" -2 "../data/data_for_test.txt" -o "../data/ES_Matrix_tmp";;
+	1)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_p2p -t $thread_num -l $siglen -1 "../data/data_for_test.txt" -2 "../data/data_for_test.txt" -o "../data/ES_Matrix_tmp";;
+	2)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_cocom -t $thread_num -l $siglen -1 "../data/data_for_test.txt" -2 "../data/data_for_test.txt" -o "../data/ES_Matrix_tmp";;
 esac
 
 #cluster
 case "$cluster_way" in
-	0) mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods_ompi $thread_num $cluster_num "../data/ES_Matrix_tmp" $outputfile;;
-	1)mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods++_ompi $thread_num $cluster_num "../data/ES_Matrix_tmp" $outputfile;;
+	0)mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods_ompi -t $thread_num -c $cluster_num -i "../data/ES_Matrix_tmp" -o $outputfile;;
+	1)mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods++_ompi -t $thread_num -c $cluster_num -i "../data/ES_Matrix_tmp" -o $outputfile;;
 esac

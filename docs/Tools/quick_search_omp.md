@@ -12,7 +12,6 @@ There are several parameters should be setted in command line example.
 | filename | a parsed profiles's file from pretreatment stage |
 | thread_num | the number of threads |
 | topN | The first and last N GSEA records ordered by ES |
-| paraway | parallel ways( 0: split data in balance load way by ourselves; 1: using #pragma omp for ) |
 
 A sample `Shell script` file is given below that makes use of `quick_search_omp`.
 
