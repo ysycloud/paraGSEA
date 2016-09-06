@@ -212,9 +212,13 @@ int ReadMatrixFile(char path[],int LineLength,int BeginLine,int EndLine,int prof
 }
 
 //write classflag vector
-void WritetxtClusterResult(int classflag[] ,int len, char writepath[])
+void WritetxtClusterResult(int classflag[] ,int len, int cluster, char writepath[])
 {
-	int i;
+	int i,j,cluster_num=0;
+	int *flag,*classes;	
+	flag = (int *) malloc(len*sizeof(int));
+	classes = (int *) malloc(len*sizeof(int));
+	memset(flag,0,len*sizeof(int));	
 	
 	FILE *fp;
 	if((fp=fopen(writepath,"w"))==NULL)
@@ -224,7 +228,22 @@ void WritetxtClusterResult(int classflag[] ,int len, char writepath[])
 	}
 	
 	for( i=0; i < len; i++)
-		fprintf(fp,"%d\n",classflag[i]);
-
+	{
+		if(flag[classflag[i]]==0)
+			flag[classflag[i]] = (++cluster_num);
+		classes[i] = flag[classflag[i]];
+	}
+	
+	for( i=0; i<cluster; i++)
+	{
+		fprintf(fp,"cluster %d :\n",i+1);
+		for( j=0; j < len; j++)
+			if(classes[j]==(i+1))
+				fprintf(fp,"%d\n",j+1);
+		fprintf(fp,"\n");
+	}
+	
 	fclose(fp);
+	free(flag);
+	free(classes);
 }

@@ -495,7 +495,7 @@ int main(int argc,char *argv[])
 		
 	MPI_Barrier(MPI_COMM_WORLD);
 	if(my_rank == 0){
-		WritetxtClusterResult(global_classflag ,profilenum, output);
+		WritetxtClusterResult(global_classflag ,profilenum,cluster_center_num , output);
 		GET_TIME(finish);
 		//compute the Write time
 		duration = finish-start;     
