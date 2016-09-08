@@ -8,6 +8,8 @@
 #define MAX_GENESET 250 
 #define Global_ES_SIZE 10000
 #define permutation_SIZE 1000
+#define L1000_LEN 1000
+#define L1000_CONDITION_LEN 150
 
 struct Profile_triple{
 	short gsUp[MAX_GENESET];

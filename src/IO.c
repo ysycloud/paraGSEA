@@ -247,3 +247,68 @@ void WritetxtClusterResult(int classflag[] ,int len, int cluster, char writepath
 	free(flag);
 	free(classes);
 }
+
+void readGeneListFile(char genelist[][12] ,int *line, char path[])
+{
+	FILE *fp;
+	fp = fopen(path,"r");
+	*line=0;
+
+	while(fgets(genelist[(*line)++], 20, fp)!= NULL);
+	(*line)--;
+
+	fclose(fp);
+}
+
+void getByteOffsetFile(char path1[],char path2[])
+{
+	FILE *fp1,*fp2;
+	char str[100];
+	fp1 = fopen(path1,"r");
+	fp2 = fopen(path2,"w");
+	
+	int line=0;
+
+	long offset=0;
+
+	fprintf( fp2, "%10d\t", offset );
+
+	while(fgets(str, L1000_CONDITION_LEN , fp1)!= NULL)  //read every line
+	{
+		offset = ftell(fp1);		
+		fprintf( fp2, "%10d\t", offset );   
+	}
+
+	fclose(fp1);
+	fclose(fp2);
+}
+
+long readByteOffsetFile(char path[],int row_num)
+{
+	FILE *fp;
+	char str[20];
+	long offset;
+	char c[] = "\t";
+
+	fp = fopen(path,"r");
+
+	fseek(fp,(row_num-1)*11,SEEK_CUR); 
+	fgets(str,20,fp);
+	offset = atol(strtok(str,c));
+
+	fclose(fp);
+
+	return offset;
+}
+
+void getSampleConditions(char path[], long offset, char conditions[])
+{
+
+	FILE *fp;
+	fp = fopen(path,"r");
+
+	fseek(fp,offset,SEEK_CUR); 
+	fgets(conditions,L1000_CONDITION_LEN,fp);
+
+	fclose(fp);
+}
