@@ -20,7 +20,7 @@ int ReadFilePara(char path[], int *profilenum, int *genelen, int *LineLength)
 	//read File
 	if((fp = fopen(path,"r")) == NULL) 
 	{ 
-		printf("file error!\n"); 
+		printf("file %s error!\n",path); 
 		return -1; 
 	} 
 	fgets(StrLine,256,fp);
@@ -53,7 +53,7 @@ int ReadFile(char path[],int LineLength,int BeginLine,int EndLine,int profilenum
 	//read File
 	if((fp = fopen(path,"r")) == NULL) 
 	{ 
-		printf("file error!\n"); 
+		printf("file %s error!\n", path); 
 		return -1; 
 	} 
 	fgets(StrLine,256,fp);
@@ -92,7 +92,7 @@ void WritetxtResult(int sourceBegin ,int sourceEnd, int matlen, char writepath[]
 	FILE *fp;
 	if((fp=fopen(writepath,"w"))==NULL)
 	{
-		printf("can not open the file to write!");
+		printf("can not open the %s file to write!\n",writepath);
 		exit(1);
 	}
 	
@@ -132,7 +132,43 @@ void getGeneSet(short gs[],int *count, char gsStr[])
 		}
 		p = strtok(NULL,c);
 	}
+	//get gs 
+	memcpy(gs,gstmp,(*count)*sizeof(short));
+}
+
+//get GeneSet from text file input
+void getGeneSetbyFile(short gs[],int *count, char filename[])
+{
+	short existflag[MAX_GENE];
+	short gstmp[MAX_GENESET];
+	char genelist[L1000_LEN][12];
+	char genesetlist[MAX_GENESET][12];
+	char gene[12];
+	int line1,line2;
+	int tmp,i,j;
+	*count = 0;
 	
+	//initial flag vector
+	memset(existflag, 0, MAX_GENE * sizeof(short));
+	readGeneListFile(genelist, &line1, "L1000_Gene_List.txt");
+	readGeneListFile(genesetlist, &line2, filename);
+
+	//get gstmp and gs count,remove the repeat elements
+	for(j=0;j<line2;j++)
+	{
+		for(i=0;i<line1;i++)
+		{
+			if(strcmp(genesetlist[j],genelist[i])==0)
+			{
+				if(existflag[i+1]==0)
+				{	//this gene not input
+					gstmp[(*count)++] = i+1;
+					existflag[gstmp[(*count)-1]] = 1;
+					break;
+				}
+			}
+		}
+	}
 	//get gs 
 	memcpy(gs,gstmp,(*count)*sizeof(short));
 }
@@ -152,7 +188,7 @@ int ReadMatrixFilePara(char path[], int *profilenum1, int *profilenum2, int *Lin
 	//read File
 	if((fp = fopen(path,"r")) == NULL) 
 	{ 
-		printf("file error!\n"); 
+		printf("file %s error!\n",path); 
 		return -1; 
 	} 
 	fgets(Str,256,fp);
@@ -184,7 +220,7 @@ int ReadMatrixFile(char path[],int LineLength,int BeginLine,int EndLine,int prof
 	//read File
 	if((fp = fopen(path,"r")) == NULL) 
 	{ 
-		printf("file error!\n"); 
+		printf("file %s error!\n",path); 
 		return -1; 
 	} 
 	fgets(StrLine,256,fp);
@@ -211,47 +247,14 @@ int ReadMatrixFile(char path[],int LineLength,int BeginLine,int EndLine,int prof
 	return 0;
 }
 
-//write classflag vector
-void WritetxtClusterResult(int classflag[] ,int len, int cluster, char writepath[])
-{
-	int i,j,cluster_num=0;
-	int *flag,*classes;	
-	flag = (int *) malloc(len*sizeof(int));
-	classes = (int *) malloc(len*sizeof(int));
-	memset(flag,0,len*sizeof(int));	
-	
-	FILE *fp;
-	if((fp=fopen(writepath,"w"))==NULL)
-	{
-		printf("can not open the file to write!");
-		exit(1);
-	}
-	
-	for( i=0; i < len; i++)
-	{
-		if(flag[classflag[i]]==0)
-			flag[classflag[i]] = (++cluster_num);
-		classes[i] = flag[classflag[i]];
-	}
-	
-	for( i=0; i<cluster; i++)
-	{
-		fprintf(fp,"cluster %d :\n",i+1);
-		for( j=0; j < len; j++)
-			if(classes[j]==(i+1))
-				fprintf(fp,"%d\n",j+1);
-		fprintf(fp,"\n");
-	}
-	
-	fclose(fp);
-	free(flag);
-	free(classes);
-}
-
 void readGeneListFile(char genelist[][12] ,int *line, char path[])
 {
 	FILE *fp;
-	fp = fopen(path,"r");
+	if((fp=fopen(path,"r"))==NULL)
+	{
+		printf("can not open %s file\n",path);
+		exit(1);
+	}
 	*line=0;
 
 	while(fgets(genelist[(*line)++], 20, fp)!= NULL);
@@ -264,8 +267,16 @@ void getByteOffsetFile(char path1[],char path2[])
 {
 	FILE *fp1,*fp2;
 	char str[100];
-	fp1 = fopen(path1,"r");
-	fp2 = fopen(path2,"w");
+	if((fp1=fopen(path1,"r"))==NULL)
+	{
+		printf("can not open %s file\n",path1);
+		exit(1);
+	}
+	if((fp2=fopen(path2,"w"))==NULL)
+	{
+		printf("can not open %s file\n",path2);
+		exit(1);
+	}
 	
 	int line=0;
 
@@ -283,6 +294,7 @@ void getByteOffsetFile(char path1[],char path2[])
 	fclose(fp2);
 }
 
+
 long readByteOffsetFile(char path[],int row_num)
 {
 	FILE *fp;
@@ -290,7 +302,11 @@ long readByteOffsetFile(char path[],int row_num)
 	long offset;
 	char c[] = "\t";
 
-	fp = fopen(path,"r");
+	if((fp=fopen(path,"r"))==NULL)
+	{
+		printf("can not open %s file\n",path);
+		exit(1);
+	}
 
 	fseek(fp,(row_num-1)*11,SEEK_CUR); 
 	fgets(str,20,fp);
@@ -305,10 +321,48 @@ void getSampleConditions(char path[], long offset, char conditions[])
 {
 
 	FILE *fp;
-	fp = fopen(path,"r");
+	if((fp=fopen(path,"r"))==NULL)
+	{
+		printf("can not open %s file\n",path);
+		exit(1);
+	}
 
 	fseek(fp,offset,SEEK_CUR); 
 	fgets(conditions,L1000_CONDITION_LEN,fp);
 
+	fclose(fp);
+}
+
+//write classflag vector
+void WritetxtClusterResult(int classflag[] ,int len, int cluster, char writepath[])
+{
+	int i,j,cluster_num=0;
+	int *flag,*classes;	
+	flag = (int *) malloc(len*sizeof(int));
+	classes = (int *) malloc(len*sizeof(int));
+	memset(flag,0,len*sizeof(int));	
+	
+	FILE *fp;
+	if((fp=fopen(writepath,"w"))==NULL)
+	{
+		printf("can not open the %s file to write!\n",writepath);
+		exit(1);
+	}
+	
+	for( i=0; i < len; i++)
+	{
+		if(flag[classflag[i]]==0)
+			flag[classflag[i]]=(++cluster_num);
+		classes[i] = flag[classflag[i]];
+	}
+	
+	for( i=0; i<cluster; i++)
+	{
+		fprintf(fp,"cluster %d :\n",i+1);
+		for( j=0; j < len; j++)
+			if(classes[j]==(i+1))
+				fprintf(fp,"%d\n",j+1);
+	}
+	
 	fclose(fp);
 }
