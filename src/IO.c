@@ -367,7 +367,10 @@ void getSampleConditions(char path[], long offset, char conditions[])
 void WritetxtClusterResult(int classflag[] ,int len, int cluster, char writepath[])
 {
 	int i,j,cluster_num=0;
+	char conditions[L1000_CONDITION_LEN];
 	int *flag,*classes;	
+	long cidnum;
+	long offset;
 	flag = (int *) malloc(len*sizeof(int));
 	classes = (int *) malloc(len*sizeof(int));
 	memset(flag,0,len*sizeof(int));	
@@ -388,10 +391,19 @@ void WritetxtClusterResult(int classflag[] ,int len, int cluster, char writepath
 	
 	for( i=0; i<cluster; i++)
 	{
+		
 		fprintf(fp,"cluster %d :\n",i+1);
 		for( j=0; j < len; j++)
+		{
 			if(classes[j]==(i+1))
-				fprintf(fp,"%d\n",j+1);
+			{
+				cidnum = readByteOffsetFile("data/data_for_test_cidnum.txt",gsea_result[i].cid);
+				offset = readByteOffsetFile("data/prepareForNewDataSet/Samples_RowByteOffset.txt",cidnum);
+				getSampleConditions("data/prepareForNewDataSet/Samples_Condition.txt", offset, conditions);
+				fprintf(fp,"%s\n",conditions);
+			}				
+		}
+			
 	}
 	
 	fclose(fp);
