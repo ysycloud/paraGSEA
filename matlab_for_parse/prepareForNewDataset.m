@@ -1,3 +1,7 @@
+if ~exist('datasource')
+	datasource='../data/modzs_n272x978.gctx';
+end
+
 load annot.mat;
 annot_info = regexp(annot,'\t','split');
 clear annot
@@ -8,7 +12,7 @@ for i=1:at_m
 	annot_rid{i} = annot_info{i}{1};
 end
 
-ds= parse_gctx('../data/modzs_n272x978.gctx');
+ds= parse_gctx(datasource);
 [m,n]=size(ds.mat);
 ds_rid = ds.rid;
 ds_cid = ds.cid;
@@ -19,7 +23,7 @@ o=ones(at_m,2);
 probe=1:at_m; 
 o=[index',probe'];
 o= sortrows(o,1);
-fid1 = fopen('../data/Gene_List.txt', 'w');
+fid1 = fopen('../data/prepareForNewDataSet/Gene_List.txt', 'w');
 for i=1:m
 	j = at_m-m+i;
 	geneSymbol(i)=annot_Symbol(o(j,2));
@@ -28,8 +32,8 @@ end
 fclose(fid1);
 
 %write out cid/condition_info and line offset file in new dataset 
-fid2 = fopen('../data/Samples_Condition.txt', 'w');
-fid3 = fopen('../data/Samples_RowByteOffset.txt', 'w');
+fid2 = fopen('../data/prepareForNewDataSet/Samples_Condition.txt', 'w');
+fid3 = fopen('../data/prepareForNewDataSet/Samples_RowByteOffset.txt', 'w');
 offset = 0;
 cid_tmp = regexp(ds_cid,':','split');
 for i=1:n
