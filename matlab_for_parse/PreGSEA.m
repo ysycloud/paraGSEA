@@ -57,7 +57,7 @@ for i = 1:n
 			fprintf(fid1,'%5g\t',o(j,2));
 		end
 		fprintf(fid1,'%5g\n',o(m,2));
-		fprintf(fid2,'%d\n',i);   %write out cid number
+		fprintf(fid2,'%10d\n',i);   %write out cid number
 	end
 end
 fprintf(fid3,'%10g\t%10g\n', count,m);

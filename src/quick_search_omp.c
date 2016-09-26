@@ -40,7 +40,7 @@ int main(int argc,char *argv[])
 	
 	double start,finish,duration;
 	
-	
+	int input_way;
 	int	paral_way = 1;
 	
 	// Unset flags (value -1).

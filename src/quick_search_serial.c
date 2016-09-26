@@ -34,10 +34,13 @@ int main(int argc,char *argv[])
 	short **indexSet;
 	short gs[MAX_GENESET];
 	char gsStr[1024];
+	char conditions[L1000_CONDITION_LEN];
 	struct GSEA_RESULT *gsea_result;	
 	double start,finish,duration;
 	
-
+	long cidnum;
+	long offset;
+	int input_way;
 	// Unset flags (value -1).
 	int TopN = -1;
     // Unset options (value 'UNSET').
@@ -105,8 +108,7 @@ int main(int argc,char *argv[])
 			exit(0);
 		}		
 	}
-		
-
+	
 	//check the parameters
 	if(TopN==-1)
 	{
@@ -152,15 +154,32 @@ int main(int argc,char *argv[])
 	duration = finish-start;     
 	printf("loading IO and prework time: %.4f s\n",duration); 
 	
+	printf("which way do you want to input the GeneSet( 0 -> standard input , others -> file input ):");
+	scanf("%d", &input_way);
 	
-	//get the geneset , split by space
-	printf("input the GeneSet( a integer[1-genelen] string split by space ):\n");
-	scanf("%[^\n]",gsStr);	
+	if(input_way==0)
+	{
+		//get the geneset , split by space
+		getchar();
+		printf("input the GeneSet until 'exit'( a string of each Gene Symbol split by space ):\n");
+		scanf("%[^\n]",gsStr);	
+	}else
+	{
+		printf("input the path of file that has GeneSet until 'exit'(each line has a Gene Symbol/name):\n");
+		scanf("%s",gsStr);
+	}
+	
 	//gets(gsStr);
-	while(strcmp(gsStr,"exit")!=0)
+	while(strcmp(gsStr,"exit")!=0) 
 	{
 		//get the geneset
-		getGeneSet(gs,&siglen,gsStr);
+		if(input_way==0)
+		{
+			getGeneSet(gs,&siglen,gsStr);
+		}else
+		{
+			getGeneSetbyFile(gs,&siglen,gsStr);
+		}
 		
 		GET_TIME(start);
 		/********************run the GSEA algorithm*****************************/
@@ -177,21 +196,40 @@ int main(int argc,char *argv[])
 		quiksort_gsea(gsea_result,0,profilenum-1);
 		
 		/********************print the TopN GSEA result*************************/
-		printf("printf the high level of TopN GSEA result:\n");
+		printf("\nprintf the high level of TopN GSEA result:\n");
 		for(i = profilenum-1; i > profilenum-1-TopN; i--)
-			printf("NO.%d -> cid:%d  ES:%f  NES:%f  pv:%.10lf\n", profilenum-i, gsea_result[i].cid, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv);
-		printf("printf the low level of TopN GSEA result:\n");
+		{
+			cidnum = readByteOffsetFile("data/data_for_test_cidnum.txt",gsea_result[i].cid);
+			offset = readByteOffsetFile("data/prepareForNewDataSet/Samples_RowByteOffset.txt",cidnum);
+			getSampleConditions("data/prepareForNewDataSet/Samples_Condition.txt", offset, conditions);
+			printf("NO.%d -> SampleConditions: %s  ES:%f  NES:%f  pv:%.10lf\n", profilenum-i, conditions, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv);
+		}
+			
+		printf("\nprintf the low level of TopN GSEA result:\n");
 		for(i=0; i<TopN; i++)
-			printf("NO.%d -> cid:%d  ES:%f  NES:%f  pv:%.10lf\n", i+1, gsea_result[i].cid, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv);  
-					
+		{
+			cidnum = readByteOffsetFile("data/data_for_test_cidnum.txt",gsea_result[i].cid);
+			offset = readByteOffsetFile("data/prepareForNewDataSet/Samples_RowByteOffset.txt",cidnum);
+			getSampleConditions("data/prepareForNewDataSet/Samples_Condition.txt", offset, conditions);
+			printf("NO.%d -> SampleConditions: %s  ES:%f  NES:%f  pv:%.10lf\n", i+1, conditions, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv); 
+		}
+			 				
 		GET_TIME(finish);
 		duration = finish-start;    //compute the GSEA time 
 		printf("finish GSEA time: %.4f s\n",duration); 
 		
 		getchar();    //remove the Enter from stdin
-		printf("input the GeneSet(split by space):\n");
-		scanf("%[^\n]",gsStr);
-		//gets(gsStr);		
+		//get the geneset
+		if(input_way==0)
+		{
+			//get the geneset , split by space
+			printf("input the GeneSet until 'exit'( a string of each Gene Symbol split by space ):\n");
+			scanf("%[^\n]",gsStr);	
+		}else
+		{
+			printf("input the path of file that has GeneSet until 'exit'(each line has a Gene Symbol/name):\n");
+			scanf("%s",gsStr);
+		}		
 	}
 	
 	//free the memory allocate dyn.

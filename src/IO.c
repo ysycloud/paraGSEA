@@ -106,32 +106,62 @@ void WritetxtResult(int sourceBegin ,int sourceEnd, int matlen, char writepath[]
 	fclose(fp);
 }
 
-
 //get GeneSet from standard input
 void getGeneSet(short gs[],int *count, char gsStr[])
 {
 	short existflag[MAX_GENE];
 	short gstmp[MAX_GENESET];
+	char genelist[L1000_LEN][12];
 	char c[] = " ", *p;
-	int tmp,i;
+	char gene[12];
+	int line;
+	int tmp,i,j;
 	*count = 0;
 	
 	//initial flag vector
 	memset(existflag, 0, MAX_GENE * sizeof(short));
-		
+	readGeneListFile(genelist ,&line,"data/prepareForNewDataSet/Gene_List.txt");
+
 	//get gstmp and gs count,remove the repeat elements
-	gstmp[(*count)++] = atoi(strtok(gsStr,c));
-	existflag[gstmp[(*count)-1]] = 1;
-	p = strtok(NULL,c);
+	strcpy(gene,strtok(gsStr,c));
+	j=0;
+	while(gene[j++]!='\0');
+	gene[j-1]='\n';
+	gene[j]='\0';
+	
+	for(i=0;i<line;i++)
+	{
+		if(strcmp(gene,genelist[i])==0)
+		{
+			gstmp[(*count)++] = i+1;
+			existflag[gstmp[(*count)-1]] = 1;
+			break;
+		}
+	}
+	
+	p = strtok(NULL,c);	
 	while(p)
 	{
-		tmp = atoi(p);
-		if(existflag[tmp]==0){	//this gene not input
-			gstmp[(*count)++] = tmp;
-			existflag[gstmp[(*count)-1]] = 1;
+		strcpy(gene,p);
+		j=0;
+		while(gene[j++]!='\0');
+		gene[j-1]='\n';
+		gene[j]='\0';
+		for(i=0;i<line;i++)
+		{
+			if(strcmp(gene,genelist[i])==0)
+			{
+				if(existflag[i+1]==0)
+				{	//this gene not input
+					gstmp[(*count)++] = i+1;
+					existflag[gstmp[(*count)-1]] = 1;
+					break;
+				}
+			}
 		}
 		p = strtok(NULL,c);
 	}
+	
 	//get gs 
 	memcpy(gs,gstmp,(*count)*sizeof(short));
 }
@@ -150,7 +180,7 @@ void getGeneSetbyFile(short gs[],int *count, char filename[])
 	
 	//initial flag vector
 	memset(existflag, 0, MAX_GENE * sizeof(short));
-	readGeneListFile(genelist, &line1, "L1000_Gene_List.txt");
+	readGeneListFile(genelist, &line1, "data/prepareForNewDataSet/Gene_List.txt");
 	readGeneListFile(genesetlist, &line2, filename);
 
 	//get gstmp and gs count,remove the repeat elements

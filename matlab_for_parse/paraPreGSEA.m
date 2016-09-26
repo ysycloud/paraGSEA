@@ -87,7 +87,7 @@ parfor i=1:cores
 				fprintf(fid1(i),'%5g\t',o(k,2));
 			end
 			fprintf(fid1(i),'%5g\n',o(m,2));
-			fprintf(fid2(i),'%d\n',begin+j);	 %write out cid number
+			fprintf(fid2(i),'%10d\n',begin+j);	 %write out cid number
 		end
 	end
 	fclose(fid1(i));
