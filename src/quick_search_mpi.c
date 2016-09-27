@@ -210,7 +210,7 @@ int main(int argc,char *argv[])
 	if(TopN==-1)
 	{
 		if(my_rank==0)
-			fprintf(stderr,"Not Set TopN parameter!\n");
+			fprintf(stderr," [ param error : -n ] Not Set TopN parameter!\n");
 		MPI_Finalize();
 		exit(0);
 	}
@@ -218,7 +218,7 @@ int main(int argc,char *argv[])
 	if((fp=fopen(sample,"r"))==NULL)
 	{
 		if(my_rank==0)
-			fprintf(stderr, "can not open sample sequence number '%s' file\n",sample);
+			fprintf(stderr, " [ param error : -s ] can not open sample sequence number '%s' file\n",sample);
 		MPI_Finalize();
 		exit(0);
 	}
@@ -229,7 +229,7 @@ int main(int argc,char *argv[])
 	if((fp=fopen(genelistfile,"r"))==NULL)
 	{
 		if(my_rank==0)
-			fprintf(stderr, "the reference directory may be incorrect!\n");
+			fprintf(stderr, " [ param error : -r ] the reference directory may be incorrect!\n");
 		MPI_Finalize();
 		exit(0);
 	}
@@ -251,7 +251,7 @@ int main(int argc,char *argv[])
 	if( profilenum <= 0 || genelen <= 0)
 	{
 		if(my_rank==0)
-			fprintf(stderr,"this file is not exist!\n");
+			fprintf(stderr," [ param error : -i ] this file is not exist!\n");
 		MPI_Finalize();
 		exit(0);
 	}

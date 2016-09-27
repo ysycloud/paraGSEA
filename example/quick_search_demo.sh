@@ -7,7 +7,7 @@ runPreGSEAbyMatlab.sh
 
 #quick_search 
 case "$quick_search_way" in
-	0)quick_search_serial -i "../data/data_for_test.txt" -n 10;;
-	1)quick_search_omp -i "../data/data_for_test.txt" -t 4 -n 10;;
-	2)mpirun -n 2 -ppn 2 -hostfile hostfile quick_search_mpi -i "../data/data_for_test.txt" -n 10;;
+	0)quick_search_serial -i ../data/data_for_test.txt -n 8 -s ../data/data_for_test_cidnum.txt -r ../data/Reference;;
+	1)quick_search_omp -i ../data/data_for_test.txt -t 4 -n 10 -s ../data/data_for_test_cidnum.txt -r ../data/Reference;;
+	2)mpirun -n 2 -ppn 2 -hostfile hostfile quick_search_mpi -i ../data/data_for_test.txt -n 8 -s ../data/data_for_test_cidnum.txt -r ../data/Reference
 esac

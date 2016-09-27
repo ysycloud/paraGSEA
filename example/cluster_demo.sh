@@ -11,7 +11,7 @@ n=3
 ppn=3
 thread_num=5
 siglen=50
-cluster_num=8
+cluster_num=5
 
 #calculate the similarity(ES) matrix
 case "$matrix_way" in
@@ -22,6 +22,6 @@ esac
 
 #cluster
 case "$cluster_way" in
-	0)mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods_ompi -t $thread_num -c $cluster_num -i "../data/ES_Matrix_tmp" -o $outputfile;;
-	1)mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods++_ompi -t $thread_num -c $cluster_num -i "../data/ES_Matrix_tmp" -o $outputfile;;
+	0)mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods_ompi -t $thread_num -c $cluster_num -i "../data/ES_Matrix_tmp" -o $outputfile -s ../data/data_for_test_cidnum.txt -r ../data/Reference;;
+	1)mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods++_ompi -t $thread_num -c $cluster_num -i "../data/ES_Matrix_tmp" -o $outputfile -s ../data/data_for_test_cidnum.txt -r ../data/Reference;;
 esac

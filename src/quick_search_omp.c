@@ -172,19 +172,19 @@ int main(int argc,char *argv[])
 	//check the parameters
 	if(TopN==-1)
 	{
-		fprintf(stderr,"Not Set TopN parameter!\n");
+		fprintf(stderr," [ param error : -n ] Not Set TopN parameter!\n");
 		exit(0);
 	}
 	
 	if(thread_count==-1)
 	{
-		fprintf(stderr,"Not Set Thread parameter!\n");
+		fprintf(stderr," [ param error : -t ] Not Set Thread parameter!\n");
 		exit(0);
 	}
 	
 	if((fp=fopen(sample,"r"))==NULL)
 	{
-		fprintf(stderr, "can not open sample sequence number '%s' file\n",sample);
+		fprintf(stderr, " [ param error : -s ] can not open sample sequence number '%s' file\n",sample);
 		exit(0);
 	}
 	fclose(fp);
@@ -193,7 +193,7 @@ int main(int argc,char *argv[])
 	
 	if((fp=fopen(genelistfile,"r"))==NULL)
 	{
-		fprintf(stderr, "the reference directory may be incorrect!\n");
+		fprintf(stderr, "[ param error : -r ] the reference directory may be incorrect!\n");
 		exit(0);
 	}
 	fclose(fp);
@@ -209,7 +209,7 @@ int main(int argc,char *argv[])
 	
 	if( profilenum <= 0 || genelen <= 0)
 	{
-		fprintf(stderr,"this file is not exist!\n");
+		fprintf(stderr," [ param error : -i ] this file is not exist!\n");
 		exit(0);
 	}
 	

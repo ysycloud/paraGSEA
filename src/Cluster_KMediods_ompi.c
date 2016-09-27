@@ -259,14 +259,14 @@ int main(int argc,char *argv[])
 	if(corenum == -1)
 	{
 		if(my_rank==0)
-			fprintf(stderr,"Not Set thread parameter!\n");
+			fprintf(stderr," [ param error : -t ] Not Set thread parameter!\n");
 		MPI_Finalize();
 		exit(0);
 	}
 	if(cluster_center_num == -1)
 	{
 		if(my_rank==0)
-			fprintf(stderr,"Not Set cluster num parameter!\n");
+			fprintf(stderr," [ param error : -c ] Not Set cluster num parameter!\n");
 		MPI_Finalize();
 		exit(0);
 	}
@@ -274,7 +274,7 @@ int main(int argc,char *argv[])
 	if((fp=fopen(sample,"r"))==NULL)
 	{
 		if(my_rank==0)
-			fprintf(stderr, "can not open sample sequence number '%s' file\n",sample);
+			fprintf(stderr, " [ param error : -s ] can not open sample sequence number '%s' file\n",sample);
 		MPI_Finalize();
 		exit(0);
 	}
@@ -286,7 +286,7 @@ int main(int argc,char *argv[])
 	if((fp=fopen(genelistfile,"r"))==NULL)
 	{
 		if(my_rank==0)
-			fprintf(stderr, "the reference directory may be incorrect!\n");
+			fprintf(stderr, " [ param error : -r ] the reference directory may be incorrect!\n");
 		MPI_Finalize();
 		exit(0);
 	}
@@ -295,7 +295,7 @@ int main(int argc,char *argv[])
 	if(output == UNSET)
 	{
 		if(my_rank==0)
-			fprintf(stderr,"Not Set output parameter!\n");
+			fprintf(stderr," [ param error : -o ] Not Set output parameter!\n");
 		MPI_Finalize();
 		exit(0);
 	}

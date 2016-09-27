@@ -226,14 +226,14 @@ int main(int argc,char *argv[])
 	if(corenum == -1)
 	{
 		if(my_rank==0)
-			fprintf(stderr,"Not Set thread parameter!\n");
+			fprintf(stderr," [ param error : -t ] Not Set thread parameter!\n");
 		MPI_Finalize();
 		exit(0);
 	}
 	if(siglen == -1)
 	{
 		if(my_rank==0)
-			fprintf(stderr,"Not Set siglen parameter!\n");
+			fprintf(stderr," [ param error : -l ] Not Set siglen parameter!\n");
 		MPI_Finalize();
 		exit(0);
 	}
@@ -241,7 +241,7 @@ int main(int argc,char *argv[])
 	if(output == UNSET)
 	{
 		if(my_rank==0)
-			fprintf(stderr,"Not Set output parameter!\n");
+			fprintf(stderr," [ param error : -o ] Not Set output parameter!\n");
 		MPI_Finalize();
 		exit(0);
 	}
@@ -262,7 +262,7 @@ int main(int argc,char *argv[])
 	if( profilenum1 <= 0 || genelen <= 0)
 	{
 		if(my_rank==0)
-			fprintf(stderr,"this file input1 is not exist!\n");
+			fprintf(stderr," [ param error : -1 ] this file input1 is not exist!\n");
 		MPI_Finalize();
 		exit(0);
 	}
@@ -270,7 +270,7 @@ int main(int argc,char *argv[])
 	if( profilenum2 <= 0 || genelen <= 0)
 	{
 		if(my_rank==0)
-			fprintf(stderr,"this file input2 is not exist!\n");
+			fprintf(stderr," [ param error : -2 ] this file input2 is not exist!\n");
 		MPI_Finalize();
 		exit(0);
 	}
