@@ -133,7 +133,8 @@ int main(int argc,char *argv[])
 				{
 					fprintf(stderr, "%s --input set more than once\n", ERRM);
 					Usage();
-				}				
+				}
+				MPI_Finalize();				
 				exit(0);
 			}
 			break;
@@ -145,8 +146,12 @@ int main(int argc,char *argv[])
 			}
 			else 
 			{
-				fprintf(stderr, "%s --sample set more than once\n", ERRM);
-				Usage();
+				if(my_rank==0)
+				{
+					fprintf(stderr, "%s --sample set more than once\n", ERRM);
+					Usage();
+				}		
+				MPI_Finalize();
 				exit(0);
 			}
 			break;
@@ -158,8 +163,12 @@ int main(int argc,char *argv[])
 			}
 			else 
 			{
-				fprintf(stderr, "%s --reference set more than once\n", ERRM);
-				Usage();
+				if(my_rank==0)
+				{
+					fprintf(stderr, "%s --reference set more than once\n", ERRM);
+					Usage();
+				}
+				MPI_Finalize();
 				exit(0);
 			}
 			break;
@@ -172,7 +181,8 @@ int main(int argc,char *argv[])
 					{
 						fprintf(stderr, "%s --topn must be a positive integer\n", ERRM);
 						Usage();
-					}				
+					}			
+					MPI_Finalize();					
 					exit(0);
 				}
 			}
@@ -181,7 +191,8 @@ int main(int argc,char *argv[])
 				{
 					fprintf(stderr,"%s --topn set more " "than once\n", ERRM);
 					Usage();
-				}		
+				}
+				MPI_Finalize();
 				exit(0);
 			}
 			break;
@@ -190,6 +201,7 @@ int main(int argc,char *argv[])
 			// Cannot parse. //
 			if(my_rank==0)
 				Usage();
+			MPI_Finalize();
 			exit(0);
 		}		
 	}
@@ -199,13 +211,15 @@ int main(int argc,char *argv[])
 	{
 		if(my_rank==0)
 			fprintf(stderr,"Not Set TopN parameter!\n");
+		MPI_Finalize();
 		exit(0);
 	}
 	
 	if((fp=fopen(sample,"r"))==NULL)
 	{
 		if(my_rank==0)
-			fprintf(stderr, "can not open %s file\n",sample);
+			fprintf(stderr, "can not open sample sequence number '%s' file\n",sample);
+		MPI_Finalize();
 		exit(0);
 	}
 	fclose(fp);
@@ -215,7 +229,8 @@ int main(int argc,char *argv[])
 	if((fp=fopen(genelistfile,"r"))==NULL)
 	{
 		if(my_rank==0)
-			fprintf(stderr, "can not open %s file\n",genelistfile);
+			fprintf(stderr, "the reference directory may be incorrect!");
+		MPI_Finalize();
 		exit(0);
 	}
 	fclose(fp);
@@ -237,6 +252,7 @@ int main(int argc,char *argv[])
 	{
 		if(my_rank==0)
 			fprintf(stderr,"this file is not exist!\n");
+		MPI_Finalize();
 		exit(0);
 	}
 	

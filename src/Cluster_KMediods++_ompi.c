@@ -33,7 +33,9 @@ char *USAGE =
 "\n"
 "  input/output options \n"
 "    -i --input1: distributed ES_Matrix file we get from stage 2(Compare Profiles)\n"
-"	 -o --output: output class flags file of every profiles in root node\n";
+"	 -o --output: output class flags file of every profiles in root node\n"
+"    -s --sample: input file/a parsed sample sequence number file from pretreatment stage. \n"
+"    -r --reference: input a directory includes referenced files about genesymbols and cids. \n";
 
 void Usage();
 void split_data(int size, int n, int rank, int* begin, int* end, int* local_n); 
@@ -71,6 +73,8 @@ int main(int argc,char *argv[])
 
 	double start,finish,duration;
 	
+	FILE *fp;
+	
 	/* Let the system do what it needs to start up MPI */
     MPI_Init(&argc, &argv);
 
@@ -101,6 +105,8 @@ int main(int argc,char *argv[])
 	char * const UNSET = "unset";
     char * input   = UNSET;
 	char * output   = UNSET;
+	char * sample   = UNSET;
+	char * reference   = UNSET;
 	
 	int c;
 	while (1) {
@@ -109,11 +115,13 @@ int main(int argc,char *argv[])
 			{"thread",             required_argument,        0, 't'},
 			{"cluster",             required_argument,       0, 'c'},
 			{"input",             required_argument,         0, 'i'},
+			{"sample",             required_argument,        0, 's'},
+			{"reference",			required_argument,        0, 'r'},
 			{"output",             required_argument,        0, 'o'},
 			{0, 0, 0, 0}
 		};
 
-		c = getopt_long(argc, argv, "t:c:i:o:",
+		c = getopt_long(argc, argv, "t:c:i:s:r:o:",
             long_options, &option_index);
 	
 		if(c==-1)	break;
@@ -135,7 +143,42 @@ int main(int argc,char *argv[])
 				{
 					fprintf(stderr, "%s --input set more than once\n", ERRM);
 					Usage();
-				}				
+				}
+				MPI_Finalize();
+				exit(0);
+			}
+			break;
+			
+		case 's':
+			if (sample == UNSET) 
+			{
+				sample = optarg;
+			}
+			else 
+			{
+				if(my_rank==0)
+				{
+					fprintf(stderr, "%s --sample set more than once\n", ERRM);
+					Usage();
+				}
+				MPI_Finalize();
+				exit(0);
+			}
+			break;
+			
+		case 'r':
+			if (reference == UNSET) 
+			{
+				reference = optarg;
+			}
+			else 
+			{
+				if(my_rank==0)
+				{
+					fprintf(stderr, "%s --reference set more than once\n", ERRM);
+					Usage();
+				}
+				MPI_Finalize();
 				exit(0);
 			}
 			break;
@@ -151,7 +194,8 @@ int main(int argc,char *argv[])
 				{
 					fprintf(stderr, "%s --output set more than once\n", ERRM);
 					Usage();
-				}				
+				}
+				MPI_Finalize();
 				exit(0);
 			}
 			break;
@@ -164,7 +208,8 @@ int main(int argc,char *argv[])
 					{
 						fprintf(stderr, "%s --thread must be a positive integer\n", ERRM);
 						Usage();
-					}				
+					}	
+					MPI_Finalize();
 					exit(0);
 				}
 			}
@@ -174,6 +219,7 @@ int main(int argc,char *argv[])
 					fprintf(stderr,"%s --thread set more " "than once\n", ERRM);
 					Usage();
 				}		
+				MPI_Finalize();
 				exit(0);
 			}
 			break;
@@ -186,7 +232,8 @@ int main(int argc,char *argv[])
 					{
 						fprintf(stderr, "%s --cluster must be a positive integer\n", ERRM);
 						Usage();
-					}				
+					}	
+					MPI_Finalize();
 					exit(0);
 				}
 			}
@@ -195,7 +242,8 @@ int main(int argc,char *argv[])
 				{
 					fprintf(stderr,"%s --cluster set more " "than once\n", ERRM);
 					Usage();
-				}		
+				}	
+				MPI_Finalize();
 				exit(0);
 			}
 			break;
@@ -204,6 +252,7 @@ int main(int argc,char *argv[])
 			// Cannot parse. //
 			if(my_rank==0)
 				Usage();
+			MPI_Finalize();
 			exit(0);
 		}		
 	}
@@ -213,19 +262,43 @@ int main(int argc,char *argv[])
 	{
 		if(my_rank==0)
 			fprintf(stderr,"Not Set thread parameter!\n");
+		MPI_Finalize();
 		exit(0);
 	}
 	if(cluster_center_num == -1)
 	{
 		if(my_rank==0)
 			fprintf(stderr,"Not Set cluster num parameter!\n");
+		MPI_Finalize();
 		exit(0);
 	}
+	
+	if((fp=fopen(sample,"r"))==NULL)
+	{
+		if(my_rank==0)
+			fprintf(stderr, "can not open sample sequence number '%s' file\n",sample);
+		MPI_Finalize();
+		exit(0);
+	}
+	fclose(fp);
+	
+	char genelistfile[FileName_LEN];
+	sprintf(genelistfile,"%s/Gene_List.txt",reference);
+	
+	if((fp=fopen(genelistfile,"r"))==NULL)
+	{
+		if(my_rank==0)
+			fprintf(stderr, "the reference directory may be incorrect!");
+		MPI_Finalize();
+		exit(0);
+	}
+	fclose(fp);
 	
 	if(output == UNSET)
 	{
 		if(my_rank==0)
 			fprintf(stderr,"Not Set output parameter!\n");
+		MPI_Finalize();
 		exit(0);
 	}
 	
@@ -254,6 +327,7 @@ int main(int argc,char *argv[])
 	{
 		if(my_rank==0)
 			fprintf(stderr,"this file input is not exist!\n");
+		MPI_Finalize();
 		exit(0);
 	}
 	
@@ -597,7 +671,7 @@ int main(int argc,char *argv[])
 		
 	MPI_Barrier(MPI_COMM_WORLD);
 	if(my_rank == 0){
-		WritetxtClusterResult(global_classflag ,profilenum, cluster_center_num, output);
+		WritetxtClusterResult(global_classflag ,profilenum, cluster_center_num, output, sample, reference);
 		GET_TIME(finish);
 		//compute the Write time
 		duration = finish-start;     

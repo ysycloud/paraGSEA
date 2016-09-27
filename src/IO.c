@@ -11,7 +11,7 @@ int ReadFilePara(char path[], int *profilenum, int *genelen, int *LineLength)
 {
 	FILE *fp; 
 	char StrLine[135168]; 
-	int strlength;           
+	int strlength;
 	char c[] = " ";
 	int line,col;
 	

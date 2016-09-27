@@ -184,7 +184,7 @@ int main(int argc,char *argv[])
 	
 	if((fp=fopen(sample,"r"))==NULL)
 	{
-		fprintf(stderr, "can not open %s file\n",sample);
+		fprintf(stderr, "can not open sample sequence number '%s' file\n",sample);
 		exit(0);
 	}
 	fclose(fp);
@@ -193,7 +193,7 @@ int main(int argc,char *argv[])
 	
 	if((fp=fopen(genelistfile,"r"))==NULL)
 	{
-		fprintf(stderr, "can not open %s file\n",genelistfile);
+		fprintf(stderr, "the reference directory may be incorrect!");
 		exit(0);
 	}
 	fclose(fp);

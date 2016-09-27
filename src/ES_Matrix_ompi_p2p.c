@@ -128,7 +128,8 @@ int main(int argc,char *argv[])
 				{
 					fprintf(stderr, "%s --input1 set more than once\n", ERRM);
 					Usage();
-				}				
+				}			
+				MPI_Finalize();
 				exit(0);
 			}
 			break;
@@ -144,7 +145,8 @@ int main(int argc,char *argv[])
 				{
 					fprintf(stderr, "%s --input2 set more than once\n", ERRM);
 					Usage();
-				}				
+				}	
+				MPI_Finalize();
 				exit(0);
 			}
 			break;
@@ -160,7 +162,8 @@ int main(int argc,char *argv[])
 				{
 					fprintf(stderr, "%s --output set more than once\n", ERRM);
 					Usage();
-				}				
+				}		
+				MPI_Finalize();
 				exit(0);
 			}
 			break;
@@ -173,7 +176,8 @@ int main(int argc,char *argv[])
 					{
 						fprintf(stderr, "%s --thread must be a positive integer\n", ERRM);
 						Usage();
-					}				
+					}		
+					MPI_Finalize();
 					exit(0);
 				}
 			}
@@ -182,7 +186,8 @@ int main(int argc,char *argv[])
 				{
 					fprintf(stderr,"%s --thread set more " "than once\n", ERRM);
 					Usage();
-				}		
+				}	
+				MPI_Finalize();
 				exit(0);
 			}
 			break;
@@ -195,7 +200,8 @@ int main(int argc,char *argv[])
 					{
 						fprintf(stderr, "%s --siglen must be a positive integer\n", ERRM);
 						Usage();
-					}				
+					}		
+					MPI_Finalize();
 					exit(0);
 				}
 			}
@@ -204,7 +210,8 @@ int main(int argc,char *argv[])
 				{
 					fprintf(stderr,"%s --siglen set more " "than once\n", ERRM);
 					Usage();
-				}		
+				}
+				MPI_Finalize();
 				exit(0);
 			}
 			break;
@@ -213,6 +220,7 @@ int main(int argc,char *argv[])
 			// Cannot parse. //
 			if(my_rank==0)
 				Usage();
+			MPI_Finalize();
 			exit(0);
 		}		
 	}
@@ -222,12 +230,14 @@ int main(int argc,char *argv[])
 	{
 		if(my_rank==0)
 			fprintf(stderr,"Not Set thread parameter!\n");
+		MPI_Finalize();
 		exit(0);
 	}
 	if(siglen == -1)
 	{
 		if(my_rank==0)
 			fprintf(stderr,"Not Set siglen parameter!\n");
+		MPI_Finalize();
 		exit(0);
 	}
 	
@@ -235,6 +245,7 @@ int main(int argc,char *argv[])
 	{
 		if(my_rank==0)
 			fprintf(stderr,"Not Set output parameter!\n");
+		MPI_Finalize();
 		exit(0);
 	}
 	
@@ -255,6 +266,7 @@ int main(int argc,char *argv[])
 	{
 		if(my_rank==0)
 			fprintf(stderr,"this file input1 is not exist!\n");
+		MPI_Finalize();
 		exit(0);
 	}
 	
@@ -262,6 +274,7 @@ int main(int argc,char *argv[])
 	{
 		if(my_rank==0)
 			fprintf(stderr,"this file input2 is not exist!\n");
+		MPI_Finalize();
 		exit(0);
 	}
 

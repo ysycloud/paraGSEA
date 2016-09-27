@@ -286,7 +286,7 @@ float ES_Profile_original(short s1[], short s2[],int len,int sig)
 		if(i==0){ 
 			//index for s2
 			for( j=0 ; j<len; j++)
-				indexS[s2[j]] = j;¡¤
+				indexS[s2[j]] = j;
 			//compute isgsUp and isgsDown
 			for( j=0 ; j<sig; j++)
 			{
