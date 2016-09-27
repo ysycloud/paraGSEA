@@ -22,6 +22,8 @@ char *USAGE =
 "\n"
 "  input/output options \n"
 "    -i --input: input file/a parsed profiles's file from pretreatment stage. \n";
+"    -s --sample: input file/a parsed sample sequence number file from pretreatment stage. \n";
+"    -r --reference: input a directory includes referenced files about genesymbols and cids. \n";
 
 float global_ES[Global_ES_SIZE];
 
@@ -46,7 +48,12 @@ int main(int argc,char *argv[])
     // Unset options (value 'UNSET').
 	char * const UNSET = "unset";
     char * input   = UNSET;
-
+	char * sample   = UNSET;
+	char * reference   = UNSET;
+	
+	char 
+	
+	
 	
 	if (argc == 1) 
 	{
@@ -60,10 +67,12 @@ int main(int argc,char *argv[])
 		static struct option long_options[] = {
 			{"topn",              required_argument,        0, 'n'},
 			{"input",             required_argument,        0, 'i'},
+			{"sample",             required_argument,        0, 's'},
+			{"reference",             required_argument,        0, 'r'},
 			{0, 0, 0, 0}
 		};
 
-		c = getopt_long(argc, argv, "n:i:",
+		c = getopt_long(argc, argv, "n:i:s:r:",
             long_options, &option_index);
 	
 		if(c==-1)	break;
@@ -82,6 +91,32 @@ int main(int argc,char *argv[])
 			else 
 			{
 				fprintf(stderr, "%s --input set more than once\n", ERRM);
+				Usage();
+				exit(0);
+			}
+			break;
+		
+		case 'i':
+			if (sample == UNSET) 
+			{
+				sample = optarg;
+			}
+			else 
+			{
+				fprintf(stderr, "%s --sample set more than once\n", ERRM);
+				Usage();
+				exit(0);
+			}
+			break;
+			
+		case 'r':
+			if (reference == UNSET) 
+			{
+				reference = optarg;
+			}
+			else 
+			{
+				fprintf(stderr, "%s --reference set more than once\n", ERRM);
 				Usage();
 				exit(0);
 			}
@@ -116,6 +151,12 @@ int main(int argc,char *argv[])
 		exit(0);
 	}
 	
+	if((fp=fopen(sample,"r"))==NULL)
+	{
+		fprintf(stderr, "can not open %s file\n",sample);
+		exit(0);
+	}
+	
 	printf("Profile Set is Loading...!\n");
 	
 	GET_TIME(start);
@@ -127,6 +168,7 @@ int main(int argc,char *argv[])
 		fprintf(stderr,"this file is not exist!\n");
 		exit(0);
 	}
+	
 	
 	printf("profilenum:%d\t genelen:%d\n",profilenum,genelen);
 	

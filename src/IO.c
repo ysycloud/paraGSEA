@@ -107,7 +107,7 @@ void WritetxtResult(int sourceBegin ,int sourceEnd, int matlen, char writepath[]
 }
 
 //get GeneSet from standard input
-void getGeneSet(short gs[],int *count, char gsStr[])
+void getGeneSet(short gs[],int *count, char gsStr[], char reference[])
 {
 	short existflag[MAX_GENE];
 	short gstmp[MAX_GENESET];
@@ -120,7 +120,7 @@ void getGeneSet(short gs[],int *count, char gsStr[])
 	
 	//initial flag vector
 	memset(existflag, 0, MAX_GENE * sizeof(short));
-	readGeneListFile(genelist ,&line,"data/prepareForNewDataSet/Gene_List.txt");
+	readGeneListFile(genelist ,&line, reference);
 
 	//get gstmp and gs count,remove the repeat elements
 	strcpy(gene,strtok(gsStr,c));
@@ -167,7 +167,7 @@ void getGeneSet(short gs[],int *count, char gsStr[])
 }
 
 //get GeneSet from text file input
-void getGeneSetbyFile(short gs[],int *count, char filename[])
+void getGeneSetbyFile(short gs[],int *count, char filename[], char reference[])
 {
 	short existflag[MAX_GENE];
 	short gstmp[MAX_GENESET];
@@ -180,7 +180,7 @@ void getGeneSetbyFile(short gs[],int *count, char filename[])
 	
 	//initial flag vector
 	memset(existflag, 0, MAX_GENE * sizeof(short));
-	readGeneListFile(genelist, &line1, "data/prepareForNewDataSet/Gene_List.txt");
+	readGeneListFile(genelist, &line1, reference);
 	readGeneListFile(genesetlist, &line2, filename);
 
 	//get gstmp and gs count,remove the repeat elements
@@ -364,7 +364,7 @@ void getSampleConditions(char path[], long offset, char conditions[])
 }
 
 //write classflag vector
-void WritetxtClusterResult(int classflag[] ,int len, int cluster, char writepath[])
+void WritetxtClusterResult(int classflag[] ,int len, int cluster, char writepath[], char cidfile[], char referencedirectory[])
 {
 	int i,j,cluster_num=0;
 	char conditions[L1000_CONDITION_LEN];
@@ -374,6 +374,11 @@ void WritetxtClusterResult(int classflag[] ,int len, int cluster, char writepath
 	flag = (int *) malloc(len*sizeof(int));
 	classes = (int *) malloc(len*sizeof(int));
 	memset(flag,0,len*sizeof(int));	
+	char conditionsfile[100];
+	char offsetfile[100];
+	
+	sprintf(conditionsfile,"%s/Samples_Condition.txt",referencedirectory);
+	sprintf(offsetfile,"%s/Samples_RowByteOffset.txt",referencedirectory);
 	
 	FILE *fp;
 	if((fp=fopen(writepath,"w"))==NULL)
@@ -397,9 +402,9 @@ void WritetxtClusterResult(int classflag[] ,int len, int cluster, char writepath
 		{
 			if(classes[j]==(i+1))
 			{
-				cidnum = readByteOffsetFile("data/data_for_test_cidnum.txt",j+1);
-				offset = readByteOffsetFile("data/prepareForNewDataSet/Samples_RowByteOffset.txt",cidnum);
-				getSampleConditions("data/prepareForNewDataSet/Samples_Condition.txt", offset, conditions);
+				cidnum = readByteOffsetFile( cidfile, j+1);
+				offset = readByteOffsetFile( offsetfile, cidnum);
+				getSampleConditions( conditionsfile, offset, conditions);
 				fprintf(fp,"%s",conditions);
 			}				
 		}

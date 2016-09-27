@@ -37,7 +37,7 @@ int main(int argc,char *argv[])
 	short gs[MAX_GENESET];
 	char gsStr[1024];
 	struct GSEA_RESULT *gsea_result;
-	
+	FILE *fp;
 	double start,finish,duration;
 	
 	int input_way;
@@ -49,7 +49,7 @@ int main(int argc,char *argv[])
     // Unset options (value 'UNSET').
 	char * const UNSET = "unset";
     char * input   = UNSET;
-
+	
 	
 	if (argc == 1) 
 	{
@@ -142,6 +142,9 @@ int main(int argc,char *argv[])
 		fprintf(stderr,"Not Set Thread parameter!\n");
 		exit(0);
 	}
+	
+
+	
 		
 	printf("Profile Set is Loading...!\n");
 	
