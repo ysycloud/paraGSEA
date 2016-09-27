@@ -23,7 +23,9 @@ char *USAGE =
 "    -n --topn: The first and last N GSEA records ordered by ES\n"
 "\n"
 "  input/output options \n"
-"    -i --input: input file/a parsed profiles's file from pretreatment stage. \n";
+"    -i --input: input file/a parsed profiles's file from pretreatment stage. \n"
+"    -s --sample: input file/a parsed sample sequence number file from pretreatment stage. \n"
+"    -r --reference: input a directory includes referenced files about genesymbols and cids. \n";
 
 float global_ES[Global_ES_SIZE];
 
@@ -37,10 +39,17 @@ int main(int argc,char *argv[])
 	short gs[MAX_GENESET];
 	char gsStr[1024];
 	struct GSEA_RESULT *gsea_result;
-	FILE *fp;
 	double start,finish,duration;
 	
+	FILE *fp;
+	char conditions[L1000_CONDITION_LEN];
+	char conditionsfile[FileName_LEN];
+	char offsetfile[FileName_LEN];
+	char genelistfile[FileName_LEN];
+	long cidnum;
+	long offset;
 	int input_way;
+
 	int	paral_way = 1;
 	
 	// Unset flags (value -1).
@@ -49,7 +58,8 @@ int main(int argc,char *argv[])
     // Unset options (value 'UNSET').
 	char * const UNSET = "unset";
     char * input   = UNSET;
-	
+	char * sample   = UNSET;
+	char * reference   = UNSET;	
 	
 	if (argc == 1) 
 	{
@@ -63,11 +73,13 @@ int main(int argc,char *argv[])
 		static struct option long_options[] = {
 			{"thread",            required_argument,        0, 't'},
 			{"topn",              required_argument,        0, 'n'},
+			{"sample",             required_argument,        0, 's'},
+			{"reference",             required_argument,        0, 'r'},
 			{"input",             required_argument,        0, 'i'},
 			{0, 0, 0, 0}
 		};
 
-		c = getopt_long(argc, argv, "n:i:t:",
+		c = getopt_long(argc, argv, "n:i:t:s:r:",
             long_options, &option_index);
 	
 		if(c==-1)	break;
@@ -86,6 +98,33 @@ int main(int argc,char *argv[])
 			else 
 			{
 				fprintf(stderr, "%s --input set more than once\n", ERRM);
+				Usage();
+				exit(0);
+			}
+			break;
+			
+		
+		case 's':
+			if (sample == UNSET) 
+			{
+				sample = optarg;
+			}
+			else 
+			{
+				fprintf(stderr, "%s --sample set more than once\n", ERRM);
+				Usage();
+				exit(0);
+			}
+			break;
+			
+		case 'r':
+			if (reference == UNSET) 
+			{
+				reference = optarg;
+			}
+			else 
+			{
+				fprintf(stderr, "%s --reference set more than once\n", ERRM);
 				Usage();
 				exit(0);
 			}
@@ -143,8 +182,24 @@ int main(int argc,char *argv[])
 		exit(0);
 	}
 	
-
+	if((fp=fopen(sample,"r"))==NULL)
+	{
+		fprintf(stderr, "can not open %s file\n",sample);
+		exit(0);
+	}
+	fclose(fp);
 	
+	sprintf(genelistfile,"%s/Gene_List.txt",reference);
+	
+	if((fp=fopen(genelistfile,"r"))==NULL)
+	{
+		fprintf(stderr, "can not open %s file\n",genelistfile);
+		exit(0);
+	}
+	fclose(fp);
+	
+	sprintf(conditionsfile,"%s/Samples_Condition.txt",reference);
+	sprintf(offsetfile,"%s/Samples_RowByteOffset.txt",reference);
 		
 	printf("Profile Set is Loading...!\n");
 	
@@ -213,15 +268,31 @@ int main(int argc,char *argv[])
 	duration = finish-start;     
 	printf("loading IO and prework time by openmp: %.4f s\n",duration); 
 	
+	printf("which way do you want to input the GeneSet( 0 -> standard input , others -> file input ):");
+	scanf("%d", &input_way);
+	
+	if(input_way==0)
+	{
+		//get the geneset , split by space
+		getchar();
+		printf("input the GeneSet until 'exit'( a string of each Gene Symbol split by space ):\n");
+		scanf("%[^\n]",gsStr);	
+	}else
+	{
+		printf("input the path of file that has GeneSet until 'exit'(each line has a Gene Symbol/name):\n");
+		scanf("%s",gsStr);
+	}
 		
-	//get the geneset , split by space
-	printf("input the GeneSet( a integer[1-genelen] string split by space ):\n");
-	scanf("%[^\n]",gsStr);	
-	//gets(gsStr);
 	while(strcmp(gsStr,"exit")!=0)
 	{
 		//get the geneset
-		getGeneSet(gs,&siglen,gsStr);
+		if(input_way==0)
+		{
+			getGeneSet(gs,&siglen,gsStr,genelistfile);
+		}else
+		{
+			getGeneSetbyFile(gs,&siglen,gsStr,genelistfile);
+		}
 		
 		GET_TIME(start);
 		/********************run the GSEA algorithm by openmp*****************************/
@@ -265,21 +336,40 @@ int main(int argc,char *argv[])
 		quiksort_gsea(gsea_result,0,profilenum-1);
 		
 		/********************print the TopN GSEA result*************************/
-		printf("printf the high level of TopN GSEA result:\n");
+		printf("\nprintf the high level of TopN GSEA result:\n");
 		for(i = profilenum-1; i > profilenum-1-TopN; i--)
-			printf("NO.%d -> cid:%d  ES:%f  NES:%f  pv:%.10lf\n", profilenum-i, gsea_result[i].cid, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv);
-		printf("printf the low level of TopN GSEA result:\n");
+		{
+			cidnum = readByteOffsetFile(sample,gsea_result[i].cid);
+			offset = readByteOffsetFile(offsetfile,cidnum);
+			getSampleConditions(conditionsfile, offset, conditions);
+			printf("NO.%d -> SampleConditions: %s  ES:%f  NES:%f  pv:%.10lf\n", profilenum-i, conditions, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv);
+		}
+			
+		printf("\nprintf the low level of TopN GSEA result:\n");
 		for(i=0; i<TopN; i++)
-			printf("NO.%d -> cid:%d  ES:%f  NES:%f  pv:%.10lf\n", i+1, gsea_result[i].cid, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv);  
+		{
+			cidnum = readByteOffsetFile(sample,gsea_result[i].cid);
+			offset = readByteOffsetFile(offsetfile,cidnum);
+			getSampleConditions(conditionsfile, offset, conditions);
+			printf("NO.%d -> SampleConditions: %s  ES:%f  NES:%f  pv:%.10lf\n", i+1, conditions, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv); 
+		}
 				
 		GET_TIME(finish);
 		duration = finish-start;    //compute the GSEA time 
 		printf("finish GSEA time by openmp: %.4f s\n",duration); 
 		
 		getchar();    //remove the Enter from stdin
-		printf("input the GeneSet(split by space):\n");
-		scanf("%[^\n]",gsStr);
-		//gets(gsStr);		
+		//get the geneset
+		if(input_way==0)
+		{
+			//get the geneset , split by space
+			printf("input the GeneSet until 'exit'( a string of each Gene Symbol split by space ):\n");
+			scanf("%[^\n]",gsStr);	
+		}else
+		{
+			printf("input the path of file that has GeneSet until 'exit'(each line has a Gene Symbol/name):\n");
+			scanf("%s",gsStr);
+		}			
 	}
 	
 	//free the memory allocate dyn.

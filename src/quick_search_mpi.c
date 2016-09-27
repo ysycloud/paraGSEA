@@ -27,7 +27,9 @@ char *USAGE =
 "    -n --topn: The first and last N GSEA records ordered by ES\n"
 "\n"
 "  input/output options \n"
-"    -i --input: input file/a parsed profiles's file from pretreatment stage. \n";
+"    -i --input: input file/a parsed profiles's file from pretreatment stage. \n"
+"    -s --sample: input file/a parsed sample sequence number file from pretreatment stage. \n"
+"    -r --reference: input a directory includes referenced files about genesymbols and cids. \n";
 
 void Usage();
 void Build_derived_type(
@@ -54,6 +56,17 @@ int main(int argc,char *argv[])
 	int leave;		//the leave data number come from the data can not be divided totally by process number
 	int parameternum;
 	double start,finish,duration;
+	
+	
+	FILE *fp;
+	char conditionsfile[FileName_LEN];
+	char offsetfile[FileName_LEN];
+	char genelistfile[FileName_LEN];
+	int input_way;
+	
+	char conditions[L1000_CONDITION_LEN];
+	long cidnum;
+	long offset;
 	
 	/* Let the system do what it needs to start up MPI */
     MPI_Init(&argc, &argv);
@@ -84,6 +97,8 @@ int main(int argc,char *argv[])
     // Unset options (value 'UNSET').
 	char * const UNSET = "unset";
     char * input   = UNSET;
+	char * sample   = UNSET;
+	char * reference   = UNSET;
 	
 	int c;
 	while (1) {
@@ -91,10 +106,12 @@ int main(int argc,char *argv[])
 		static struct option long_options[] = {
 			{"topn",              required_argument,        0, 'n'},
 			{"input",             required_argument,        0, 'i'},
+			{"sample",             required_argument,        0, 's'},
+			{"reference",             required_argument,        0, 'r'},
 			{0, 0, 0, 0}
 		};
 
-		c = getopt_long(argc, argv, "n:i:",
+		c = getopt_long(argc, argv, "n:i:s:r:",
             long_options, &option_index);
 	
 		if(c==-1)	break;
@@ -117,6 +134,32 @@ int main(int argc,char *argv[])
 					fprintf(stderr, "%s --input set more than once\n", ERRM);
 					Usage();
 				}				
+				exit(0);
+			}
+			break;
+			
+		case 's':
+			if (sample == UNSET) 
+			{
+				sample = optarg;
+			}
+			else 
+			{
+				fprintf(stderr, "%s --sample set more than once\n", ERRM);
+				Usage();
+				exit(0);
+			}
+			break;
+			
+		case 'r':
+			if (reference == UNSET) 
+			{
+				reference = optarg;
+			}
+			else 
+			{
+				fprintf(stderr, "%s --reference set more than once\n", ERRM);
+				Usage();
 				exit(0);
 			}
 			break;
@@ -158,6 +201,27 @@ int main(int argc,char *argv[])
 			fprintf(stderr,"Not Set TopN parameter!\n");
 		exit(0);
 	}
+	
+	if((fp=fopen(sample,"r"))==NULL)
+	{
+		if(my_rank==0)
+			fprintf(stderr, "can not open %s file\n",sample);
+		exit(0);
+	}
+	fclose(fp);
+	
+	sprintf(genelistfile,"%s/Gene_List.txt",reference);
+	
+	if((fp=fopen(genelistfile,"r"))==NULL)
+	{
+		if(my_rank==0)
+			fprintf(stderr, "can not open %s file\n",genelistfile);
+		exit(0);
+	}
+	fclose(fp);
+	
+	sprintf(conditionsfile,"%s/Samples_Condition.txt",reference);
+	sprintf(offsetfile,"%s/Samples_RowByteOffset.txt",reference);
 
 	//barrier all processes to compute time
 	MPI_Barrier(MPI_COMM_WORLD); 
@@ -228,18 +292,36 @@ int main(int argc,char *argv[])
 	}
 	
 	if(my_rank == 0){		
-		//get the geneset , split by space
-		printf("input the GeneSet( a integer[1-genelen] string split by space ):\n");
-		scanf("%[^\n]",gsStr);
-		getchar();
+		
+		printf("which way do you want to input the GeneSet( 0 -> standard input , others -> file input ):");
+		scanf("%d", &input_way);
+	
+		if(input_way==0)
+		{
+			//get the geneset , split by space
+			getchar();
+			printf("input the GeneSet until 'exit'( a string of each Gene Symbol split by space ):\n");
+			scanf("%[^\n]",gsStr);	
+		}else
+		{
+			printf("input the path of file that has GeneSet until 'exit'(each line has a Gene Symbol/name):\n");
+			scanf("%s",gsStr);
+		}
 	}
 	
 	MPI_Bcast( gsStr, 1024, MPI_CHAR, 0 ,MPI_COMM_WORLD);  //Bcast the gsStr to all process
+	MPI_Bcast( &input_way, 1, MPI_INT, 0 ,MPI_COMM_WORLD);  //Bcast the input_way to all process
 		
 	while(strcmp(gsStr,"exit")!=0)
 	{
 		//get the geneset
-		getGeneSet(gs,&siglen,gsStr);
+		if(input_way==0)
+		{
+			getGeneSet(gs,&siglen,gsStr,genelistfile);
+		}else
+		{
+			getGeneSetbyFile(gs,&siglen,gsStr,genelistfile);
+		}
 	
 		MPI_Barrier(MPI_COMM_WORLD);
 		/********************run the GSEA algorithm by mpi****************************/
@@ -291,12 +373,22 @@ int main(int argc,char *argv[])
 			quiksort_gsea(gsea_result,0,profilenum-1);
 		
 			/********************print the TopN GSEA result*************************/
-			printf("printf the high level of TopN GSEA result:\n");
+			printf("\nprintf the high level of TopN GSEA result:\n");
 			for(i = profilenum-1; i > profilenum-1-TopN; i--)
-				printf("NO.%d -> cid:%d  ES:%f  NES:%f  pv:%.10lf\n", profilenum-i, gsea_result[i].cid, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv);
-			printf("printf the low level of TopN GSEA result:\n");
+			{
+				cidnum = readByteOffsetFile(sample,gsea_result[i].cid);
+				offset = readByteOffsetFile(offsetfile,cidnum);
+				getSampleConditions(conditionsfile, offset, conditions);
+				printf("NO.%d -> SampleConditions: %s  ES:%f  NES:%f  pv:%.10lf\n", profilenum-i, conditions, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv);
+			}
+			printf("\nprintf the low level of TopN GSEA result:\n");
 			for(i=0; i<TopN; i++)
-				printf("NO.%d -> cid:%d  ES:%f  NES:%f  pv:%.10lf\n", i+1, gsea_result[i].cid, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv);  
+			{
+				cidnum = readByteOffsetFile(sample,gsea_result[i].cid);
+				offset = readByteOffsetFile(offsetfile,cidnum);
+				getSampleConditions(conditionsfile, offset, conditions);
+				printf("NO.%d -> SampleConditions: %s  ES:%f  NES:%f  pv:%.10lf\n", i+1, conditions, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv); 
+			}
 		}
 	
 		MPI_Barrier(MPI_COMM_WORLD);
@@ -306,10 +398,18 @@ int main(int argc,char *argv[])
 			duration = finish-start;     
 			printf("finish GSEA time by MPI: %.4f s\n",duration);
 			
-			//get the geneset , split by space
-			printf("input the GeneSet(split by space):\n");
-			scanf("%[^\n]",gsStr);
-			getchar();
+			getchar();    //remove the Enter from stdin
+			//get the geneset
+			if(input_way==0)
+			{
+				//get the geneset , split by space
+				printf("input the GeneSet until 'exit'( a string of each Gene Symbol split by space ):\n");
+				scanf("%[^\n]",gsStr);	
+			}else
+			{
+				printf("input the path of file that has GeneSet until 'exit'(each line has a Gene Symbol/name):\n");
+				scanf("%s",gsStr);
+			}	
 		}
 		MPI_Bcast( gsStr, 1024, MPI_CHAR, 0 ,MPI_COMM_WORLD);  //Bcast the gsStr to all process
 	}

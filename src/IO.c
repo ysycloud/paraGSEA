@@ -374,8 +374,8 @@ void WritetxtClusterResult(int classflag[] ,int len, int cluster, char writepath
 	flag = (int *) malloc(len*sizeof(int));
 	classes = (int *) malloc(len*sizeof(int));
 	memset(flag,0,len*sizeof(int));	
-	char conditionsfile[100];
-	char offsetfile[100];
+	char conditionsfile[FileName_LEN];
+	char offsetfile[FileName_LEN];
 	
 	sprintf(conditionsfile,"%s/Samples_Condition.txt",referencedirectory);
 	sprintf(offsetfile,"%s/Samples_RowByteOffset.txt",referencedirectory);

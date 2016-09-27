@@ -10,6 +10,7 @@
 #define permutation_SIZE 1000
 #define L1000_LEN 1000
 #define L1000_CONDITION_LEN 150
+#define FileName_LEN 150
 
 struct Profile_triple{
 	short gsUp[MAX_GENESET];

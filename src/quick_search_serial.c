@@ -21,8 +21,8 @@ char *USAGE =
 "    -n --topn: The first and last N GSEA records ordered by ES\n"
 "\n"
 "  input/output options \n"
-"    -i --input: input file/a parsed profiles's file from pretreatment stage. \n";
-"    -s --sample: input file/a parsed sample sequence number file from pretreatment stage. \n";
+"    -i --input: input file/a parsed profiles's file from pretreatment stage. \n"
+"    -s --sample: input file/a parsed sample sequence number file from pretreatment stage. \n"
 "    -r --reference: input a directory includes referenced files about genesymbols and cids. \n";
 
 float global_ES[Global_ES_SIZE];
@@ -36,13 +36,18 @@ int main(int argc,char *argv[])
 	short **indexSet;
 	short gs[MAX_GENESET];
 	char gsStr[1024];
-	char conditions[L1000_CONDITION_LEN];
 	struct GSEA_RESULT *gsea_result;	
 	double start,finish,duration;
 	
+	FILE *fp;
+	char conditions[L1000_CONDITION_LEN];
+	char conditionsfile[FileName_LEN];
+	char offsetfile[FileName_LEN];
+	char genelistfile[FileName_LEN];
 	long cidnum;
 	long offset;
 	int input_way;
+	
 	// Unset flags (value -1).
 	int TopN = -1;
     // Unset options (value 'UNSET').
@@ -50,10 +55,6 @@ int main(int argc,char *argv[])
     char * input   = UNSET;
 	char * sample   = UNSET;
 	char * reference   = UNSET;
-	
-	char 
-	
-	
 	
 	if (argc == 1) 
 	{
@@ -96,7 +97,7 @@ int main(int argc,char *argv[])
 			}
 			break;
 		
-		case 'i':
+		case 's':
 			if (sample == UNSET) 
 			{
 				sample = optarg;
@@ -156,6 +157,19 @@ int main(int argc,char *argv[])
 		fprintf(stderr, "can not open %s file\n",sample);
 		exit(0);
 	}
+	fclose(fp);
+	
+	sprintf(genelistfile,"%s/Gene_List.txt",reference);
+	
+	if((fp=fopen(genelistfile,"r"))==NULL)
+	{
+		fprintf(stderr, "can not open %s file\n",genelistfile);
+		exit(0);
+	}
+	fclose(fp);
+	
+	sprintf(conditionsfile,"%s/Samples_Condition.txt",reference);
+	sprintf(offsetfile,"%s/Samples_RowByteOffset.txt",reference);
 	
 	printf("Profile Set is Loading...!\n");
 	
@@ -211,16 +225,15 @@ int main(int argc,char *argv[])
 		scanf("%s",gsStr);
 	}
 	
-	//gets(gsStr);
 	while(strcmp(gsStr,"exit")!=0) 
 	{
 		//get the geneset
 		if(input_way==0)
 		{
-			getGeneSet(gs,&siglen,gsStr);
+			getGeneSet(gs,&siglen,gsStr,genelistfile);
 		}else
 		{
-			getGeneSetbyFile(gs,&siglen,gsStr);
+			getGeneSetbyFile(gs,&siglen,gsStr,genelistfile);
 		}
 		
 		GET_TIME(start);
@@ -241,18 +254,18 @@ int main(int argc,char *argv[])
 		printf("\nprintf the high level of TopN GSEA result:\n");
 		for(i = profilenum-1; i > profilenum-1-TopN; i--)
 		{
-			cidnum = readByteOffsetFile("data/data_for_test_cidnum.txt",gsea_result[i].cid);
-			offset = readByteOffsetFile("data/prepareForNewDataSet/Samples_RowByteOffset.txt",cidnum);
-			getSampleConditions("data/prepareForNewDataSet/Samples_Condition.txt", offset, conditions);
+			cidnum = readByteOffsetFile(sample,gsea_result[i].cid);
+			offset = readByteOffsetFile(offsetfile,cidnum);
+			getSampleConditions(conditionsfile, offset, conditions);
 			printf("NO.%d -> SampleConditions: %s  ES:%f  NES:%f  pv:%.10lf\n", profilenum-i, conditions, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv);
 		}
 			
 		printf("\nprintf the low level of TopN GSEA result:\n");
 		for(i=0; i<TopN; i++)
 		{
-			cidnum = readByteOffsetFile("data/data_for_test_cidnum.txt",gsea_result[i].cid);
-			offset = readByteOffsetFile("data/prepareForNewDataSet/Samples_RowByteOffset.txt",cidnum);
-			getSampleConditions("data/prepareForNewDataSet/Samples_Condition.txt", offset, conditions);
+			cidnum = readByteOffsetFile(sample,gsea_result[i].cid);
+			offset = readByteOffsetFile(offsetfile,cidnum);
+			getSampleConditions(conditionsfile, offset, conditions);
 			printf("NO.%d -> SampleConditions: %s  ES:%f  NES:%f  pv:%.10lf\n", i+1, conditions, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv); 
 		}
 			 				
