@@ -229,7 +229,7 @@ int main(int argc,char *argv[])
 	if((fp=fopen(genelistfile,"r"))==NULL)
 	{
 		if(my_rank==0)
-			fprintf(stderr, "the reference directory may be incorrect!");
+			fprintf(stderr, "the reference directory may be incorrect!\n");
 		MPI_Finalize();
 		exit(0);
 	}
@@ -334,9 +334,33 @@ int main(int argc,char *argv[])
 		if(input_way==0)
 		{
 			getGeneSet(gs,&siglen,gsStr,genelistfile);
+			if(siglen==0)
+			{
+				if(my_rank==0)
+				{
+					getchar();    //remove the Enter from stdin
+					printf("There is no gene be hitted, please make sure the GeneSet have at least onr Gene in Profile!\n");
+					printf("input the GeneSet until 'exit'( a string of each Gene Symbol split by space ):\n");
+					scanf("%[^\n]",gsStr);
+				}
+				MPI_Bcast( gsStr, 1024, MPI_CHAR, 0 ,MPI_COMM_WORLD);
+				continue;
+			}
 		}else
 		{
 			getGeneSetbyFile(gs,&siglen,gsStr,genelistfile);
+			if(siglen==0)
+			{
+				if(my_rank==0)
+				{
+					getchar();    //remove the Enter from stdin
+					printf("There is no gene be hitted, please make sure the GeneSet have at least onr Gene in Profile!\n");
+					printf("input the path of file that has GeneSet until 'exit'(each line has a Gene Symbol/name):\n");
+					scanf("%s",gsStr);
+				}
+				MPI_Bcast( gsStr, 1024, MPI_CHAR, 0 ,MPI_COMM_WORLD);
+				continue;
+			}
 		}
 	
 		MPI_Barrier(MPI_COMM_WORLD);
@@ -395,7 +419,7 @@ int main(int argc,char *argv[])
 				cidnum = readByteOffsetFile(sample,gsea_result[i].cid);
 				offset = readByteOffsetFile(offsetfile,cidnum);
 				getSampleConditions(conditionsfile, offset, conditions);
-				printf("NO.%d -> SampleConditions: %s  ES:%f  NES:%f  pv:%.10lf\n", profilenum-i, conditions, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv);
+				printf("\nNO.%d -> SampleConditions: %s  ES:%f  NES:%f  pv:%.10lf\n", profilenum-i, conditions, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv);
 			}
 			printf("\nprintf the low level of TopN GSEA result:\n");
 			for(i=0; i<TopN; i++)
@@ -403,7 +427,7 @@ int main(int argc,char *argv[])
 				cidnum = readByteOffsetFile(sample,gsea_result[i].cid);
 				offset = readByteOffsetFile(offsetfile,cidnum);
 				getSampleConditions(conditionsfile, offset, conditions);
-				printf("NO.%d -> SampleConditions: %s  ES:%f  NES:%f  pv:%.10lf\n", i+1, conditions, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv); 
+				printf("\nNO.%d -> SampleConditions: %s  ES:%f  NES:%f  pv:%.10lf\n", i+1, conditions, gsea_result[i].ES, gsea_result[i].NES, gsea_result[i].pv); 
 			}
 		}
 	

@@ -288,7 +288,7 @@ int main(int argc,char *argv[])
 	if((fp=fopen(genelistfile,"r"))==NULL)
 	{
 		if(my_rank==0)
-			fprintf(stderr, "the reference directory may be incorrect!");
+			fprintf(stderr, "the reference directory may be incorrect!\n");
 		MPI_Finalize();
 		exit(0);
 	}

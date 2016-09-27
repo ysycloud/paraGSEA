@@ -283,7 +283,7 @@ void readGeneListFile(char genelist[][12] ,int *line, char path[])
 	if((fp=fopen(path,"r"))==NULL)
 	{
 		printf("can not open %s file\n",path);
-		exit(1);
+		exit(0);
 	}
 	*line=0;
 
@@ -300,12 +300,12 @@ void getByteOffsetFile(char path1[],char path2[])
 	if((fp1=fopen(path1,"r"))==NULL)
 	{
 		printf("can not open %s file\n",path1);
-		exit(1);
+		exit(0);
 	}
 	if((fp2=fopen(path2,"w"))==NULL)
 	{
 		printf("can not open %s file\n",path2);
-		exit(1);
+		exit(0);
 	}
 	
 	int line=0;
@@ -335,7 +335,7 @@ long readByteOffsetFile(char path[],int row_num)
 	if((fp=fopen(path,"r"))==NULL)
 	{
 		printf("can not open %s file\n",path);
-		exit(1);
+		exit(0);
 	}
 
 	fseek(fp,(row_num-1)*11,SEEK_CUR); 
@@ -354,7 +354,7 @@ void getSampleConditions(char path[], long offset, char conditions[])
 	if((fp=fopen(path,"r"))==NULL)
 	{
 		printf("can not open %s file\n",path);
-		exit(1);
+		exit(0);
 	}
 
 	fseek(fp,offset,SEEK_CUR); 
@@ -384,7 +384,7 @@ void WritetxtClusterResult(int classflag[] ,int len, int cluster, char writepath
 	if((fp=fopen(writepath,"w"))==NULL)
 	{
 		printf("can not open the %s file to write!\n",writepath);
-		exit(1);
+		exit(0);
 	}
 	
 	for( i=0; i < len; i++)
@@ -407,8 +407,7 @@ void WritetxtClusterResult(int classflag[] ,int len, int cluster, char writepath
 				getSampleConditions( conditionsfile, offset, conditions);
 				fprintf(fp,"%s",conditions);
 			}				
-		}
-			
+		}		
 	}
 	
 	fclose(fp);
