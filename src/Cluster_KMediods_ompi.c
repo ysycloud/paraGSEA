@@ -31,7 +31,7 @@ char *USAGE =
 "	 -c	--cluster: the number of clusters we want to get\n"
 				
 "\n"
-"  input/output options \n"
+"  input/output options: \n"
 "    -i --input1: distributed ES_Matrix file we get from stage 2(Compare Profiles)\n"
 "	 -o --output: output class flags file of every profiles in root node\n"
 "    -s --sample: input file/a parsed sample sequence number file from pretreatment stage. \n"

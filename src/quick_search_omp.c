@@ -22,7 +22,7 @@ char *USAGE =
 "	 -t --thread: the number of threads\n"
 "    -n --topn: The first and last N GSEA records ordered by ES\n"
 "\n"
-"  input/output options \n"
+"  input/output options: \n"
 "    -i --input: input file/a parsed profiles's file from pretreatment stage. \n"
 "    -s --sample: input file/a parsed sample sequence number file from pretreatment stage. \n"
 "    -r --reference: input a directory includes referenced files about genesymbols and cids. \n";

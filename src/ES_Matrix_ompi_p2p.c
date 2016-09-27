@@ -28,7 +28,7 @@ char *USAGE =
 "    -t --thread: the number of threads in per process_num\n"
 "	 -l	--siglen: the length of Gene Expression Signature\n"
 "\n"
-"  input/output options \n"
+"  input/output options: \n"
 "    -1 --input1: a parsed profiles's file from pretreatment stage.\n"
 "    -2 --input2: another parsed profiles's file from pretreatment stage.\n"
 "	 -o --output: output file ,distributed in every nodes ,with ES Matrix\n";
