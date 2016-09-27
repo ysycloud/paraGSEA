@@ -23,7 +23,7 @@ o=ones(at_m,2);
 probe=1:at_m; 
 o=[index',probe'];
 o= sortrows(o,1);
-fid1 = fopen('../data/prepareForNewDataSet/Gene_List.txt', 'w');
+fid1 = fopen('../data/Reference/Gene_List.txt', 'w');
 for i=1:m
 	j = at_m-m+i;
 	geneSymbol(i)=annot_Symbol(o(j,2));
@@ -32,8 +32,8 @@ end
 fclose(fid1);
 
 %write out cid/condition_info and line offset file in new dataset 
-fid2 = fopen('../data/prepareForNewDataSet/Samples_Condition.txt', 'w');
-fid3 = fopen('../data/prepareForNewDataSet/Samples_RowByteOffset.txt', 'w');
+fid2 = fopen('../data/Reference/Samples_Condition.txt', 'w');
+fid3 = fopen('../data/Reference/Samples_RowByteOffset.txt', 'w');
 offset = 0;
 cid_tmp = regexp(ds_cid,':','split');
 for i=1:n
