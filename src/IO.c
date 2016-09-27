@@ -392,15 +392,15 @@ void WritetxtClusterResult(int classflag[] ,int len, int cluster, char writepath
 	for( i=0; i<cluster; i++)
 	{
 		
-		fprintf(fp,"cluster %d :\n",i+1);
+		fprintf(fp,"\ncluster %d :\n",i+1);
 		for( j=0; j < len; j++)
 		{
 			if(classes[j]==(i+1))
 			{
-				cidnum = readByteOffsetFile("data/data_for_test_cidnum.txt",gsea_result[i].cid);
+				cidnum = readByteOffsetFile("data/data_for_test_cidnum.txt",j+1);
 				offset = readByteOffsetFile("data/prepareForNewDataSet/Samples_RowByteOffset.txt",cidnum);
 				getSampleConditions("data/prepareForNewDataSet/Samples_Condition.txt", offset, conditions);
-				fprintf(fp,"%s\n",conditions);
+				fprintf(fp,"%s",conditions);
 			}				
 		}
 			
