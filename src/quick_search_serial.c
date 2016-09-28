@@ -18,7 +18,7 @@ char *USAGE =
 "  quick_search_serial [options]\n"
 "\n"
 "  general options:\n"
-"    -n --topn: The first and last N GSEA records ordered by ES\n"
+"    -n --topn: The first and last N GSEA records ordered by ES. [ default 10 ]"
 "\n"
 "  input/output options: \n"
 "    -i --input: input file/a parsed profiles's file from pretreatment stage. \n"
@@ -147,10 +147,7 @@ int main(int argc,char *argv[])
 	
 	//check the parameters
 	if(TopN==-1)
-	{
-		fprintf(stderr,"[ param error : -n ] Not Set TopN parameter!\n");
-		exit(0);
-	}
+		TopN = 10;
 	
 	if((fp=fopen(sample,"r"))==NULL)
 	{

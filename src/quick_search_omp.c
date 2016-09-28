@@ -19,8 +19,8 @@ char *USAGE =
 "  quick_search_omp [options]\n"
 "\n"
 "  general options:\n"
-"	 -t --thread: the number of threads\n"
-"    -n --topn: The first and last N GSEA records ordered by ES\n"
+"	 -t --thread: the number of threads. [ default 1 ] \n"
+"    -n --topn: The first and last N GSEA records ordered by ES. [ default 10 ]\n"
 "\n"
 "  input/output options: \n"
 "    -i --input: input file/a parsed profiles's file from pretreatment stage. \n"
@@ -171,16 +171,10 @@ int main(int argc,char *argv[])
 
 	//check the parameters
 	if(TopN==-1)
-	{
-		fprintf(stderr," [ param error : -n ] Not Set TopN parameter!\n");
-		exit(0);
-	}
+		TopN = 10;
 	
 	if(thread_count==-1)
-	{
-		fprintf(stderr," [ param error : -t ] Not Set Thread parameter!\n");
-		exit(0);
-	}
+		thread_count = 1;
 	
 	if((fp=fopen(sample,"r"))==NULL)
 	{

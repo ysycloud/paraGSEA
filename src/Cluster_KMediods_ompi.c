@@ -22,13 +22,13 @@ char *USAGE =
 "  Cluster_KMediods_ompi [options]\n"
 "\n"
 "  general options before command by MPI:\n"
-"	 -n process_num : Total number of processes\n"
-"	 -ppn pernum: the number of processes in each node\n"
-"	 -hostfile hostfile:  list the IP or Hostname of nodes\n"
+"	 -n process_num : Total number of processes. [ default 1 ]\n"
+"	 -ppn pernum: the number of processes in each node. [ default 1 ]\n"
+"	 -hostfile hostfile:  list the IP or Hostname of nodes. [ default localhost ]"
 "\n"
 "  general options:\n"
-"    -t --thread: the number of threads in per process_num\n"
-"	 -c	--cluster: the number of clusters we want to get\n"
+"    -t --thread: the number of threads in per process_num. [ default 1 ]\n"
+"	 -c	--cluster: the number of clusters we want to get. [ default 5 ]\n"
 				
 "\n"
 "  input/output options: \n"
@@ -257,19 +257,10 @@ int main(int argc,char *argv[])
 
 	//check the parameters
 	if(corenum == -1)
-	{
-		if(my_rank==0)
-			fprintf(stderr," [ param error : -t ] Not Set thread parameter!\n");
-		MPI_Finalize();
-		exit(0);
-	}
+		corenum = 1;
+	
 	if(cluster_center_num == -1)
-	{
-		if(my_rank==0)
-			fprintf(stderr," [ param error : -c ] Not Set cluster num parameter!\n");
-		MPI_Finalize();
-		exit(0);
-	}
+		cluster_center_num = 5;
 	
 	if((fp=fopen(sample,"r"))==NULL)
 	{

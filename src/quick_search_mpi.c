@@ -19,12 +19,12 @@ char *USAGE =
 "  quick_search_mpi [options]\n"
 "\n"
 "  general options before command by MPI:\n"
-"	 -n process_num : Total number of processes\n"
-"	 -ppn pernum: the number of processes in each node\n"
-"	 -hostfile hostfile:  list the IP or Hostname of nodes"
+"	 -n process_num : Total number of processes. [ default 1 ]\n"
+"	 -ppn pernum: the number of processes in each node. [ default 1 ]\n"
+"	 -hostfile hostfile:  list the IP or Hostname of nodes. [ default localhost ]"
 "\n"
 "  general options:\n"
-"    -n --topn: The first and last N GSEA records ordered by ES\n"
+"    -n --topn: The first and last N GSEA records ordered by ES. [ default 10 ]\n"
 "\n"
 "  input/output options: \n"
 "    -i --input: input file/a parsed profiles's file from pretreatment stage. \n"
@@ -208,12 +208,7 @@ int main(int argc,char *argv[])
 
 	//check the parameters
 	if(TopN==-1)
-	{
-		if(my_rank==0)
-			fprintf(stderr," [ param error : -n ] Not Set TopN parameter!\n");
-		MPI_Finalize();
-		exit(0);
-	}
+		TopN = 10;
 	
 	if((fp=fopen(sample,"r"))==NULL)
 	{

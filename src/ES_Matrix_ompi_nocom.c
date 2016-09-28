@@ -20,13 +20,13 @@ char *USAGE =
 "  ES_Matrix_ompi_nocom [options]\n"
 "\n"
 "  general options before command by MPI:\n"
-"	 -n process_num : Total number of processes\n"
-"	 -ppn pernum: the number of processes in each node\n"
-"	 -hostfile hostfile:  list the IP or Hostname of nodes"
+"	 -n process_num : Total number of processes. [ default 1 ]\n"
+"	 -ppn pernum: the number of processes in each node. [ default 1 ]\n"
+"	 -hostfile hostfile:  list the IP or Hostname of nodes. [ default localhost ]"
 "\n"
 "  general options:\n"
-"    -t --thread: the number of threads in per process_num\n"
-"	 -l	--siglen: the length of Gene Expression Signature\n"
+"    -t --thread: the number of threads in per process_num. [ default 1 ]\n"
+"	 -l	--siglen: the length of Gene Expression Signature. [ default 50 ]\n"
 "\n"
 "  input/output options: \n"
 "    -1 --input1: a parsed profiles's file from pretreatment stage.\n"
@@ -224,19 +224,10 @@ int main(int argc,char *argv[])
 
 	//check the parameters
 	if(corenum == -1)
-	{
-		if(my_rank==0)
-			fprintf(stderr," [ param error : -t ] Not Set thread parameter!\n");
-		MPI_Finalize();
-		exit(0);
-	}
+		corenum = 1;
+	
 	if(siglen == -1)
-	{
-		if(my_rank==0)
-			fprintf(stderr," [ param error : -l ] Not Set siglen parameter!\n");
-		MPI_Finalize();
-		exit(0);
-	}
+		siglen = 50;
 	
 	if(output == UNSET)
 	{
