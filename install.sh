@@ -7,7 +7,5 @@ cd paraGSEA
 make all
 #install
 make install
-#clean
-make clean
 #Test
 quick_search_serial

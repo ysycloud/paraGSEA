@@ -3,16 +3,16 @@ Gene Set Enrichment Analysis (GSEA) Tools for LINCS data in a parallel manner
 
 ## I. Description
 
-paraGSEA implements MPI and OpenMP-Based parallel GSEA algorithm for multi-core or cluster architecture. 
+paraGSEA implements a MPI and OpenMP-Based parallel GSEA algorithm for multi-core or cluster architecture. 
 
 Many studies have been conducted using gene expression profile similarity to identify functional connections among genes and drugs. While working well for query single gene set in reference of small datasets, its scalability and computation performance is poor in large scale datasets. Here we propose paraGSEA, a parallel computing framework for large scale transcriptomics data analysis. In the process of pairwise similarity metric generation and expression profile clustering, time and space complexity are greatly reduced through elimination of redundant GSEA calculations and optimization of parallel procedures. The framework can be executed on multi-CPU or multi-core computing systems in an efficient manner.
 
 In general, We used the 1ktools(https://github.com/cmap/l1ktools) tools to parse the .gctx file which stored gene profile data defined by Lincs(CMap) based on HDF5 file format.We used Matlab to parse the .gctx file、extract the gene profile sets and write to .txt file. C will read the file 、complete parallel GSEA and write out the result in a suitable file.
 
 ## II. Implementation Details
-Several optimizations are implemented in paraGSEA for every stages.
+There mainly parts of work and several optimizations are implemented in paraGSEA.
 
-1. In our work, we first implemented GSEA approach in efficient parallel strategy with MPI and OpenMP.In this part, on the one hand, we reduced the computational overhead of standard procedure to calculate the Enrichment Score by pre-sorting, indexing and removing the prefix sum. On the other hand, we will take a global permutation method to wipe off the redundant overhead of estimation of significance level step and multiple hypothesis testing step.
+1. First, we implement GSEA approach in efficient parallel strategy with MPI and OpenMP to perform a quick search task, which needs users input a gene set and it will output the top N results after searching the profile data set by carrying out GSEA calculations. In this part, on the one hand, we reduced the computational overhead of standard procedure to calculate the Enrichment Score by pre-sorting, indexing and removing the prefix sum. On the other hand, we will take a global permutation method to wipe off the redundant overhead of estimation of significance level step and multiple hypothesis testing step.
 
 2. Second, we expanded GSEA’s application to quickly compare two gene profile sets to get an Enrichment Score matrix of every gene profile pairs. In this part, in addition to using the previous optimization strategies, our implementation also allows to generate a second level of parallelization by creating several threads per MPI process. The assignment of tasks to threads or processes is performed through a strict load balancing strategy, which leads to a better performance.
 
@@ -127,8 +127,6 @@ cd paraGSEA
 make all
 #install
 make install
-#clean
-make clean
 ```
 
 #### VI.II.III. Tools:
