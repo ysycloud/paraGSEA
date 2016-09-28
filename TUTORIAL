@@ -38,12 +38,12 @@ Setting the MATLAB path:
 Enter the "pathtool" command, click "Add with Subfolders...", and select the directory ParaGSEA/matlab_for_parse.
 
 using by command line:
-You can easilly use the script `example/runPreGSEAbyMatlab.sh` to parse the original data. Or you 
-can easilly use the script `example/runparaPreGSEAbyMatlab.sh` to parse the original data in a more 
+You can easily use the script `example/runPreGSEAbyMatlab.sh` to parse the original data. Or you 
+can easily use the script `example/runparaPreGSEAbyMatlab.sh` to parse the original data in a more 
 efficent way but you must make sure that you have a multicores environment first. 
 
 The input and output file path you must set in both two script, and an extra core number is also supposed to be
-setted in the second script. However, you must notice that the number of cores must be smaller than the actual 
+set in the second script. However, you must notice that the number of cores must be smaller than the actual 
 core number in your system.
 
 -----------------------------------------------------
