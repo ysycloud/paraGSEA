@@ -41,24 +41,32 @@ if ~exist('concentration') %not set, concentration will not be consider
 end
 
 ds = parse_gctx(file_input);
-%ds = parse_gct(file_input);
+%ds = parse_gct(file_input);	%-------------------please change this line if the file is .gct--------------------%
 mat = ds.mat;
 [m,n]=size(ds.mat);
 
 tic
-%check the field name
+%check samples field number
 [cisin,cindex] = ismember(sample_conditions_chd, ds.chd);
+
+[~,fn] = size(cisin);
+if fn~=5   %only judge 5 fields
+	disp('[ Field Error ]sample conditions field number error, please make sure before generating a reference!');
+	clear;
+	return;
+end
+
 if cisin(1)==0
 	disp('cell line field name error, we will ignore cell_id_set');
 	isCell = 1;
 end
 if cisin(2)==0
 	disp('perturbation field name error, we will ignore pert_set');
-	isCell = 1;
+	isPert = 1;
 end
 if cisin(3)==0
 	disp('perturbation type field name error, we will ignore pert_type');
-	isPert = 1;
+	isType = 1;
 end
 if cisin(4)==0
 	disp('duration field name error, we will ignore duration');
@@ -81,8 +89,14 @@ count = 0;
 o=ones(m,2);
 for i = 1:n
 	
+	if isDura == 0 
+		dura_now = str2num(ds.cdesc{i,cindex(4)}(isstrprop(ds.cdesc{i,cindex(4)},'digit')));  %extract the number part
+	end
+	if isCon == 0 
+		con_now = str2num(ds.cdesc{i,cindex(5)}(isstrprop(ds.cdesc{i,cindex(5)},'digit')));  %extract the number part
+	end
 	
-	if ( isCell || ismember(cid_info{i}{1}{2},cell_id_set) ) && ( isPert || ismember(cid_info{i}{2}{1},pert_set) ) && ( isDura || isequal(cid_info{i}{1}{3},duration) ) && ( isCon || isequal(cid_info{i}{3}{1},concentration) )
+	if ( isCell || ismember(ds.cdesc{i,cindex(1)},cell_id_set) ) && ( isPert || ismember(ds.cdesc{i,cindex(2)}, pert_set) ) && ( isType || isequal(ds.cdesc{i,cindex(3)}, pert_type) ) && ( isDura || dura_now == duration ) && ( isCon || con_now == concentration )
 		count = count+1;  %count the number of fit profile
 		o = [mat(:,i),probe];
 		o = sortrows(o,1);
