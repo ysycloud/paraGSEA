@@ -1,3 +1,4 @@
+% default parameters
 if ~exist('gene_symbol_rhd')
 	gene_symbol_rhd = 'pr_gene_symbol';
 end
@@ -11,11 +12,18 @@ if ~exist('datasource')
 end
 
 ds= parse_gctx(datasource);
-%ds= parse_gct(datasource);
+%ds= parse_gct(datasource);  %-------------------please change this line if the file is .gct--------------------%
 [m,n]=size(ds.mat);
 
 %write out GeneSymbols corresponding to the rid in new dataset 
 [risin,rindex] = ismember(gene_symbol_rhd, ds.rhd);
+
+%check the gene_symbol field name
+if risin==0
+	disp('[ Field Error ]gene_symbol field name error, please make sure before generating a reference!');
+	clear;
+	return;
+end
 fid1 = fopen('../data/Reference/Gene_List.txt', 'w');
 for i=1:m
 	fprintf(fid1,'%s\n',ds.rdesc{i,rindex});
@@ -24,11 +32,21 @@ fclose(fid1);
 
 %write out cid/condition_info and line offset file in new dataset
 [cisin,cindex] = ismember(sample_conditions_chd, ds.chd);
+
+%check samples field number
+[~,fn] = size(cisin);
+if fn~=5   %only judge 5 fields
+	disp('[ Field Error ]sample conditions field number error, please make sure before generating a reference!');
+	clear;
+	return;
+end
+
 fid2 = fopen('../data/Reference/Samples_Condition.txt', 'w');
 fid3 = fopen('../data/Reference/Samples_RowByteOffset.txt', 'w');
 offset = 0;
 for i=1:n
 	fprintf(fid3,'%10d\t',offset);
+	% check the samples field name 
 	if cisin(1)==0
 		cell_line = 'field error';
 	else
