@@ -26,7 +26,7 @@ if ~exist('pert_set') %not set, perturbation will not be consider
 end
 
 isType = 0;
-if ~exist('pert_type') %not set, perturbation will not be consider
+if ~exist('pert_type') %not set, perturbation type will not be consider
 	isType = 1;
 end
 
