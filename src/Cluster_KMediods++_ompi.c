@@ -19,7 +19,7 @@
 char *USAGE =
 "\n"
 "Usage:"
-"  Cluster_KMediods_ompi [options]\n"
+"  Cluster_KMediods++_ompi [options]\n"
 "\n"
 "  general options before command by MPI:\n"
 "	 -n process_num : Total number of processes. [ default 1 ]\n"
