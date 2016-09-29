@@ -30,7 +30,7 @@ if ~exist('pert_set') %not set, perturbation will not be consider
 end
 
 isType = 0;
-if ~exist('pert_type') %not set, perturbation type will not be consider
+if ~exist('pert_type_set') %not set, perturbation type will not be consider
 	isType = 1;
 end
 
@@ -68,7 +68,7 @@ if cisin(2)==0
 	isPert = 1;
 end
 if cisin(3)==0
-	disp('perturbation type field name error, we will ignore pert_type');
+	disp('perturbation type field name error, we will ignore pert_type_set');
 	isType = 1;
 end
 if cisin(4)==0
@@ -124,7 +124,7 @@ parfor i=1:cores
 			con_now(i) = str2num(ds.cdesc{begin+j,cindex(5)}(isstrprop(ds.cdesc{begin+j,cindex(5)},'digit')));  %extract the number part
 		end
 		
-		if ( isCell || ismember(ds.cdesc{begin+j,cindex(1)},cell_id_set) ) && ( isPert || ismember(ds.cdesc{begin+j,cindex(2)}, pert_set) ) && ( isType || isequal(ds.cdesc{begin+j,cindex(3)}, pert_type) ) && ( isDura || dura_now(i) == duration ) && ( isCon || con_now(i) == concentration )
+		if ( isCell || ismember(ds.cdesc{begin+j,cindex(1)},cell_id_set) ) && ( isPert || ismember(ds.cdesc{begin+j,cindex(2)}, pert_set) ) && ( isType || ismember(ds.cdesc{begin+j,cindex(3)}, pert_type_set) ) && ( isDura || dura_now(i) == duration ) && ( isCon || con_now(i) == concentration )
 			lcount(i)=lcount(i)+1;	 %count the number of fit profile in local thread
 			o = [mat(:,begin+j),probe];
 			o = sortrows(o,1);

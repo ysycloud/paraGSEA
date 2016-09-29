@@ -26,7 +26,7 @@ if ~exist('pert_set') %not set, perturbation will not be consider
 end
 
 isType = 0;
-if ~exist('pert_type') %not set, perturbation type will not be consider
+if ~exist('pert_type_set') %not set, perturbation type will not be consider
 	isType = 1;
 end
 
@@ -65,7 +65,7 @@ if cisin(2)==0
 	isPert = 1;
 end
 if cisin(3)==0
-	disp('perturbation type field name error, we will ignore pert_type');
+	disp('perturbation type field name error, we will ignore pert_type_set');
 	isType = 1;
 end
 if cisin(4)==0
@@ -96,7 +96,7 @@ for i = 1:n
 		con_now = str2num(ds.cdesc{i,cindex(5)}(isstrprop(ds.cdesc{i,cindex(5)},'digit')));  %extract the number part
 	end
 	
-	if ( isCell || ismember(ds.cdesc{i,cindex(1)},cell_id_set) ) && ( isPert || ismember(ds.cdesc{i,cindex(2)}, pert_set) ) && ( isType || isequal(ds.cdesc{i,cindex(3)}, pert_type) ) && ( isDura || dura_now == duration ) && ( isCon || con_now == concentration )
+	if ( isCell || ismember(ds.cdesc{i,cindex(1)},cell_id_set) ) && ( isPert || ismember(ds.cdesc{i,cindex(2)}, pert_set) ) && ( isType || ismember(ds.cdesc{i,cindex(3)}, pert_type_set) ) && ( isDura || dura_now == duration ) && ( isCon || con_now == concentration )
 		count = count+1;  %count the number of fit profile
 		o = [mat(:,i),probe];
 		o = sortrows(o,1);
