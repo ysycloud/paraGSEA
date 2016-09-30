@@ -46,7 +46,7 @@ Usage:   quick_search_serial [options]
 	general options:
 		-n --topn: The first and last N GSEA records ordered by ES. [ default 10]
 	input/output options:
-		-i --input: input file/a parsed profiles's file from pretreatment stage.
+		-i --input: input file/a parsed profiles file from pretreatment stage.
 		-s --sample: input file/a parsed sample sequence number file from pretreatment stage.
 		-r --reference: input a directory includes referenced files about genesymbols and cids.
 ```
@@ -66,7 +66,7 @@ Run `cd paraGSEA/matlab_for_parse` or enter the `pathtool` command, click "Add w
 #### VI.I.III. using by command line:
 After you set the MATLAB path, you should enter `matlab` in shell to start matlab environment.
 
-In order to provide user-friendly parsed method to allow user set their own conditions of profile they need, we must generate some reference data to facilitate our main work. There is a Matlab script in ‘paraGSEA/matlab_for_parse’ directory named `genReferenceforNewDataSet.m` to help us finish this work. The Only thing we need to do is just setting some field names and file path. There is a example below. More detail have been told in `tutorial`(tutorial.pdf). 
+In order to provide user-friendly parsed method to allow user set their own conditions of profile they need, we must generate some reference data to facilitate our main work. There is a Matlab script in ‘paraGSEA/matlab_for_parse’ directory named `genReferenceforNewDataSet.m` to help us finish this work. The Only thing we need to do is just setting some field names and file path. There is a example below. More detail have been told in `tutorial`. 
 
 ```shell
 datasource='../data/modzs_n272x978.gctx';
