@@ -1,544 +1,272 @@
-cid:CPC006_A549_6H:BRD-U88459701-000-01-8:10
-    cell_line:      A549;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC020_A375_6H:BRD-A82307304-001-01-8:10
-    cell_line:      A375;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC020_HT29_6H:BRD-A82307304-001-01-8:10
-    cell_line:      HT29;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC020_PC3_24H:BRD-A82307304-001-01-8:10
-    cell_line:       PC3;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_A375_6H:BRD-U88459701-000-01-8:10
-    cell_line:      A375;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_A375_24H:BRD-U88459701-000-01-8:10
-    cell_line:      A375;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_A549_24H:BRD-U88459701-000-01-8:10
-    cell_line:      A549;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_A673_6H:BRD-U88459701-000-01-8:10
-    cell_line:      A673;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_AGS_6H:BRD-U88459701-000-01-8:10
-    cell_line:       AGS;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_CL34_6H:BRD-U88459701-000-01-8:10
-    cell_line:      CL34;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_CORL23_6H:BRD-U88459701-000-01-8:10
-    cell_line:    CORL23;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_COV644_6H:BRD-U88459701-000-01-8:10
-    cell_line:    COV644;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_DV90_6H:BRD-U88459701-000-01-8:10
-    cell_line:      DV90;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_EFO27_6H:BRD-U88459701-000-01-8:10
-    cell_line:     EFO27;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HA1E_6H:BRD-U88459701-000-01-8:10
-    cell_line:      HA1E;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HA1E_24H:BRD-U88459701-000-01-8:10
-    cell_line:      HA1E;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_HCC15_6H:BRD-U88459701-000-01-8:10
-    cell_line:     HCC15;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HCC515_6H:BRD-U88459701-000-01-8:10
-    cell_line:    HCC515;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HCC515_24H:BRD-U88459701-000-01-8:10
-    cell_line:    HCC515;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_HCT116_6H:BRD-U88459701-000-01-8:10
-    cell_line:    HCT116;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HEC108_6H:BRD-U88459701-000-01-8:10
-    cell_line:    HEC108;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HEPG2_6H:BRD-U88459701-000-01-8:10
-    cell_line:     HEPG2;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HT115_6H:BRD-U88459701-000-01-8:10
-    cell_line:     HT115;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HT29_6H:BRD-U88459701-000-01-8:10
-    cell_line:      HT29;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HT29_24H:BRD-U88459701-000-01-8:10
-    cell_line:      HT29;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_JHUEM2_6H:BRD-U88459701-000-01-8:10
-    cell_line:    JHUEM2;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_LOVO_6H:BRD-U88459701-000-01-8:10
-    cell_line:      LOVO;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_MCF7_6H:BRD-U88459701-000-01-8:10
-    cell_line:      MCF7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_MCF7_24H:BRD-U88459701-000-01-8:10
-    cell_line:      MCF7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_MDST8_6H:BRD-U88459701-000-01-8:10
-    cell_line:     MDST8;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_NCIH1694_6H:BRD-U88459701-000-01-8:10
-    cell_line:  NCIH1694;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_NCIH1836_6H:BRD-U88459701-000-01-8:10
-    cell_line:  NCIH1836;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_NCIH2073_6H:BRD-U88459701-000-01-8:10
-    cell_line:  NCIH2073;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_NCIH508_6H:BRD-U88459701-000-01-8:10
-    cell_line:   NCIH508;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_NCIH596_6H:BRD-U88459701-000-01-8:10
-    cell_line:   NCIH596;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_NOMO1_6H:BRD-U88459701-000-01-8:10
-    cell_line:     NOMO1;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_OV7_6H:BRD-U88459701-000-01-8:10
-    cell_line:       OV7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_PC3_6H:BRD-U88459701-000-01-8:10
-    cell_line:       PC3;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_PC3_24H:BRD-U88459701-000-01-8:10
-    cell_line:       PC3;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_PL21_6H:BRD-U88459701-000-01-8:10
-    cell_line:      PL21;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_RMGI_6H:BRD-U88459701-000-01-8:10
-    cell_line:      RMGI;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_RMUGS_6H:BRD-U88459701-000-01-8:10
-    cell_line:     RMUGS;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SKLU1_6H:BRD-U88459701-000-01-8:10
-    cell_line:     SKLU1;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SKM1_6H:BRD-U88459701-000-01-8:10
-    cell_line:      SKM1;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SKMEL1_6H:BRD-U88459701-000-01-8:10
-    cell_line:    SKMEL1;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SKMEL28_6H:BRD-U88459701-000-01-8:10
-    cell_line:   SKMEL28;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SNGM_6H:BRD-U88459701-000-01-8:10
-    cell_line:      SNGM;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SNU1040_6H:BRD-U88459701-000-01-8:10
-    cell_line:   SNU1040;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SNUC4_6H:BRD-U88459701-000-01-8:10
-    cell_line:     SNUC4;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SNUC5_6H:BRD-U88459701-000-01-8:10
-    cell_line:     SNUC5;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SW480_6H:BRD-U88459701-000-01-8:10
-    cell_line:     SW480;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SW620_6H:BRD-U88459701-000-01-8:10
-    cell_line:     SW620;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SW948_6H:BRD-U88459701-000-01-8:10
-    cell_line:     SW948;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_T3M10_6H:BRD-U88459701-000-01-8:10
-    cell_line:     T3M10;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_THP1_6H:BRD-U88459701-000-01-8:10
-    cell_line:      THP1;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_TYKNU_6H:BRD-U88459701-000-01-8:10
-    cell_line:     TYKNU;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_U937_6H:BRD-U88459701-000-01-8:10
-    cell_line:      U937;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_VCAP_6H:BRD-U88459701-000-01-8:10
-    cell_line:      VCAP;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_VCAP_24H:BRD-U88459701-000-01-8:10
-    cell_line:      VCAP;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_WSUDLCL2_6H:BRD-U88459701-000-01-8:10
-    cell_line:  WSUDLCL2;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC020_A549_6H:BRD-A82307304-001-01-8:10
-    cell_line:      A549;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC020_HA1E_6H:BRD-A82307304-001-01-8:10
-    cell_line:      HA1E;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC020_HCC515_6H:BRD-A82307304-001-01-8:10
-    cell_line:    HCC515;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC020_MCF7_6H:BRD-A82307304-001-01-8:10
-    cell_line:      MCF7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC020_MCF7_24H:BRD-A82307304-001-01-8:10
-    cell_line:      MCF7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC020_PC3_6H:BRD-A82307304-001-01-8:10
-    cell_line:       PC3;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC020_VCAP_6H:BRD-A82307304-001-01-8:10
-    cell_line:      VCAP;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC020_VCAP_24H:BRD-A82307304-001-01-8:10
-    cell_line:      VCAP;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CVD001_HEPG2_6H:BRD-U88459701-000-01-8:10
-    cell_line:     HEPG2;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CVD001_HEPG2_6H:BRD-U88459701-000-01-8:2.5
-    cell_line:     HEPG2;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      3 ?M
-cid:CVD001_HEPG2_24H:BRD-U88459701-000-01-8:10
-    cell_line:     HEPG2;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CVD001_HEPG2_24H:BRD-U88459701-000-01-8:2.5
-    cell_line:     HEPG2;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      3 ?M
-cid:CVD001_HUH7_6H:BRD-U88459701-000-01-8:10
-    cell_line:      HUH7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CVD001_HUH7_6H:BRD-U88459701-000-01-8:2.5
-    cell_line:      HUH7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      3 ?M
-cid:CVD001_HUH7_24H:BRD-U88459701-000-01-8:10
-    cell_line:      HUH7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CVD001_HUH7_24H:BRD-U88459701-000-01-8:2.5
-    cell_line:      HUH7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      3 ?M
-cid:CPD003_MCF7_6H:BRD-K69726342-001-01-8:10
-    cell_line:      MCF7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPD003_MCF7_24H:BRD-K69726342-001-01-8:10
-    cell_line:      MCF7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPD003_PC3_6H:BRD-K69726342-001-01-8:10
-    cell_line:       PC3;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPD003_PC3_24H:BRD-K69726342-001-01-8:10
-    cell_line:       PC3;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CVD001_PHH_6H:BRD-U88459701-000-01-8:10
-    cell_line:       PHH;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CVD001_PHH_6H:BRD-U88459701-000-01-8:2.5
-    cell_line:       PHH;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      3 ?M
-cid:CVD001_PHH_24H:BRD-U88459701-000-01-8:10
-    cell_line:       PHH;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CVD001_PHH_24H:BRD-U88459701-000-01-8:2.5
-    cell_line:       PHH;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      3 ?M
-cid:NMH001_FIBRNPC_6H:BRD-K69726342-001-02-6:10
-    cell_line:   FIBRNPC;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:NMH001_FIBRNPC_24H:BRD-K69726342-001-02-6:10
-    cell_line:   FIBRNPC;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:NMH001_NEU_6H:BRD-K69726342-001-02-6:10
-    cell_line:       NEU;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:NMH001_NEU_24H:BRD-K69726342-001-02-6:10
-    cell_line:       NEU;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:NMH001_NEU.KCL_6H.4H:BRD-K69726342-001-02-6:10
-    cell_line:   NEU.KCL;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration: 6 h & 4 h;    concentration:     10 ?M
-cid:NMH001_NEU.KCL_24H.4H:BRD-K69726342-001-02-6:10
-    cell_line:   NEU.KCL;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:24 h & 4 h;    concentration:     10 ?M
-cid:NMH001_NPC_6H:BRD-K69726342-001-02-6:10
-    cell_line:       NPC;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:NMH001_NPC_24H:BRD-K69726342-001-02-6:10
-    cell_line:       NPC;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_H1299_6H:BRD-U88459701-000-01-8:10
-    cell_line:     H1299;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_RKO_6H:BRD-U88459701-000-01-8:10
-    cell_line:       RKO;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:LJP001_BT20_24H:BRD-K56343971-001-04-9:2
-    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      1 ?M
-cid:LJP001_BT20_24H:BRD-K56343971-001-04-9:0.08
-    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    100 nM
-cid:LJP001_HS578T_24H:BRD-K56343971-001-04-9:10
-    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:LJP001_HS578T_24H:BRD-K56343971-001-04-9:0.4
-    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
-cid:LJP001_MCF10A_6H:BRD-K56343971-001-04-9:10
-    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:LJP001_MCF10A_6H:BRD-K56343971-001-04-9:2
-    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      1 ?M
-cid:LJP001_MCF7_6H:BRD-K56343971-001-04-9:2
-    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      1 ?M
-cid:LJP001_MDAMB231_6H:BRD-K56343971-001-04-9:10
-    cell_line:  MDAMB231;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:LJP001_MDAMB231_6H:BRD-K56343971-001-04-9:0.4
-    cell_line:  MDAMB231;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
-cid:LJP001_SKBR3_6H:BRD-K56343971-001-04-9:10
-    cell_line:     SKBR3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_A375_6H:BRD-K56343971-001-02-3:10
-    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_A375_24H:BRD-K56343971-001-02-3:10
-    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_A549_6H:BRD-K56343971-001-02-3:10
-    cell_line:      A549;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_A549_24H:BRD-K56343971-001-02-3:10
-    cell_line:      A549;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_A673_6H:BRD-K56343971-001-02-3:10
-    cell_line:      A673;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_AGS_6H:BRD-K56343971-001-02-3:10
-    cell_line:       AGS;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_CL34_6H:BRD-K56343971-001-02-3:10
-    cell_line:      CL34;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_CORL23_6H:BRD-K56343971-001-02-3:10
-    cell_line:    CORL23;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_COV644_6H:BRD-K56343971-001-02-3:10
-    cell_line:    COV644;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_DV90_6H:BRD-K56343971-001-02-3:10
-    cell_line:      DV90;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_EFO27_6H:BRD-K56343971-001-02-3:10
-    cell_line:     EFO27;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HA1E_6H:BRD-K56343971-001-02-3:10
-    cell_line:      HA1E;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HA1E_24H:BRD-K56343971-001-02-3:10
-    cell_line:      HA1E;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_HCC15_6H:BRD-K56343971-001-02-3:10
-    cell_line:     HCC15;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HCC515_6H:BRD-K56343971-001-02-3:10
-    cell_line:    HCC515;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HCC515_24H:BRD-K56343971-001-02-3:10
-    cell_line:    HCC515;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_HCT116_6H:BRD-K56343971-001-02-3:10
-    cell_line:    HCT116;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HEC108_6H:BRD-K56343971-001-02-3:10
-    cell_line:    HEC108;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HEPG2_6H:BRD-K56343971-001-02-3:10
-    cell_line:     HEPG2;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HT115_6H:BRD-K56343971-001-02-3:10
-    cell_line:     HT115;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HT29_6H:BRD-K56343971-001-02-3:10
-    cell_line:      HT29;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_HT29_24H:BRD-K56343971-001-02-3:10
-    cell_line:      HT29;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_JHUEM2_6H:BRD-K56343971-001-02-3:10
-    cell_line:    JHUEM2;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_LOVO_6H:BRD-K56343971-001-02-3:10
-    cell_line:      LOVO;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_MCF7_6H:BRD-K56343971-001-02-3:10
-    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_MCF7_24H:BRD-K56343971-001-02-3:10
-    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_MDST8_6H:BRD-K56343971-001-02-3:10
-    cell_line:     MDST8;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_NCIH1694_6H:BRD-K56343971-001-02-3:10
-    cell_line:  NCIH1694;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_NCIH1836_6H:BRD-K56343971-001-02-3:10
-    cell_line:  NCIH1836;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_NCIH2073_6H:BRD-K56343971-001-02-3:10
-    cell_line:  NCIH2073;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_NCIH508_6H:BRD-K56343971-001-02-3:10
-    cell_line:   NCIH508;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_NCIH596_6H:BRD-K56343971-001-02-3:10
-    cell_line:   NCIH596;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_NOMO1_6H:BRD-K56343971-001-02-3:10
-    cell_line:     NOMO1;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_OV7_6H:BRD-K56343971-001-02-3:10
-    cell_line:       OV7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_PC3_6H:BRD-K56343971-001-02-3:10
-    cell_line:       PC3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_PC3_24H:BRD-K56343971-001-02-3:10
-    cell_line:       PC3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_PL21_6H:BRD-K56343971-001-02-3:10
-    cell_line:      PL21;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_RMGI_6H:BRD-K56343971-001-02-3:10
-    cell_line:      RMGI;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_RMUGS_6H:BRD-K56343971-001-02-3:10
-    cell_line:     RMUGS;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SKLU1_6H:BRD-K56343971-001-02-3:10
-    cell_line:     SKLU1;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SKM1_6H:BRD-K56343971-001-02-3:10
-    cell_line:      SKM1;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SKMEL1_6H:BRD-K56343971-001-02-3:10
-    cell_line:    SKMEL1;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SKMEL28_6H:BRD-K56343971-001-02-3:10
-    cell_line:   SKMEL28;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SNGM_6H:BRD-K56343971-001-02-3:10
-    cell_line:      SNGM;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SNU1040_6H:BRD-K56343971-001-02-3:10
-    cell_line:   SNU1040;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SNUC4_6H:BRD-K56343971-001-02-3:10
-    cell_line:     SNUC4;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SNUC5_6H:BRD-K56343971-001-02-3:10
-    cell_line:     SNUC5;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SW480_6H:BRD-K56343971-001-02-3:10
-    cell_line:     SW480;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SW620_6H:BRD-K56343971-001-02-3:10
-    cell_line:     SW620;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_SW948_6H:BRD-K56343971-001-02-3:10
-    cell_line:     SW948;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_THP1_6H:BRD-K56343971-001-02-3:10
-    cell_line:      THP1;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_TYKNU_6H:BRD-K56343971-001-02-3:10
-    cell_line:     TYKNU;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_U937_6H:BRD-K56343971-001-02-3:10
-    cell_line:      U937;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_VCAP_6H:BRD-K56343971-001-02-3:10
-    cell_line:      VCAP;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC006_VCAP_24H:BRD-K56343971-001-02-3:10
-    cell_line:      VCAP;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC006_WSUDLCL2_6H:BRD-K56343971-001-02-3:10
-    cell_line:  WSUDLCL2;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC014_A375_6H:BRD-K56343971-001-01-5:10
-    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC014_A549_6H:BRD-K56343971-001-01-5:10
-    cell_line:      A549;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC014_A549_24H:BRD-K56343971-001-01-5:10
-    cell_line:      A549;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC014_ASC_24H:BRD-K56343971-001-01-5:10
-    cell_line:       ASC;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC014_HA1E_6H:BRD-K56343971-001-01-5:10
-    cell_line:      HA1E;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC014_HCC515_6H:BRD-K56343971-001-01-5:10
-    cell_line:    HCC515;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC014_HEPG2_6H:BRD-K56343971-001-01-5:10
-    cell_line:     HEPG2;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC014_HT29_6H:BRD-K56343971-001-01-5:10
-    cell_line:      HT29;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC014_MCF7_6H:BRD-K56343971-001-01-5:10
-    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC014_MCF7_24H:BRD-K56343971-001-01-5:10
-    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC014_NEU_24H:BRD-K56343971-001-01-5:10
-    cell_line:       NEU;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC014_NPC_24H:BRD-K56343971-001-01-5:10
-    cell_line:       NPC;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC014_PC3_6H:BRD-K56343971-001-01-5:10
-    cell_line:       PC3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC014_PC3_24H:BRD-K56343971-001-01-5:10
-    cell_line:       PC3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC014_PHH_24H:BRD-K56343971-001-01-5:10
-    cell_line:       PHH;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC014_SKB_24H:BRD-K56343971-001-01-5:10
-    cell_line:       SKB;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC014_VCAP_6H:BRD-K56343971-001-01-5:10
-    cell_line:      VCAP;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC014_VCAP_24H:BRD-K56343971-001-01-5:10
-    cell_line:      VCAP;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:LJP001_BT20_6H:BRD-K56343971-001-04-9:10
-    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:LJP001_BT20_6H:BRD-K56343971-001-04-9:2
-    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      1 ?M
-cid:LJP001_BT20_6H:BRD-K56343971-001-04-9:0.4
-    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
-cid:LJP001_BT20_6H:BRD-K56343971-001-04-9:0.08
-    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    100 nM
-cid:LJP001_BT20_24H:BRD-K56343971-001-04-9:10
-    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:LJP001_BT20_24H:BRD-K56343971-001-04-9:0.4
-    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
-cid:LJP001_HS578T_6H:BRD-K56343971-001-04-9:10
-    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:LJP001_HS578T_6H:BRD-K56343971-001-04-9:2
-    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      1 ?M
-cid:LJP001_HS578T_6H:BRD-K56343971-001-04-9:0.4
-    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
-cid:LJP001_HS578T_6H:BRD-K56343971-001-04-9:0.08
-    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    100 nM
-cid:LJP001_HS578T_24H:BRD-K56343971-001-04-9:2
-    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      1 ?M
-cid:LJP001_HS578T_24H:BRD-K56343971-001-04-9:0.08
-    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    100 nM
-cid:LJP001_MCF10A_6H:BRD-K56343971-001-04-9:0.4
-    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
-cid:LJP001_MCF10A_6H:BRD-K56343971-001-04-9:0.08
-    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    100 nM
-cid:LJP001_MCF10A_24H:BRD-K56343971-001-04-9:10
-    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:LJP001_MCF10A_24H:BRD-K56343971-001-04-9:2
-    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      1 ?M
-cid:LJP001_MCF10A_24H:BRD-K56343971-001-04-9:0.4
-    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
-cid:LJP001_MCF10A_24H:BRD-K56343971-001-04-9:0.08
-    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    100 nM
-cid:LJP001_MCF7_6H:BRD-K56343971-001-04-9:10
-    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:LJP001_MCF7_6H:BRD-K56343971-001-04-9:0.4
-    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
-cid:LJP001_MCF7_6H:BRD-K56343971-001-04-9:0.08
-    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    100 nM
-cid:LJP001_MCF7_24H:BRD-K56343971-001-04-9:10
-    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:LJP001_MCF7_24H:BRD-K56343971-001-04-9:2
-    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      1 ?M
-cid:LJP001_MCF7_24H:BRD-K56343971-001-04-9:0.4
-    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
-cid:LJP001_MCF7_24H:BRD-K56343971-001-04-9:0.08
-    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    100 nM
-cid:LJP001_MDAMB231_6H:BRD-K56343971-001-04-9:2
-    cell_line:  MDAMB231;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      1 ?M
-cid:LJP001_MDAMB231_6H:BRD-K56343971-001-04-9:0.08
-    cell_line:  MDAMB231;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    100 nM
-cid:LJP001_MDAMB231_24H:BRD-K56343971-001-04-9:10
-    cell_line:  MDAMB231;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:LJP001_MDAMB231_24H:BRD-K56343971-001-04-9:2
-    cell_line:  MDAMB231;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      1 ?M
-cid:LJP001_MDAMB231_24H:BRD-K56343971-001-04-9:0.4
-    cell_line:  MDAMB231;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
-cid:LJP001_MDAMB231_24H:BRD-K56343971-001-04-9:0.08
-    cell_line:  MDAMB231;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    100 nM
-cid:LJP001_SKBR3_6H:BRD-K56343971-001-04-9:2
-    cell_line:     SKBR3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      1 ?M
-cid:LJP001_SKBR3_6H:BRD-K56343971-001-04-9:0.4
-    cell_line:     SKBR3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
-cid:LJP001_SKBR3_6H:BRD-K56343971-001-04-9:0.08
-    cell_line:     SKBR3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    100 nM
-cid:LJP001_SKBR3_24H:BRD-K56343971-001-04-9:10
-    cell_line:     SKBR3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:LJP001_SKBR3_24H:BRD-K56343971-001-04-9:2
-    cell_line:     SKBR3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      1 ?M
-cid:LJP001_SKBR3_24H:BRD-K56343971-001-04-9:0.4
-    cell_line:     SKBR3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
-cid:LJP001_SKBR3_24H:BRD-K56343971-001-04-9:0.08
-    cell_line:     SKBR3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    100 nM
-cid:BRAF001_A375_24H:BRD-U73308409-000-01-9:10
-    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:BRAF001_A375_24H:BRD-U73308409-000-01-9:2.5
-    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      3 ?M
-cid:BRAF001_A375_24H:BRD-U73308409-000-01-9:0.625
-    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
-cid:BRAF001_A375_24H:BRD-U73308409-000-01-9:0.15625
-    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    100 nM
-cid:BRAF001_A375_6H:BRD-U73308409-000-01-9:10
-    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:BRAF001_A375_6H:BRD-U73308409-000-01-9:2.5
-    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      3 ?M
-cid:BRAF001_A375_6H:BRD-U73308409-000-01-9:0.625
-    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
-cid:BRAF001_A375_6H:BRD-U73308409-000-01-9:0.15625
-    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    100 nM
-cid:CPC006_H1299_6H:BRD-K56343971-001-02-3:10
-    cell_line:     H1299;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:BRAF001_HEK293T_24H:BRD-U73308409-000-01-9:10
-    cell_line:   HEK293T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:BRAF001_HEK293T_24H:BRD-U73308409-000-01-9:2.5
-    cell_line:   HEK293T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      3 ?M
-cid:BRAF001_HEK293T_24H:BRD-U73308409-000-01-9:0.625
-    cell_line:   HEK293T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
-cid:BRAF001_HEK293T_24H:BRD-U73308409-000-01-9:0.15625
-    cell_line:   HEK293T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    100 nM
-cid:BRAF001_HEK293T_6H:BRD-U73308409-000-01-9:10
-    cell_line:   HEK293T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:BRAF001_HEK293T_6H:BRD-U73308409-000-01-9:2.5
-    cell_line:   HEK293T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      3 ?M
-cid:BRAF001_HEK293T_6H:BRD-U73308409-000-01-9:0.625
-    cell_line:   HEK293T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
-cid:BRAF001_HEK293T_6H:BRD-U73308409-000-01-9:0.15625
-    cell_line:   HEK293T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    100 nM
-cid:CPC006_RKO_6H:BRD-K56343971-001-02-3:10
-    cell_line:       RKO;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC004_PC3_6H:BRD-A51714012-001-03-1:10
-    cell_line:       PC3;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPD002_MCF7_6H:BRD-A51714012-001-04-9:10
-    cell_line:      MCF7;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC004_A375_6H:BRD-A51714012-001-03-1:10
-    cell_line:      A375;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC004_HA1E_6H:BRD-A51714012-001-03-1:10
-    cell_line:      HA1E;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC004_HA1E_24H:BRD-A51714012-001-03-1:10
-    cell_line:      HA1E;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC004_HCC515_6H:BRD-A51714012-001-03-1:10
-    cell_line:    HCC515;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC004_HCC515_24H:BRD-A51714012-001-03-1:10
-    cell_line:    HCC515;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC004_HEPG2_6H:BRD-A51714012-001-03-1:10
-    cell_line:     HEPG2;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC004_HT29_6H:BRD-A51714012-001-03-1:10
-    cell_line:      HT29;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC004_MCF7_6H:BRD-A51714012-001-03-1:10
-    cell_line:      MCF7;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC004_PC3_24H:BRD-A51714012-001-03-1:10
-    cell_line:       PC3;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC004_VCAP_6H:BRD-A51714012-001-03-1:10
-    cell_line:      VCAP;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC004_VCAP_24H:BRD-A51714012-001-03-1:10
-    cell_line:      VCAP;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC011_A375_6H:BRD-A51714012-003-09-4:10
-    cell_line:      A375;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC011_A549_6H:BRD-A51714012-003-09-4:10
-    cell_line:      A549;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC011_A549_24H:BRD-A51714012-003-09-4:10
-    cell_line:      A549;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC011_HA1E_6H:BRD-A51714012-003-09-4:10
-    cell_line:      HA1E;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC011_HT29_6H:BRD-A51714012-003-09-4:10
-    cell_line:      HT29;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC011_MCF7_6H:BRD-A51714012-003-09-4:10
-    cell_line:      MCF7;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC011_MCF7_24H:BRD-A51714012-003-09-4:10
-    cell_line:      MCF7;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC011_PC3_6H:BRD-A51714012-003-09-4:10
-    cell_line:       PC3;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC011_PC3_24H:BRD-A51714012-003-09-4:10
-    cell_line:       PC3;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC011_VCAP_6H:BRD-A51714012-003-09-4:10
-    cell_line:      VCAP;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC011_VCAP_24H:BRD-A51714012-003-09-4:10
-    cell_line:      VCAP;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC015_A375_6H:BRD-A51714012-001-03-1:10
-    cell_line:      A375;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC015_A549_6H:BRD-A51714012-001-03-1:10
-    cell_line:      A549;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC015_A549_24H:BRD-A51714012-001-03-1:10
-    cell_line:      A549;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC015_ASC_24H:BRD-A51714012-001-03-1:10
-    cell_line:       ASC;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC015_HEPG2_6H:BRD-A51714012-001-03-1:10
-    cell_line:     HEPG2;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC015_HT29_6H:BRD-A51714012-001-03-1:10
-    cell_line:      HT29;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC015_MCF7_6H:BRD-A51714012-001-03-1:10
-    cell_line:      MCF7;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPC015_MCF7_24H:BRD-A51714012-001-03-1:10
-    cell_line:      MCF7;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC015_NPC_24H:BRD-A51714012-001-03-1:10
-    cell_line:       NPC;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC015_PHH_24H:BRD-A51714012-001-03-1:10
-    cell_line:       PHH;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPC015_SKB_24H:BRD-A51714012-001-03-1:10
-    cell_line:       SKB;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPD002_MCF7_24H:BRD-A51714012-001-04-9:10
-    cell_line:      MCF7;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
-cid:CPD002_PC3_6H:BRD-A51714012-001-04-9:10
-    cell_line:       PC3;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
-cid:CPD002_PC3_24H:BRD-A51714012-001-04-9:10
-    cell_line:       PC3;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_A549_6H:BRD-U88459701-000-01-8:10;    cell_line:      A549;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC020_A375_6H:BRD-A82307304-001-01-8:10;    cell_line:      A375;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC020_HT29_6H:BRD-A82307304-001-01-8:10;    cell_line:      HT29;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC020_PC3_24H:BRD-A82307304-001-01-8:10;    cell_line:       PC3;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_A375_6H:BRD-U88459701-000-01-8:10;    cell_line:      A375;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_A375_24H:BRD-U88459701-000-01-8:10;    cell_line:      A375;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_A549_24H:BRD-U88459701-000-01-8:10;    cell_line:      A549;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_A673_6H:BRD-U88459701-000-01-8:10;    cell_line:      A673;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_AGS_6H:BRD-U88459701-000-01-8:10;    cell_line:       AGS;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_CL34_6H:BRD-U88459701-000-01-8:10;    cell_line:      CL34;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_CORL23_6H:BRD-U88459701-000-01-8:10;    cell_line:    CORL23;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_COV644_6H:BRD-U88459701-000-01-8:10;    cell_line:    COV644;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_DV90_6H:BRD-U88459701-000-01-8:10;    cell_line:      DV90;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_EFO27_6H:BRD-U88459701-000-01-8:10;    cell_line:     EFO27;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HA1E_6H:BRD-U88459701-000-01-8:10;    cell_line:      HA1E;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HA1E_24H:BRD-U88459701-000-01-8:10;    cell_line:      HA1E;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_HCC15_6H:BRD-U88459701-000-01-8:10;    cell_line:     HCC15;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HCC515_6H:BRD-U88459701-000-01-8:10;    cell_line:    HCC515;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HCC515_24H:BRD-U88459701-000-01-8:10;    cell_line:    HCC515;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_HCT116_6H:BRD-U88459701-000-01-8:10;    cell_line:    HCT116;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HEC108_6H:BRD-U88459701-000-01-8:10;    cell_line:    HEC108;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HEPG2_6H:BRD-U88459701-000-01-8:10;    cell_line:     HEPG2;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HT115_6H:BRD-U88459701-000-01-8:10;    cell_line:     HT115;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HT29_6H:BRD-U88459701-000-01-8:10;    cell_line:      HT29;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HT29_24H:BRD-U88459701-000-01-8:10;    cell_line:      HT29;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_JHUEM2_6H:BRD-U88459701-000-01-8:10;    cell_line:    JHUEM2;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_LOVO_6H:BRD-U88459701-000-01-8:10;    cell_line:      LOVO;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_MCF7_6H:BRD-U88459701-000-01-8:10;    cell_line:      MCF7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_MCF7_24H:BRD-U88459701-000-01-8:10;    cell_line:      MCF7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_MDST8_6H:BRD-U88459701-000-01-8:10;    cell_line:     MDST8;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_NCIH1694_6H:BRD-U88459701-000-01-8:10;    cell_line:  NCIH1694;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_NCIH1836_6H:BRD-U88459701-000-01-8:10;    cell_line:  NCIH1836;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_NCIH2073_6H:BRD-U88459701-000-01-8:10;    cell_line:  NCIH2073;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_NCIH508_6H:BRD-U88459701-000-01-8:10;    cell_line:   NCIH508;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_NCIH596_6H:BRD-U88459701-000-01-8:10;    cell_line:   NCIH596;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_NOMO1_6H:BRD-U88459701-000-01-8:10;    cell_line:     NOMO1;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_OV7_6H:BRD-U88459701-000-01-8:10;    cell_line:       OV7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_PC3_6H:BRD-U88459701-000-01-8:10;    cell_line:       PC3;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_PC3_24H:BRD-U88459701-000-01-8:10;    cell_line:       PC3;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_PL21_6H:BRD-U88459701-000-01-8:10;    cell_line:      PL21;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_RMGI_6H:BRD-U88459701-000-01-8:10;    cell_line:      RMGI;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_RMUGS_6H:BRD-U88459701-000-01-8:10;    cell_line:     RMUGS;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SKLU1_6H:BRD-U88459701-000-01-8:10;    cell_line:     SKLU1;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SKM1_6H:BRD-U88459701-000-01-8:10;    cell_line:      SKM1;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SKMEL1_6H:BRD-U88459701-000-01-8:10;    cell_line:    SKMEL1;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SKMEL28_6H:BRD-U88459701-000-01-8:10;    cell_line:   SKMEL28;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SNGM_6H:BRD-U88459701-000-01-8:10;    cell_line:      SNGM;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SNU1040_6H:BRD-U88459701-000-01-8:10;    cell_line:   SNU1040;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SNUC4_6H:BRD-U88459701-000-01-8:10;    cell_line:     SNUC4;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SNUC5_6H:BRD-U88459701-000-01-8:10;    cell_line:     SNUC5;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SW480_6H:BRD-U88459701-000-01-8:10;    cell_line:     SW480;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SW620_6H:BRD-U88459701-000-01-8:10;    cell_line:     SW620;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SW948_6H:BRD-U88459701-000-01-8:10;    cell_line:     SW948;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_T3M10_6H:BRD-U88459701-000-01-8:10;    cell_line:     T3M10;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_THP1_6H:BRD-U88459701-000-01-8:10;    cell_line:      THP1;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_TYKNU_6H:BRD-U88459701-000-01-8:10;    cell_line:     TYKNU;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_U937_6H:BRD-U88459701-000-01-8:10;    cell_line:      U937;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_VCAP_6H:BRD-U88459701-000-01-8:10;    cell_line:      VCAP;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_VCAP_24H:BRD-U88459701-000-01-8:10;    cell_line:      VCAP;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_WSUDLCL2_6H:BRD-U88459701-000-01-8:10;    cell_line:  WSUDLCL2;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC020_A549_6H:BRD-A82307304-001-01-8:10;    cell_line:      A549;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC020_HA1E_6H:BRD-A82307304-001-01-8:10;    cell_line:      HA1E;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC020_HCC515_6H:BRD-A82307304-001-01-8:10;    cell_line:    HCC515;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC020_MCF7_6H:BRD-A82307304-001-01-8:10;    cell_line:      MCF7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC020_MCF7_24H:BRD-A82307304-001-01-8:10;    cell_line:      MCF7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC020_PC3_6H:BRD-A82307304-001-01-8:10;    cell_line:       PC3;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC020_VCAP_6H:BRD-A82307304-001-01-8:10;    cell_line:      VCAP;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC020_VCAP_24H:BRD-A82307304-001-01-8:10;    cell_line:      VCAP;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CVD001_HEPG2_6H:BRD-U88459701-000-01-8:10;    cell_line:     HEPG2;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CVD001_HEPG2_6H:BRD-U88459701-000-01-8:2.5;    cell_line:     HEPG2;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      3 ?M
+cid:CVD001_HEPG2_24H:BRD-U88459701-000-01-8:10;    cell_line:     HEPG2;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CVD001_HEPG2_24H:BRD-U88459701-000-01-8:2.5;    cell_line:     HEPG2;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      3 ?M
+cid:CVD001_HUH7_6H:BRD-U88459701-000-01-8:10;    cell_line:      HUH7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CVD001_HUH7_6H:BRD-U88459701-000-01-8:2.5;    cell_line:      HUH7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      3 ?M
+cid:CVD001_HUH7_24H:BRD-U88459701-000-01-8:10;    cell_line:      HUH7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CVD001_HUH7_24H:BRD-U88459701-000-01-8:2.5;    cell_line:      HUH7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      3 ?M
+cid:CPD003_MCF7_6H:BRD-K69726342-001-01-8:10;    cell_line:      MCF7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPD003_MCF7_24H:BRD-K69726342-001-01-8:10;    cell_line:      MCF7;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPD003_PC3_6H:BRD-K69726342-001-01-8:10;    cell_line:       PC3;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPD003_PC3_24H:BRD-K69726342-001-01-8:10;    cell_line:       PC3;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CVD001_PHH_6H:BRD-U88459701-000-01-8:10;    cell_line:       PHH;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CVD001_PHH_6H:BRD-U88459701-000-01-8:2.5;    cell_line:       PHH;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      3 ?M
+cid:CVD001_PHH_24H:BRD-U88459701-000-01-8:10;    cell_line:       PHH;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CVD001_PHH_24H:BRD-U88459701-000-01-8:2.5;    cell_line:       PHH;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      3 ?M
+cid:NMH001_FIBRNPC_6H:BRD-K69726342-001-02-6:10;    cell_line:   FIBRNPC;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:NMH001_FIBRNPC_24H:BRD-K69726342-001-02-6:10;    cell_line:   FIBRNPC;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:NMH001_NEU_6H:BRD-K69726342-001-02-6:10;    cell_line:       NEU;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:NMH001_NEU_24H:BRD-K69726342-001-02-6:10;    cell_line:       NEU;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:NMH001_NEU.KCL_6H.4H:BRD-K69726342-001-02-6:10;    cell_line:   NEU.KCL;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration: 6 h & 4 h;    concentration:     10 ?M
+cid:NMH001_NEU.KCL_24H.4H:BRD-K69726342-001-02-6:10;    cell_line:   NEU.KCL;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:24 h & 4 h;    concentration:     10 ?M
+cid:NMH001_NPC_6H:BRD-K69726342-001-02-6:10;    cell_line:       NPC;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:NMH001_NPC_24H:BRD-K69726342-001-02-6:10;    cell_line:       NPC;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_H1299_6H:BRD-U88459701-000-01-8:10;    cell_line:     H1299;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_RKO_6H:BRD-U88459701-000-01-8:10;    cell_line:       RKO;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:LJP001_BT20_24H:BRD-K56343971-001-04-9:2;    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      1 ?M
+cid:LJP001_BT20_24H:BRD-K56343971-001-04-9:0.08;    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    100 nM
+cid:LJP001_HS578T_24H:BRD-K56343971-001-04-9:10;    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:LJP001_HS578T_24H:BRD-K56343971-001-04-9:0.4;    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
+cid:LJP001_MCF10A_6H:BRD-K56343971-001-04-9:10;    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:LJP001_MCF10A_6H:BRD-K56343971-001-04-9:2;    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      1 ?M
+cid:LJP001_MCF7_6H:BRD-K56343971-001-04-9:2;    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      1 ?M
+cid:LJP001_MDAMB231_6H:BRD-K56343971-001-04-9:10;    cell_line:  MDAMB231;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:LJP001_MDAMB231_6H:BRD-K56343971-001-04-9:0.4;    cell_line:  MDAMB231;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
+cid:LJP001_SKBR3_6H:BRD-K56343971-001-04-9:10;    cell_line:     SKBR3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_A375_6H:BRD-K56343971-001-02-3:10;    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_A375_24H:BRD-K56343971-001-02-3:10;    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_A549_6H:BRD-K56343971-001-02-3:10;    cell_line:      A549;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_A549_24H:BRD-K56343971-001-02-3:10;    cell_line:      A549;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_A673_6H:BRD-K56343971-001-02-3:10;    cell_line:      A673;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_AGS_6H:BRD-K56343971-001-02-3:10;    cell_line:       AGS;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_CL34_6H:BRD-K56343971-001-02-3:10;    cell_line:      CL34;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_CORL23_6H:BRD-K56343971-001-02-3:10;    cell_line:    CORL23;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_COV644_6H:BRD-K56343971-001-02-3:10;    cell_line:    COV644;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_DV90_6H:BRD-K56343971-001-02-3:10;    cell_line:      DV90;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_EFO27_6H:BRD-K56343971-001-02-3:10;    cell_line:     EFO27;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HA1E_6H:BRD-K56343971-001-02-3:10;    cell_line:      HA1E;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HA1E_24H:BRD-K56343971-001-02-3:10;    cell_line:      HA1E;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_HCC15_6H:BRD-K56343971-001-02-3:10;    cell_line:     HCC15;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HCC515_6H:BRD-K56343971-001-02-3:10;    cell_line:    HCC515;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HCC515_24H:BRD-K56343971-001-02-3:10;    cell_line:    HCC515;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_HCT116_6H:BRD-K56343971-001-02-3:10;    cell_line:    HCT116;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HEC108_6H:BRD-K56343971-001-02-3:10;    cell_line:    HEC108;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HEPG2_6H:BRD-K56343971-001-02-3:10;    cell_line:     HEPG2;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HT115_6H:BRD-K56343971-001-02-3:10;    cell_line:     HT115;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HT29_6H:BRD-K56343971-001-02-3:10;    cell_line:      HT29;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_HT29_24H:BRD-K56343971-001-02-3:10;    cell_line:      HT29;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_JHUEM2_6H:BRD-K56343971-001-02-3:10;    cell_line:    JHUEM2;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_LOVO_6H:BRD-K56343971-001-02-3:10;    cell_line:      LOVO;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_MCF7_6H:BRD-K56343971-001-02-3:10;    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_MCF7_24H:BRD-K56343971-001-02-3:10;    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_MDST8_6H:BRD-K56343971-001-02-3:10;    cell_line:     MDST8;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_NCIH1694_6H:BRD-K56343971-001-02-3:10;    cell_line:  NCIH1694;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_NCIH1836_6H:BRD-K56343971-001-02-3:10;    cell_line:  NCIH1836;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_NCIH2073_6H:BRD-K56343971-001-02-3:10;    cell_line:  NCIH2073;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_NCIH508_6H:BRD-K56343971-001-02-3:10;    cell_line:   NCIH508;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_NCIH596_6H:BRD-K56343971-001-02-3:10;    cell_line:   NCIH596;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_NOMO1_6H:BRD-K56343971-001-02-3:10;    cell_line:     NOMO1;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_OV7_6H:BRD-K56343971-001-02-3:10;    cell_line:       OV7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_PC3_6H:BRD-K56343971-001-02-3:10;    cell_line:       PC3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_PC3_24H:BRD-K56343971-001-02-3:10;    cell_line:       PC3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_PL21_6H:BRD-K56343971-001-02-3:10;    cell_line:      PL21;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_RMGI_6H:BRD-K56343971-001-02-3:10;    cell_line:      RMGI;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_RMUGS_6H:BRD-K56343971-001-02-3:10;    cell_line:     RMUGS;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SKLU1_6H:BRD-K56343971-001-02-3:10;    cell_line:     SKLU1;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SKM1_6H:BRD-K56343971-001-02-3:10;    cell_line:      SKM1;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SKMEL1_6H:BRD-K56343971-001-02-3:10;    cell_line:    SKMEL1;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SKMEL28_6H:BRD-K56343971-001-02-3:10;    cell_line:   SKMEL28;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SNGM_6H:BRD-K56343971-001-02-3:10;    cell_line:      SNGM;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SNU1040_6H:BRD-K56343971-001-02-3:10;    cell_line:   SNU1040;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SNUC4_6H:BRD-K56343971-001-02-3:10;    cell_line:     SNUC4;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SNUC5_6H:BRD-K56343971-001-02-3:10;    cell_line:     SNUC5;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SW480_6H:BRD-K56343971-001-02-3:10;    cell_line:     SW480;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SW620_6H:BRD-K56343971-001-02-3:10;    cell_line:     SW620;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_SW948_6H:BRD-K56343971-001-02-3:10;    cell_line:     SW948;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_THP1_6H:BRD-K56343971-001-02-3:10;    cell_line:      THP1;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_TYKNU_6H:BRD-K56343971-001-02-3:10;    cell_line:     TYKNU;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_U937_6H:BRD-K56343971-001-02-3:10;    cell_line:      U937;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_VCAP_6H:BRD-K56343971-001-02-3:10;    cell_line:      VCAP;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC006_VCAP_24H:BRD-K56343971-001-02-3:10;    cell_line:      VCAP;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC006_WSUDLCL2_6H:BRD-K56343971-001-02-3:10;    cell_line:  WSUDLCL2;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC014_A375_6H:BRD-K56343971-001-01-5:10;    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC014_A549_6H:BRD-K56343971-001-01-5:10;    cell_line:      A549;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC014_A549_24H:BRD-K56343971-001-01-5:10;    cell_line:      A549;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC014_ASC_24H:BRD-K56343971-001-01-5:10;    cell_line:       ASC;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC014_HA1E_6H:BRD-K56343971-001-01-5:10;    cell_line:      HA1E;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC014_HCC515_6H:BRD-K56343971-001-01-5:10;    cell_line:    HCC515;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC014_HEPG2_6H:BRD-K56343971-001-01-5:10;    cell_line:     HEPG2;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC014_HT29_6H:BRD-K56343971-001-01-5:10;    cell_line:      HT29;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC014_MCF7_6H:BRD-K56343971-001-01-5:10;    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC014_MCF7_24H:BRD-K56343971-001-01-5:10;    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC014_NEU_24H:BRD-K56343971-001-01-5:10;    cell_line:       NEU;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC014_NPC_24H:BRD-K56343971-001-01-5:10;    cell_line:       NPC;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC014_PC3_6H:BRD-K56343971-001-01-5:10;    cell_line:       PC3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC014_PC3_24H:BRD-K56343971-001-01-5:10;    cell_line:       PC3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC014_PHH_24H:BRD-K56343971-001-01-5:10;    cell_line:       PHH;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC014_SKB_24H:BRD-K56343971-001-01-5:10;    cell_line:       SKB;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC014_VCAP_6H:BRD-K56343971-001-01-5:10;    cell_line:      VCAP;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC014_VCAP_24H:BRD-K56343971-001-01-5:10;    cell_line:      VCAP;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:LJP001_BT20_6H:BRD-K56343971-001-04-9:10;    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:LJP001_BT20_6H:BRD-K56343971-001-04-9:2;    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      1 ?M
+cid:LJP001_BT20_6H:BRD-K56343971-001-04-9:0.4;    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
+cid:LJP001_BT20_6H:BRD-K56343971-001-04-9:0.08;    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    100 nM
+cid:LJP001_BT20_24H:BRD-K56343971-001-04-9:10;    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:LJP001_BT20_24H:BRD-K56343971-001-04-9:0.4;    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
+cid:LJP001_HS578T_6H:BRD-K56343971-001-04-9:10;    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:LJP001_HS578T_6H:BRD-K56343971-001-04-9:2;    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      1 ?M
+cid:LJP001_HS578T_6H:BRD-K56343971-001-04-9:0.4;    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
+cid:LJP001_HS578T_6H:BRD-K56343971-001-04-9:0.08;    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    100 nM
+cid:LJP001_HS578T_24H:BRD-K56343971-001-04-9:2;    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      1 ?M
+cid:LJP001_HS578T_24H:BRD-K56343971-001-04-9:0.08;    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    100 nM
+cid:LJP001_MCF10A_6H:BRD-K56343971-001-04-9:0.4;    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
+cid:LJP001_MCF10A_6H:BRD-K56343971-001-04-9:0.08;    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    100 nM
+cid:LJP001_MCF10A_24H:BRD-K56343971-001-04-9:10;    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:LJP001_MCF10A_24H:BRD-K56343971-001-04-9:2;    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      1 ?M
+cid:LJP001_MCF10A_24H:BRD-K56343971-001-04-9:0.4;    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
+cid:LJP001_MCF10A_24H:BRD-K56343971-001-04-9:0.08;    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    100 nM
+cid:LJP001_MCF7_6H:BRD-K56343971-001-04-9:10;    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:LJP001_MCF7_6H:BRD-K56343971-001-04-9:0.4;    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
+cid:LJP001_MCF7_6H:BRD-K56343971-001-04-9:0.08;    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    100 nM
+cid:LJP001_MCF7_24H:BRD-K56343971-001-04-9:10;    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:LJP001_MCF7_24H:BRD-K56343971-001-04-9:2;    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      1 ?M
+cid:LJP001_MCF7_24H:BRD-K56343971-001-04-9:0.4;    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
+cid:LJP001_MCF7_24H:BRD-K56343971-001-04-9:0.08;    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    100 nM
+cid:LJP001_MDAMB231_6H:BRD-K56343971-001-04-9:2;    cell_line:  MDAMB231;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      1 ?M
+cid:LJP001_MDAMB231_6H:BRD-K56343971-001-04-9:0.08;    cell_line:  MDAMB231;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    100 nM
+cid:LJP001_MDAMB231_24H:BRD-K56343971-001-04-9:10;    cell_line:  MDAMB231;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:LJP001_MDAMB231_24H:BRD-K56343971-001-04-9:2;    cell_line:  MDAMB231;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      1 ?M
+cid:LJP001_MDAMB231_24H:BRD-K56343971-001-04-9:0.4;    cell_line:  MDAMB231;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
+cid:LJP001_MDAMB231_24H:BRD-K56343971-001-04-9:0.08;    cell_line:  MDAMB231;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    100 nM
+cid:LJP001_SKBR3_6H:BRD-K56343971-001-04-9:2;    cell_line:     SKBR3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      1 ?M
+cid:LJP001_SKBR3_6H:BRD-K56343971-001-04-9:0.4;    cell_line:     SKBR3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
+cid:LJP001_SKBR3_6H:BRD-K56343971-001-04-9:0.08;    cell_line:     SKBR3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    100 nM
+cid:LJP001_SKBR3_24H:BRD-K56343971-001-04-9:10;    cell_line:     SKBR3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:LJP001_SKBR3_24H:BRD-K56343971-001-04-9:2;    cell_line:     SKBR3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      1 ?M
+cid:LJP001_SKBR3_24H:BRD-K56343971-001-04-9:0.4;    cell_line:     SKBR3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
+cid:LJP001_SKBR3_24H:BRD-K56343971-001-04-9:0.08;    cell_line:     SKBR3;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    100 nM
+cid:BRAF001_A375_24H:BRD-U73308409-000-01-9:10;    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:BRAF001_A375_24H:BRD-U73308409-000-01-9:2.5;    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      3 ?M
+cid:BRAF001_A375_24H:BRD-U73308409-000-01-9:0.625;    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
+cid:BRAF001_A375_24H:BRD-U73308409-000-01-9:0.15625;    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    100 nM
+cid:BRAF001_A375_6H:BRD-U73308409-000-01-9:10;    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:BRAF001_A375_6H:BRD-U73308409-000-01-9:2.5;    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      3 ?M
+cid:BRAF001_A375_6H:BRD-U73308409-000-01-9:0.625;    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
+cid:BRAF001_A375_6H:BRD-U73308409-000-01-9:0.15625;    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    100 nM
+cid:CPC006_H1299_6H:BRD-K56343971-001-02-3:10;    cell_line:     H1299;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:BRAF001_HEK293T_24H:BRD-U73308409-000-01-9:10;    cell_line:   HEK293T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:BRAF001_HEK293T_24H:BRD-U73308409-000-01-9:2.5;    cell_line:   HEK293T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:      3 ?M
+cid:BRAF001_HEK293T_24H:BRD-U73308409-000-01-9:0.625;    cell_line:   HEK293T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
+cid:BRAF001_HEK293T_24H:BRD-U73308409-000-01-9:0.15625;    cell_line:   HEK293T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    100 nM
+cid:BRAF001_HEK293T_6H:BRD-U73308409-000-01-9:10;    cell_line:   HEK293T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:BRAF001_HEK293T_6H:BRD-U73308409-000-01-9:2.5;    cell_line:   HEK293T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:      3 ?M
+cid:BRAF001_HEK293T_6H:BRD-U73308409-000-01-9:0.625;    cell_line:   HEK293T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
+cid:BRAF001_HEK293T_6H:BRD-U73308409-000-01-9:0.15625;    cell_line:   HEK293T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    100 nM
+cid:CPC006_RKO_6H:BRD-K56343971-001-02-3:10;    cell_line:       RKO;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC004_PC3_6H:BRD-A51714012-001-03-1:10;    cell_line:       PC3;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPD002_MCF7_6H:BRD-A51714012-001-04-9:10;    cell_line:      MCF7;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC004_A375_6H:BRD-A51714012-001-03-1:10;    cell_line:      A375;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC004_HA1E_6H:BRD-A51714012-001-03-1:10;    cell_line:      HA1E;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC004_HA1E_24H:BRD-A51714012-001-03-1:10;    cell_line:      HA1E;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC004_HCC515_6H:BRD-A51714012-001-03-1:10;    cell_line:    HCC515;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC004_HCC515_24H:BRD-A51714012-001-03-1:10;    cell_line:    HCC515;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC004_HEPG2_6H:BRD-A51714012-001-03-1:10;    cell_line:     HEPG2;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC004_HT29_6H:BRD-A51714012-001-03-1:10;    cell_line:      HT29;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC004_MCF7_6H:BRD-A51714012-001-03-1:10;    cell_line:      MCF7;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC004_PC3_24H:BRD-A51714012-001-03-1:10;    cell_line:       PC3;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC004_VCAP_6H:BRD-A51714012-001-03-1:10;    cell_line:      VCAP;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC004_VCAP_24H:BRD-A51714012-001-03-1:10;    cell_line:      VCAP;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC011_A375_6H:BRD-A51714012-003-09-4:10;    cell_line:      A375;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC011_A549_6H:BRD-A51714012-003-09-4:10;    cell_line:      A549;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC011_A549_24H:BRD-A51714012-003-09-4:10;    cell_line:      A549;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC011_HA1E_6H:BRD-A51714012-003-09-4:10;    cell_line:      HA1E;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC011_HT29_6H:BRD-A51714012-003-09-4:10;    cell_line:      HT29;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC011_MCF7_6H:BRD-A51714012-003-09-4:10;    cell_line:      MCF7;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC011_MCF7_24H:BRD-A51714012-003-09-4:10;    cell_line:      MCF7;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC011_PC3_6H:BRD-A51714012-003-09-4:10;    cell_line:       PC3;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC011_PC3_24H:BRD-A51714012-003-09-4:10;    cell_line:       PC3;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC011_VCAP_6H:BRD-A51714012-003-09-4:10;    cell_line:      VCAP;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC011_VCAP_24H:BRD-A51714012-003-09-4:10;    cell_line:      VCAP;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC015_A375_6H:BRD-A51714012-001-03-1:10;    cell_line:      A375;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC015_A549_6H:BRD-A51714012-001-03-1:10;    cell_line:      A549;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC015_A549_24H:BRD-A51714012-001-03-1:10;    cell_line:      A549;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC015_ASC_24H:BRD-A51714012-001-03-1:10;    cell_line:       ASC;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC015_HEPG2_6H:BRD-A51714012-001-03-1:10;    cell_line:     HEPG2;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC015_HT29_6H:BRD-A51714012-001-03-1:10;    cell_line:      HT29;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC015_MCF7_6H:BRD-A51714012-001-03-1:10;    cell_line:      MCF7;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPC015_MCF7_24H:BRD-A51714012-001-03-1:10;    cell_line:      MCF7;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC015_NPC_24H:BRD-A51714012-001-03-1:10;    cell_line:       NPC;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC015_PHH_24H:BRD-A51714012-001-03-1:10;    cell_line:       PHH;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPC015_SKB_24H:BRD-A51714012-001-03-1:10;    cell_line:       SKB;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPD002_MCF7_24H:BRD-A51714012-001-04-9:10;    cell_line:      MCF7;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M
+cid:CPD002_PC3_6H:BRD-A51714012-001-04-9:10;    cell_line:       PC3;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 ?M
+cid:CPD002_PC3_24H:BRD-A51714012-001-04-9:10;    cell_line:       PC3;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 ?M

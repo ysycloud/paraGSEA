@@ -72,7 +72,7 @@ for i=1:n
 	else
 		concentration = ds.cdesc{i,cindex(5)};
 	end
-	fprintf(fid2,'cid:%s\n    cell_line:%10s;    perturbation:%15s;    perturbation type:%10s;    duration:%10s;    concentration:%10s\n', ds.cid{i}, cell_line, perturbation, perturbation_type, duration, concentration );
+	fprintf(fid2,'cid:%s;    cell_line:%10s;    perturbation:%15s;    perturbation type:%10s;    duration:%10s;    concentration:%10s\n', ds.cid{i}, cell_line, perturbation, perturbation_type, duration, concentration );
 	offset = ftell(fid2);
 end
 fclose(fid2);
