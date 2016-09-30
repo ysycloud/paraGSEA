@@ -1,10 +1,18 @@
+% cell_id_set={'MCF7'};  
+% pert_set={'atorvastatin','vemurafenib','venlafaxine'};
+% pert_type_set = {'trt_cp'};
+% duration = 24;  
+% concentration= 10;
+
 % default parameters
 if ~exist('sample_conditions_chd')
-	sample_conditions_chd = {'cell_id', 'pert_iname', 'pert_type', 'pert_itime', 'pert_idose'}; 
+	sample_conditions_chd = {'cell_id', 'pert_iname', 'pert_type', 'pert_itime', 'pert_idose'};
+	%sample_conditions_chd = {'CL_Name', 'SM_Name', 'SM_Pert_Type', 'SM_Time', 'SM_Dose'}; 
 end
 
 if ~exist('file_input')
 	file_input='../data/modzs_n272x978.gctx';
+	%file_input='../data/GSE70138_Broad_LINCS_Level2_GEX_n78980x978_2015-06-30.gct';
 end
 
 if ~exist('file_name')
@@ -90,10 +98,18 @@ o=ones(m,2);
 for i = 1:n
 	
 	if isDura == 0 
-		dura_now = str2num(ds.cdesc{i,cindex(4)}(isstrprop(ds.cdesc{i,cindex(4)},'digit')));  %extract the number part
+		if isequal(class(ds.cdesc{i,cindex(4)}),'char')
+			dura_now = str2num(ds.cdesc{i,cindex(4)}(isstrprop(ds.cdesc{i,cindex(4)},'digit')));  %extract the number part
+		else
+			dura_now = ds.cdesc{i,cindex(4)};
+		end
 	end
 	if isCon == 0 
-		con_now = str2num(ds.cdesc{i,cindex(5)}(isstrprop(ds.cdesc{i,cindex(5)},'digit')));  %extract the number part
+		if isequal(class(ds.cdesc{i,cindex(4)}),'char')
+			con_now = str2num(ds.cdesc{i,cindex(5)}(isstrprop(ds.cdesc{i,cindex(5)},'digit')));  %extract the number part
+		else
+			con_now = ds.cdesc{i,cindex(5)};
+		end
 	end
 	
 	if ( isCell || ismember(ds.cdesc{i,cindex(1)},cell_id_set) ) && ( isPert || ismember(ds.cdesc{i,cindex(2)}, pert_set) ) && ( isType || ismember(ds.cdesc{i,cindex(3)}, pert_type_set) ) && ( isDura || dura_now == duration ) && ( isCon || con_now == concentration )
