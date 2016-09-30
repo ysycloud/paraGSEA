@@ -25,8 +25,8 @@ With all these optimizations, paraGSEA can attains a 50x speedup compared with o
 ## V. Compilation and installation
 
 ### V.I. Prerequisites
-* [1ktools](https://github.com/cmap/l1ktools) is used to parse the .gctx file which stored gene profile data defined by LINCS and Connectivity Map (CMap) in HDF5 file format.
-* Matlab to parse the .gctx file、extract the gene profile sets and export to plain text file, which will be taken as input of C code of parallel GSEA.
+* [1ktools](https://github.com/cmap/l1ktools) is used to parse the .gctx or .gct file which stored gene profile data defined by LINCS and Connectivity Map (CMap) in HDF5 file format.
+* Matlab to parse the .gctx(.gct) file、generate some reference data, extract the gene profile sets and write out to plain text files, which will be taken as input of C code of parallel GSEA.
 * MPICH2
 * GCC compiler supports the OpenMP v2.5, v4.0 specification.
 
@@ -36,12 +36,20 @@ With all these optimizations, paraGSEA can attains a 50x speedup compared with o
 
 2. Configure `Matlab Tools`: you may need to set `paraGSEA/matlab_for_parse` as the `Matlab path` to parse the original file first.
 
-3. Install and configure `C Tools`: In order to install the `C Tools`, you must enter the `paraGSEA` directory first. Then, you can compile and install the Tools in current `bin` directory using command line `make all` so that you can use these tools in this directory. if you want to use the tools in every places of this system, you should run `make install`. However, you may need root authority to execute this operation. And, if you finshed this operation, you can run `make clean` to clean the local Tools in `bin` directory.
+3. Install and configure `C Tools`: In order to install the `C Tools`, you must enter the `paraGSEA` directory first. Then, you can compile and install the Tools in current `bin` directory using command line `make all` so that you can use these tools in this directory. if you want to use the tools in every places of this system, you should run `make install`. However, you may need root authority to execute this operation. Also, if you finshed this operation, you can run `make clean` to clean the local Tools in `bin` directory.
 
 ### V.III. Test
 
-You can test any Tools we provided with some simple datas in `data` directory easily. For example , run `quick_search_serial "data/data_for_test.txt" 10` to test the `Serial Quick Search Tools` in single node. Also, Some typical test sample is provided in [runParaGSEALinux.sh](runParaGSEALinux.sh) shell script. 
-
+You can test any Tools we provided with some simple datas in `data` directory easily. For example , run `quick_search_serial` to test the `Serial Quick Search Tools` in single node, which wiil obtain the output shown below. Also, Some typical test sample is provided in [runParaGSEALinux.sh](runParaGSEALinux.sh) shell script. 
+```shell
+Usage:   quick_search_serial [options]
+	general options:
+		-n --topn: The first and last N GSEA records ordered by ES. [ default 10]
+	input/output options:
+		-i --input: input file/a parsed profiles's file from pretreatment stage.
+		-s --sample: input file/a parsed sample sequence number file from pretreatment stage.
+		-r --reference: input a directory includes referenced files about genesymbols and cids.
+```
 The whole install and test process is provided in [install.sh](install.sh) shell script
 
 ## VI. Description of Tools
@@ -57,44 +65,38 @@ Run `cd paraGSEA/matlab_for_parse` or enter the `pathtool` command, click "Add w
 
 #### VI.I.III. using by command line:
 After you set the MATLAB path, you should enter `matlab` in shell to start matlab environment.
-Then, you can set the input and output file path in matlab environment and enter `PreGSEA` to parse original data.
-Or, you can use the shell script below to start matlab environment and parse original data.
+
+In order to provide user-friendly parsed method to allow user set their own conditions of profile they need, we must generate some reference data to facilitate our main work. There is a Matlab script in ‘paraGSEA/matlab_for_parse’ directory named `genReferenceforNewDataSet.m` to help us finish this work. The Only thing we need to do is just setting some field names and file path. There is a example below. More detail have been told in `tutorial`(tutorial.pdf). 
+
+```shell
+datasource='../data/modzs_n272x978.gctx';
+gene_symbol_rhd = 'pr_gene_symbol'; 
+sample_conditions_chd = {'cell_id', 'pert_iname', 'pert_type', 'pert_itime', 'pert_idose'};
+genReferenceforNewDataSet
+```
+
+Then, you can set the input,output file path and some sample conditions in matlab environment and enter `PreGSEA` to parse original data.
+Or, you can use the shell script below to start matlab environment and parse original data directly.
 
 ```shell
 % execute matlab script to parse the data  
-matlab -nodesktop -nosplash -nojvm -r "file_input='../data/modzs_n272x978.gctx'; file_name='../data/data_for_test.txt'; file_name_cid='../data/data_for_test_cid.txt'; file_name_rid='../data/data_for_test_rid.txt'; PreGSEA; quit;"
-```
+matlab -nodesktop -nosplash -nojvm -r " file_input='../data/modzs_n272x978.gctx';  file_name='../data/data_for_test.txt';  file_name_cidnum='../data/data_for_test_cidnum.txt';  sample_conditions_chd = {'cell_id', 'pert_iname', 'pert_type', 'pert_itime', 'pert_idose'};  cell_id_set={'A549','MCF7','A375','A673','AGS'};  pert_set={'atorvastatin','vemurafenib','venlafaxine'}; pert_type_set = {'trt_cp'}; duration = 6 ;  concentration= 10;  PreGSEA;  quit;"
 
-**Note:** the example of setting input and output file path in matlab script and parse original data is shown below.
-```matlab
-% setting input file name（ .gctx ----original gene dataset）
-file_input = '../data/modzs_n272x978.gctx';
-
-% setting the out file name of profiles
-file_name = '../data/data_for_test.txt';  
-
-% setting out file name of profiles' cids(profiles)
-file_name_cid = '../data/data_for_test_cid.txt';
-
-% setting out file name of profiles' rids(genes)
-file_name_rid='../data/data_for_test_rid.txt';   
-
-% excuting the PreAnalysis in GSEA for C Tools
-PreGSEA
+cat ../data/tmp >> ../data/data_for_test.txt
+rm -f ../data/tmp
 ```
 
 By the way, there are another more efficent script provided to parse the original data in a parallel manner.
-To use this script, you are supposed to make sure that you have a multicores system first, and except the input and output file path you must set in matlab environment like the last script, the number of cores are also should be setted. Then you
-can enter `paraPreGSEA` to parse original data.
+To use this script, you are supposed to make sure that you have a multicores system first, and except the input and output file path you must set in matlab environment like the last script, the number of cores are also should be setted. Then you can enter `paraPreGSEA` to parse original data.
 Or, you can use the shell script below to start matlab environment and parse original data in a parallel manner.
 
 ```shell
 # execute matlab script to parallel parse the data  
-matlab -nodesktop -nosplash -nojvm -r "file_input='../data/modzs_n272x978.gctx'; file_name='../data/data_for_test.txt'; file_name_cid='../data/data_for_test_cid.txt'; file_name_rid='../data/data_for_test_rid.txt'; cores = 2; paraPreGSEA; quit;"
+matlab -nodesktop -nosplash -nojvm -r " file_input='../data/modzs_n272x978.gctx';  file_name='../data/data_for_test.txt';  file_name_cid='../data/data_for_test_cidnum.txt';  cores = 2;  sample_conditions_chd = {'cell_id', 'pert_iname', 'pert_type', 'pert_itime', 'pert_idose'};  cell_id_set={'A549','MCF7','A375','A673','AGS'}; pert_set={'atorvastatin','vemurafenib','venlafaxine'}; pert_type_set = {'trt_cp'}; duration = 6 ;  concentration= 10;  paraPreGSEA;  quit;"
 
 cat ../data/data_for_test.txt_* >> ../data/data_for_test.txt
-cat ../data/data_for_test_cid.txt_* >> ../data/data_for_test_cid.txt
-rm -f ../data/data_for_test.txt_* ../data/data_for_test_cid.txt_*
+cat ../data/data_for_test_cidnum.txt_* >> ../data/data_for_test_cidnum.txt
+rm -f ../data/data_for_test.txt_* ../data/data_for_test_cidnum.txt_*
 ```
 
 **Note:** the number of cores must be smaller than the actual core number in your system. And after the parse work, you shoul merge every parts of output file into a whole file like the shell script shown above.
@@ -102,7 +104,8 @@ rm -f ../data/data_for_test.txt_* ../data/data_for_test_cid.txt_*
 #### VI.I.V. Tools:
 * [**PreGSEA.m**](matlab_for_parse/PreGSEA.m) : extract the gene profile sets、finish pre-sorting and write to .txt file.
 * [**paraPreGSEA.m**] (matlab_for_parse/paraPreGSEA.m): extract the gene profile sets、finish pre-sorting and write to .txt file in a parallel manner.
-* [**parse_gctx.m**] (matlab_for_parse/parse_gctx.m): parse .gctx file which is provided by 1ktools.
+* [**parse_gctx.m**] (matlab_for_parse/lib/parse_gctx.m): parse .gctx file which is provided by 1ktools.
+* [**parse_gct.m**] (matlab_for_parse/lib/parse_gct.m): parse .gctx file which is provided by 1ktools.
 
 #### VI.I.VI. Note:
  * the example of executing shell script to parse the data is provided by [example/runPreGSEAbyMatlab.sh](docs/example/runPreGSEAbyMatlab.md)
