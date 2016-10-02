@@ -422,8 +422,13 @@ the detail usage of each C Tool is shown below.
 	......
 	
 ### VI.III Standard Input format of Compare Profiles:
-	The mainly input file of this part is two ranked profiles files, such as `data_for_test.txt`, 
-	which has been described before. Therefore, there will be no more description.
+
+  When we get a new source file in correct HDF5 format to analysis, such as the example `modzs_n272x978.gctx`, 
+  we need generate some reference data first. 
+  Three files will generate as reference data(`Gene_List.txt`, `Samples_Condition.txt`, `Samples_RowByteOffset.txt`).
+  
+  The mainly input file of this part is two ranked profiles files, such as `data_for_test.txt`, 
+  which has been described before. Therefore, there will be no more description.
 	
 
 ### VI.V Standard Input format of Clusting Profiles( Output format of Compare Profiles ):
