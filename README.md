@@ -332,7 +332,6 @@ the detail usage of each C Tool is shown below.
   Three files will generate as reference data(`Gene_List.txt`, `Samples_Condition.txt`, `Samples_RowByteOffset.txt`).
   
 ####  VI.I.I. `Gene_List.txt`: ####
-  
   This file includes all gene names of every profile in original order recorded in HDF5 source file.
   When users input a GeneSet, we can get the sequence number of every gene with this file.
   The main format is one gene name(symbol) per line.
