@@ -11,7 +11,7 @@ Gene Set Enrichment Analysis (GSEA) Tools for LINCS data in a parallel manner
     5. Datasets in examples | File formats.
 	6. Using Problems
     7. License.
-    8. References.
+    8. Contact.
 
 ## I. Description
 
@@ -302,7 +302,6 @@ the detail usage of each C Tool is shown below.
 **Note:** 
  * runParalESLinux.sh annotate a list of execution case of C tools. Removing the annotation, you can using it easily.
  * the details of parameter list of each C tool can be seen in runParalESLinux.sh or the `tutorial`.
-
 
 #### V.II.VI. Demo
 * [**quick_search_demo.sh**](docs/example/quick_search_demo.md): a shell script example to execute a whole quick_search process includes parses original data
