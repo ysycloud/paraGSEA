@@ -318,19 +318,71 @@ the detail usage of each C Tool is shown below.
 | modzs_n272x978.gctx | original profile file from LINCS Dataset| HDF5 |
 | Gene_List.txt | all gene names of every profile in original order recorded in HDF5 source file | one gene name(symbol) per line |
 | Samples_Condition.txt | treatment conditions of all profiles in original order recorded in HDF5 source file | one profile's conditions per line |
-| Samples_RowByteOffset.txt | Bytes offset of every line in `Samples_Condition.txt` | every offset value is splitted by `\t` |
-| data_for_test.txt | ranked profile file | first line : profile_number & profile_Length ; next profile_number lines : a ranked profile file included profile_Length elements |
+| Samples_RowByteOffset.txt | Bytes offsets of every line in `Samples_Condition.txt` | every offset value is splitted by `\t` |
+| data_for_test.txt | ranked profiles file in a sequence number format | first line : profile_number & profile_Length ; next profile_number lines : a ranked profile includes profile_Length genes in a sequence number format |
 | data_for_test_cidnum.txt | profile sequence number file corresponding to these profiles we extract in `data_for_test.txt` | one sequence number per line |
 | GeneSet.txt | GeneSet example file | one gene name(symbol) per line |
 | ES_Matrix_test_*.txt | ES Matrix file stored in distributed way ( ‘*’ will be replaced by process id )| first line : row_number & column_number ; next row_number lines : a Enrichment scores vector included column_number elements |
 | Cluster_result_test.txt | cluster result file | each line consists of a class label or a profile information |
 
+
 ### VI.I generated reference data format:
   
+  When we get a new source file in correct HDF5 format to analysis, such as the example `modzs_n272x978.gctx`, 
+  we need generate some reference data first. 
+  Three files will generate as reference data(`Gene_List.txt`, `Samples_Condition.txt`, `Samples_RowByteOffset.txt`).
+  
+####  VI.I.I. `Gene_List.txt`: ####
+  
+  This file includes all gene names of every profile in original order recorded in HDF5 source file.
+  When users input a GeneSet, we can get the sequence number of every gene with this file.
+  The main format is one gene name(symbol) per line.
+  
+  Example:
+	
+	PSME1
+	ATF1
+	RHEB
+	FOXO3
+	RHOA
+	IL1B
+	ASAH1
+	......
+	
+####  VI.I.II. `Samples_Condition.txt`: ####
+  
+  This file includes treatment conditions of all profiles in original order recorded in HDF5 source file.
+  When we get a profile sequence number, we can get the detail information of this profile treatment conditions with this file.
+  The main format is one profile's conditions per line.
 
+  Example:
+  
+	cid:CPC006_A549_6H:BRD-U88459701-000-01-8:10;    cell_line:      A549;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	cid:CPC020_A375_6H:BRD-A82307304-001-01-8:10;    cell_line:      A375;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	cid:CPC020_HT29_6H:BRD-A82307304-001-01-8:10;    cell_line:      HT29;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	......
+
+####  VI.I.III. `Samples_RowByteOffset.txt`: ####
+  
+  This file includes Bytes offsets of every line in `Samples_Condition.txt`.
+  With this file, we can locate specific line treatment conditions directly without loading all `Samples_Condition.txt` into memory, 
+  that will be very effective in time and space consumption.
+  The main format is every offset value is splitted by `\t`.
+
+  Example:
+	
+	  0	       189	       378	       567	       756	       945	      1135	      1325	......
+  
 
 ### VI.II Standard Input format of Quick Search:
 
+####  VI.II.I. `data_for_test.txt`: ####
+  
+  This file is ranked profiles file which is parsed and extracted from source HDF5 file.
+  There are two parts of this file, The first is the first line, which only consists of two figures, the profile number and profile length.
+  The second part is the content of every profile. each line is a profile includes profile_Length genes in a sequence number format.
+  In order to get this part, we first numbered every gene starting with one and then ordered them according to their differential expression
+ 
   Example:
   
 	272	       978
@@ -338,6 +390,7 @@ the detail usage of each C Tool is shown below.
 	650	  605	  711	  436	  630	  429	  787	...  
 	175	  136	  857	  145	  832	  707	  850	...
 	 80	  207	  102	  127	  861	  512	  860	...
+	......
 	 
 
 ### VI.III Standard Input format of Compare Profiles:
