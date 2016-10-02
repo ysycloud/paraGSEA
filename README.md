@@ -145,7 +145,7 @@ rm -f ../data/data_for_test.txt_* ../data/data_for_test_cidnum.txt_*
 1. MPICH2
 2. GCC compiler supports the OpenMP v2.5, v4.0 specification
 
-#### V.II.III. Tools(Source file list):
+#### V.II.II. Tools(Source file list):
 
 * [**quick_search_serial.c**](docs/Tools/quick_search_serial.md) read the .txt file 、complete GSEA and show the topN results in a serial way.
 * [**quick_search_omp.c**](docs/Tools/quick_search_omp.md) read the .txt file 、complete parallel GSEA by OpenMP and show the topN results.
@@ -156,10 +156,10 @@ rm -f ../data/data_for_test.txt_* ../data/data_for_test_cidnum.txt_*
 * [**Cluster_KMediods_ompi.c**](docs/Tools/Cluster_KMediods_ompi.md) read the ES_Matrix file 、complete a general clustering algorithm like K-Mediods by MPI/OpenMP.
 * [**Cluster_KMediods++_ompi.c**](docs/Tools/Cluster_KMediods++_ompi.md) read the ES_Matrix file 、complete a general clustering algorithm like K-Mediods by MPI/OpenMP, but let the distance between initial cluster centers as far as possible.
 
-#### V.II.V. Demo:
+#### V.II.III. Demo:
 * [**runParalESLinux.sh**](runParaGSEALinux.sh): run Executable files in Linux.
 
-#### V.II.VI. Running paraGSEA:
+#### V.II.V. Running paraGSEA:
 
 paraGSEA runs on Linux and Mac.
 
@@ -272,7 +272,7 @@ List of arguments:
 	 a directory include some reference data files we generate from pretreatment stage
 
 	 
-the detail usage of each C Tools is shown below.
+the detail usage of each C Tool is shown below.
 ```shell
 #param list :filename topn
 #quick_search_serial -i data/data_for_test.txt -n 10 -s data/data_for_test_cidnum.txt -r data/Reference
@@ -301,27 +301,36 @@ the detail usage of each C Tools is shown below.
 
 **Note:** 
  * runParalESLinux.sh annotate a list of execution case of C tools. Removing the annotation, you can using it easily.
- * the details of parameter list of each C tools can be seen in runParalESLinux.sh or the `tutorial`.
+ * the details of parameter list of each C tool can be seen in runParalESLinux.sh or the `tutorial`.
 
 
-### V.II.VII. Demo
+#### V.II.VI. Demo
 * [**quick_search_demo.sh**](docs/example/quick_search_demo.md): a shell script example to execute a whole quick_search process includes parses original data
 , select quick search way and quick search.
 * [**cluster_demo.sh**](docs/example/cluster_demo.md): a shell script example to execute a whole cluster process includes parses original data
 , select ES_Matrix & cluster way and execute ES_Matrix & cluster.
 
-### VI. Datasets in examples | File Formats
+
+## VI. Datasets in examples | File Formats
 
 | File | Description | Format|
 | ---- | ----------- |--------|
 | modzs_n272x978.gctx | original profile file from LINCS Dataset| HDF5 |
-| data_for_test.txt | ranked profile file in a index format | first line : profile_number & profile_Length ; next profile_number lines : a ranked profile file included profile_Length elements |
-| data_for_test_cid.txt | cid( profile identification ) file | each line : a cid( profile identification ) string corresponding to the last profile_number lines of the `data_for_test.txt` |
-| ES_Matrix_test_*.txt | ES Matrix file stored in distributed way ( ‘*’ will be replaced by process id )| first line : row_number	column_number ; next row_number lines : a Enrichment scores vector included column_number elements |
-| Cluster_result_test.txt | cluster result file | each line : a cluster flag corresponding to each profile |
+| Gene_List.txt | all gene names of every profile in original order recorded in HDF5 source file | one gene name(symbol) per line |
+| Samples_Condition.txt | treatment conditions of all profiles in original order recorded in HDF5 source file | one profile's conditions per line |
+| Samples_RowByteOffset.txt | Bytes offset of every line in `Samples_Condition.txt` | every offset value is splitted by `\t` |
+| data_for_test.txt | ranked profile file | first line : profile_number & profile_Length ; next profile_number lines : a ranked profile file included profile_Length elements |
+| data_for_test_cidnum.txt | profile sequence number file corresponding to these profiles we extract in `data_for_test.txt` | one sequence number per line |
+| GeneSet.txt | GeneSet example file | one gene name(symbol) per line |
+| ES_Matrix_test_*.txt | ES Matrix file stored in distributed way ( ‘*’ will be replaced by process id )| first line : row_number & column_number ; next row_number lines : a Enrichment scores vector included column_number elements |
+| Cluster_result_test.txt | cluster result file | each line consists of a class label or a profile information |
 
-#### VI.I Standard parsed profile format:
+### VI.I generated reference data format:
   
+
+
+### VI.II Standard Input format of Quick Search:
+
   Example:
   
 	272	       978
@@ -329,6 +338,13 @@ the detail usage of each C Tools is shown below.
 	650	  605	  711	  436	  630	  429	  787	...  
 	175	  136	  857	  145	  832	  707	  850	...
 	 80	  207	  102	  127	  861	  512	  860	...
+	 
+
+### VI.III Standard Input format of Compare Profiles:
+
+### VI.V Standard Input format of Clusting Profiles( Output format of Compare Profiles ):
+
+### VI.VI Standard Output format of Clusting Profiles:
 
 
 ## VII. Using Problem
