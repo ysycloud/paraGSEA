@@ -379,9 +379,9 @@ the detail usage of each C Tool is shown below.
 ####  VI.II.I. `data_for_test.txt`: ####
   
   This file is ranked profiles file which is parsed and extracted from source HDF5 file.
-  There are two parts of this file, The first is the first line, which only consists of two figures, the profile number and profile length.
-  The second part is the content of every profile. each line is a profile includes profile_Length genes in a sequence number format.
-  In order to get this part, we first numbered every gene starting with one and then ordered them according to their differential expression
+  There are two parts of this file. The first is the first line, which only consists of two figures, the profile number and profile length.
+  The second part is the content of every profile. Each line is a profile includes profile_Length genes in a sequence number format.
+  In order to get this part, we first numbered every gene starting with one and then ordered them according to their differential expression.
  
   Example:
   
@@ -391,14 +391,87 @@ the detail usage of each C Tool is shown below.
 	175	  136	  857	  145	  832	  707	  850	...
 	 80	  207	  102	  127	  861	  512	  860	...
 	......
-	 
 
+####  VI.II.II. `data_for_test_cidnum.txt`: ####
+  
+  This file is profile sequence number file corresponding to these profiles we extract in `data_for_test.txt`.
+  When we get this profile sequence number, we can get the detail information of this profile treatment conditions with reference data.
+  The main format is one sequence number per line.
+ 
+  Example:
+  
+        14
+        15
+        18
+        19
+        20
+        21
+		......
+		
+####  VI.II.III. `GeneSet.txt`: ####
+	
+  This is a GeneSet example file with the same format of `Gene_List.txt`, where presents as one gene name(symbol) per line.
+	
+  Example:
+  
+	CDKN2A
+	CDKN1B
+	GAPDH
+	CISD1
+	SPDEF
+	IGF1R
+	......
+	
 ### VI.III Standard Input format of Compare Profiles:
+
+	The mainly input file of this part is two ranked profiles files, such as `data_for_test.txt`, 
+	which has been described before. Therefore, there will be no more description.
+	
 
 ### VI.V Standard Input format of Clusting Profiles( Output format of Compare Profiles ):
 
+####  VI.V.I. `ES_Matrix_test_*.txt`: ####
+
+  There are some ES Matrix files stored in distributed way ( ‘*’ will be replaced by process id ). 
+  There are also two parts of each ES Matrix file. The first is the first line, which only consists of two figures, the row number and column number.
+  The second part is the ES vectors of every profile to all other profiles, where each line is a enrichment scores vector included column_number elements.
+  
+  Example:
+  
+	136	       272
+	1.000	0.271	0.147	0.067	0.247	-0.065 ...
+	0.271	1.000	0.259	0.109	0.265	0.256  ...
+	0.147	0.259	1.000	0.071	-0.012	-0.061 ...
+	0.067	0.109	0.071	1.000	0.185	0.433  ...
+	0.247	0.265	-0.012	0.185	1.000	0.226  ...
+	......
+
 ### VI.VI Standard Output format of Clusting Profiles:
 
+####  VI.VI.I. `Cluster_result_test.txt`: ####
+
+  This is the cluster result file, which includes the class labels and corresponding profile treatment conditions information.
+  
+  Example:
+
+	cluster 1 :
+	cid:CPC006_A549_6H:BRD-U88459701-000-01-8:10;    cell_line:      A549;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	cid:CPC020_A375_6H:BRD-A82307304-001-01-8:10;    cell_line:      A375;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	......
+	cluster 2 :
+	cid:CPC020_HT29_6H:BRD-A82307304-001-01-8:10;    cell_line:      HT29;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	cid:CPC006_A375_6H:BRD-U88459701-000-01-8:10;    cell_line:      A375;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	......
+	cluster 3 :
+	cid:CPC006_A549_24H:BRD-U88459701-000-01-8:10;    cell_line:      A549;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 uM
+	cid:CPC006_AGS_6H:BRD-U88459701-000-01-8:10;    cell_line:       AGS;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	......
+	cluster 4 :
+	cid:CPC006_HA1E_6H:BRD-U88459701-000-01-8:10;    cell_line:      HA1E;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	cid:CPC006_HCC15_6H:BRD-U88459701-000-01-8:10;    cell_line:     HCC15;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	......
+	......
+	
 
 ## VII. Using Problem
 1. When we get a new profile file keeps in correct format with a ‘gctx’ or ‘gct’ suffix to analysis, we must generate some reference data first to facilitate the main follow-up work of C Tools.
