@@ -5,10 +5,12 @@ end
 
 if ~exist('sample_conditions_chd')
 	sample_conditions_chd = {'cell_id', 'pert_iname', 'pert_type', 'pert_itime', 'pert_idose'}; 
+	%sample_conditions_chd = {'CL_Name', 'SM_Name', 'SM_Pert_Type', 'SM_Time', 'SM_Dose'}; 
 end
 
 if ~exist('datasource')
 	datasource='../data/modzs_n272x978.gctx';
+	%datasource='../data/GSE70138_Broad_LINCS_Level2_GEX_n78980x978_2015-06-30.gct';	
 end
 
 ds= parse_gctx(datasource);
@@ -65,12 +67,20 @@ for i=1:n
 	if cisin(4)==0
 		duration = 'field error';
 	else
-		duration = ds.cdesc{i,cindex(4)};
+		if	~isequal(class(ds.cdesc{i,cindex(4)}),'char')
+			duration = num2str(ds.cdesc{i,cindex(4)});
+		else
+			duration = ds.cdesc{i,cindex(4)};
+		end
 	end
 	if cisin(5)==0
 		concentration = 'field error';
 	else
-		concentration = ds.cdesc{i,cindex(5)};
+		if	~isequal(class(ds.cdesc{i,cindex(5)}),'char')
+			concentration = num2str(ds.cdesc{i,cindex(5)});
+		else
+			concentration = ds.cdesc{i,cindex(5)};
+		end	
 	end
 	fprintf(fid2,'cid:%s;    cell_line:%10s;    perturbation:%15s;    perturbation type:%10s;    duration:%10s;    concentration:%10s\n', ds.cid{i}, cell_line, perturbation, perturbation_type, duration, concentration );
 	offset = ftell(fid2);
