@@ -183,7 +183,7 @@ List of arguments:
 	 
   **-s or --sample** *sample sequece number file*
 
-	 a text file include sample sequence numbers which are extracted from pretreatment stage as input.
+	 a text file include sample sequence numbers which are extracted from pretreatment stage.
 
   **-r or --reference** *reference data directory*
 
@@ -265,7 +265,7 @@ List of arguments:
 	 
   **-s or --sample** *sample sequece number file*
 
-	 a text file include sample sequence numbers which are extracted from pretreatment stage as input.
+	 a text file include sample sequence numbers which are extracted from pretreatment stage.
 
   **-r or --reference** *reference data directory*
 

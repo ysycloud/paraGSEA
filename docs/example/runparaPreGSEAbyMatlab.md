@@ -30,8 +30,7 @@ However, there are some things we must notice:
 
 2. the number of cores must be smaller than the actual core number in your system. 
 
-3.the five parameters is the filter conditions to extract the profiles we need. 
-If there is one condition we not set, this condition will no longer be taken into account to extract profiles. 
+3. the five parameters is the filter conditions to extract the profiles we need. If there is one condition we not set, this condition will no longer be taken into account to extract profiles. 
 
 4. after the parse work, you shoul merge every parts of output file into a whole file like the shell script shown.
 ```shell

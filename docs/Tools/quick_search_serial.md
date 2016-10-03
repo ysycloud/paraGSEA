@@ -8,26 +8,34 @@ There are several parameters should be setted in command line example.
 
 | parameter name | Parameter function |
 | -------------- | -------------------|
-| filename | a parsed profiles's file from pretreatment stage |
-| topN | The first and last N GSEA records ordered by ES |
+| -i --input | a parsed profiles's ranked sequence number file from pretreatment stage |
+| -n --topn | define the first and last N GSEA records ordered by ES |
+| -s --sample | a text file include sample sequence numbers which are extracted from pretreatment stage |
+| -r --reference | a directory include some reference data files we generate from pretreatment stage |
+
 
 A sample `Shell script` file is given below that makes use of `quick_search_serial`.
 
 ```shell
-./bin/quick_search_serial "data/data_for_test.txt" 10
+./bin/quick_search_serial -i data/data_for_test.txt -n 8 -s data/data_for_test_cidnum.txt -r data/Reference
 ```
 
 It may will produce the following output:
 ```shell
 Profile Set is Loading...!
 profilenum:272	 genelen:978
-loading IO and prework time: 0.0283 s
-input the GeneSet( a integer[1-genelen] string split by space ):
+loading IO and prework time: 0.0237 s
+which way do you want to input the GeneSet( 0 -> standard input , others -> file input ):
 ```
 
-Then you can input the GeneSet which is a integer string split by space 
-between 1 to genlen. each integer represents a gene recorded in 
-`data/data_for_test_rid.txt`
+Then you can choose which way do you want to input the GeneSet. 
+Choosing 0, then you must input a gene set directly. 
+
+For example
+
+Choosing Others, you must input a file path where there is a gene set. 
+Second way may be more convenient such as the example shows.
+
 
 Therefore, you can input the GeneSet as below:
 ```shell
