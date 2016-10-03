@@ -13,15 +13,17 @@ There are several parameters should be setted in command line example.
 | -n process_num | Total number of processes |
 | -ppn pernum |the number of processes in each node |
 | -hostfile hostfile | list the IP or Hostname of nodes |
-| thread_num | the number of threads in per process_num |
-| cluster_num | the number of clusters we want to get |
-| filename1 | distributed ES_Matrix file we get from stage 2(Compare Profiles) |
-| filename2 | output class flags file of every profiles in root node |
+| -t --thread | define the maximum number of parallel threads |
+| -c --cluster | define the number of clusters we want to get |
+| -i --input | distributed ES_Matrix file we get from stage 2(Compare Profiles) |
+| -o --output | define the output cluster result file of every profiles in root node |
+| -s --sample | a text file include sample sequence numbers which are extracted from pretreatment stage |
+| -r --reference | a directory include some reference data files we generate from pretreatment stage |
 
 A sample `Shell script` file is given below that makes use of `Cluster_KMediods_ompi`.
 
 ```shell
-mpirun -n 2 -ppn 2 -hostfile example/hostfile ./bin/Cluster_KMediods_ompi 4 8 "data/ES_Matrix_test" "data/Cluster_result_test.txt"
+mpirun -n 2 -ppn 2 -hostfile example/hostfile Cluster_KMediods_ompi -t 4 -c 8 -i data/ES_Matrix_test -o data/Cluster_result_test.txt  -s data/data_for_test_cidnum.txt -r data/Reference
 ```
 
 the example hostfile just has one record as below:
@@ -107,5 +109,40 @@ Paral KMediods	compute the Cluster Centers Spent: 0.2829 s
 ```
 
 There is also no more need of you to input anything in command line. However,
-the cluster_flag_vector will be written to file `data/Cluster_result_test.txt` 
+the cluster results will be written to file `data/Cluster_result_test.txt` 
 in root process.
+
+For Example:
+
+	cluster 1 :
+	cid:CPC006_A549_6H:BRD-U88459701-000-01-8:10;    cell_line:      A549;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	cid:CPC020_A375_6H:BRD-A82307304-001-01-8:10;    cell_line:      A375;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	......
+	cluster 2 :
+	cid:CPC020_HT29_6H:BRD-A82307304-001-01-8:10;    cell_line:      HT29;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	cid:CPC006_A375_6H:BRD-U88459701-000-01-8:10;    cell_line:      A375;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	......
+	cluster 3 :
+	cid:CPC006_A549_24H:BRD-U88459701-000-01-8:10;    cell_line:      A549;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 uM
+	cid:CPC006_AGS_6H:BRD-U88459701-000-01-8:10;    cell_line:       AGS;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	......
+	cluster 4 :
+	cid:CPC006_HA1E_6H:BRD-U88459701-000-01-8:10;    cell_line:      HA1E;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	cid:CPC006_HCC15_6H:BRD-U88459701-000-01-8:10;    cell_line:     HCC15;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	......
+	cluster 5 :
+	cid:CPC006_TYKNU_6H:BRD-K56343971-001-02-3:10;    cell_line:     TYKNU;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	cid:CPC006_VCAP_6H:BRD-K56343971-001-02-3:10;    cell_line:      VCAP;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	......
+	cluster 6 :
+	cid:CPC006_HEC108_6H:BRD-U88459701-000-01-8:10;    cell_line:    HEC108;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	cid:CPC006_SKLU1_6H:BRD-U88459701-000-01-8:10;    cell_line:     SKLU1;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	......
+	cluster 7 :
+	cid:CPC004_HCC515_24H:BRD-A51714012-001-03-1:10;    cell_line:    HCC515;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:      24 h;    concentration:     10 uM
+	cid:CPC011_A549_6H:BRD-A51714012-003-09-4:10;    cell_line:      A549;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:       6 h;    concentration:     10 uM
+	......
+	cluster 8 :
+	cid:BRAF001_A375_24H:BRD-U73308409-000-01-9:0.625;    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:      24 h;    concentration:    500 nM
+	cid:BRAF001_A375_6H:BRD-U73308409-000-01-9:0.625;    cell_line:      A375;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:       6 h;    concentration:    500 nM
+	......

@@ -38,7 +38,8 @@ CCNH HMGA2 IGFBP3 RB1 PARP1 CDK6
 ```
 
 Or choosing Others, you must input a file path where there is a gene set. 
-Second way may be more convenient such as the example shows.
+Most of times, Second way may be more convenient.
+
 For example:
 ```shell
 input the path of file that has GeneSet until 'exit'(each line has a Gene Symbol/name):
@@ -62,7 +63,9 @@ NO.5 -> SampleConditions: cid:LJP001_MCF7_24H:BRD-K56343971-001-04-9:2;    cell_
 
 printf the low level of TopN GSEA result:
 
-NO.1 -> SampleConditions: cid:LJP001_HS578T_6H:BRD-K56343971-001-04-9:0.4;    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    durati  ES:-0.229569  NES:-1.821155  pv:-0.0023933623NO.2 -> SampleConditions: cid:CPC006_HEC108_6H:BRD-U88459701-000-01-8:10;    cell_line:    HEC108;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duratio  ES:-0.219655  NES:-1.762991  pv:-0.0029483190
+NO.1 -> SampleConditions: cid:LJP001_HS578T_6H:BRD-K56343971-001-04-9:0.4;    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    durati  ES:-0.229569  NES:-1.821155  pv:-0.0023933623 
+
+NO.2 -> SampleConditions: cid:CPC006_HEC108_6H:BRD-U88459701-000-01-8:10;    cell_line:    HEC108;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duratio  ES:-0.219655  NES:-1.762991  pv:-0.0029483190
 
 NO.3 -> SampleConditions: cid:CPC006_SNUC5_6H:BRD-K56343971-001-02-3:10;    cell_line:     SNUC5;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration  ES:-0.202629  NES:-1.648118  pv:-0.0058889213
 

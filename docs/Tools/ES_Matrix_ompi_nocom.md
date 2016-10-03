@@ -12,16 +12,16 @@ There are several parameters should be setted in command line example.
 | -n process_num | Total number of processes |
 | -ppn pernum |the number of processes in each node |
 | -hostfile hostfile | list the IP or Hostname of nodes |
-| thread_num | the number of threads in per process_num |
-| siglen | the length of Gene Expression Signature |
-| filename1 | a parsed profiles's file from pretreatment stage |
-| filename2 | another parsed profiles's file from pretreatment stage |
-| filename3 | output file ,distributed in every nodes ,with ES Matrix |
+| -t --thread | define the maximum number of parallel threads |
+| -l--siglen | define the length of Gene Expression Signatur |
+| -1 --input1 | a parsed profiles's file from pretreatment stage |
+| -2 --input2 | another parsed profiles's file from pretreatment stage |
+| -o --output | output file ,distributed in every nodes ,with ES Matrix |
 
 A sample `Shell script` file is given below that makes use of `ES_Matrix_ompi_nocom`.
 
 ```shell
-mpirun -n 2 -ppn 2 -hostfile example/hostfile ./bin/ES_Matrix_ompi_nocom 4 50 "data/data_for_test.txt" "data/data_for_test.txt" "data/ES_Matrix_test"
+mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_nocom -t 4 -l 50 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
 ```
 
 the example hostfile just has one record as below:

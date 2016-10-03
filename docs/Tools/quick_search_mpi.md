@@ -12,13 +12,15 @@ There are several parameters should be setted in command line example.
 | -n process_num | Total number of processes |
 | -ppn pernum |the number of processes in each node |
 | -hostfile hostfile | list the IP or Hostname of nodes |
-| filename | a parsed profiles's file from pretreatment stage |
-| topN | The first and last N GSEA records ordered by ES |
+| -i --input | a parsed profiles's ranked sequence number file from pretreatment stage |
+| -n --topn | define the first and last N GSEA records ordered by ES |
+| -s --sample | a text file include sample sequence numbers which are extracted from pretreatment stage |
+| -r --reference | a directory include some reference data files we generate from pretreatment stage |
 
 A sample `Shell script` file is given below that makes use of `quick_search_mpi`.
 
 ```shell
-mpirun -n 2 -ppn 2 -hostfile example/hostfile ./bin/quick_search_mpi "data/data_for_test.txt" 15
+mpirun -n 2 -ppn 2 -hostfile example/hostfile quick_search_mpi -i data/data_for_test.txt -n 5 -s data/data_for_test_cidnum.txt -r data/Reference
 ```
 
 the example hostfile just has one record as below:
@@ -35,59 +37,60 @@ It may will produce the following output:
 Profile Set is Loading...!
 profilenum:272	 genelen:978
 loading IO and prework time by MPI: 0.0244 s
-input the GeneSet( a integer[1-genelen] string split by space ):
+which way do you want to input the GeneSet( 0 -> standard input , others -> file input ):
 ```
 
-Then you can input the GeneSet which is a integer string split by space 
-between 1 to genlen. each integer represents a gene recorded in 
-`data/data_for_test_rid.txt`
+Then you can choose which way do you want to input the GeneSet. 
+Choosing 0, then you must input a gene set directly. 
 
-Therefore, you can input the GeneSet as below:
+For example:
 ```shell
-100 99 88 87 86 85 84 83 82 81
+input the GeneSet until 'exit'( a string of each Gene Symbol split by space ):
+CCNH HMGA2 IGFBP3 RB1 PARP1 CDK6
+```
+
+Or choosing Others, you must input a file path where there is a gene set. 
+Most of times, Second way may be more convenient.
+
+For example:
+```shell
+input the path of file that has GeneSet until 'exit'(each line has a Gene Symbol/name):
+data/GeneSet.txt
 ```
 
 It will produce the following output:
 ```shell
+
 printf the high level of TopN GSEA result:
-NO.1 -> cid:204  ES:0.528926  NES:2.080132  pv:0.0016774794
-NO.2 -> cid:66  ES:0.518595  NES:1.985430  pv:0.0016865702
-NO.3 -> cid:37  ES:0.456818  NES:1.780453  pv:0.0059239669
-NO.4 -> cid:78  ES:0.442355  NES:1.703747  pv:0.0098807840
-NO.5 -> cid:97  ES:0.436364  NES:1.715039  pv:0.0072045455
-NO.6 -> cid:255  ES:0.409711  NES:1.621115  pv:0.0101367769
-NO.7 -> cid:65  ES:0.397107  NES:1.518632  pv:0.0160305767
-NO.8 -> cid:206  ES:0.396488  NES:1.561015  pv:0.0147049580
-NO.9 -> cid:58  ES:0.393595  NES:1.529173  pv:0.0147747936
-NO.10 -> cid:4  ES:0.391942  NES:1.516823  pv:0.0148828506
-NO.11 -> cid:184  ES:0.383884  NES:1.470641  pv:0.0172006207
-NO.12 -> cid:183  ES:0.381818  NES:1.481119  pv:0.0159822311
-NO.13 -> cid:71  ES:0.381198  NES:1.454726  pv:0.0210621910
-NO.14 -> cid:185  ES:0.379752  NES:1.467693  pv:0.0200134277
-NO.15 -> cid:123  ES:0.373967  NES:1.458159  pv:0.0213320255
+
+NO.1 -> SampleConditions: cid:CPC006_SKLU1_6H:BRD-K56343971-001-02-3:10;    cell_line:     SKLU1;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration  ES:0.315086  NES:2.540525  pv:0.0000000000
+
+NO.2 -> SampleConditions: cid:LJP001_MCF10A_24H:BRD-K56343971-001-04-9:0.08;    cell_line:    MCF10A;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    dura  ES:0.225345  NES:1.881119  pv:0.0010856895
+
+NO.3 -> SampleConditions: cid:NMH001_NEU.KCL_6H.4H:BRD-K69726342-001-02-6:10;    cell_line:   NEU.KCL;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    dur  ES:0.223448  NES:1.843819  pv:0.0014393966
+
+NO.4 -> SampleConditions: cid:LJP001_BT20_24H:BRD-K56343971-001-04-9:0.4;    cell_line:      BT20;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duratio  ES:0.221078  NES:1.843653  pv:0.0016556464
+
+NO.5 -> SampleConditions: cid:LJP001_MCF7_24H:BRD-K56343971-001-04-9:2;    cell_line:      MCF7;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration:  ES:0.216035  NES:1.790939  pv:0.0023914223
+
 printf the low level of TopN GSEA result:
-NO.1 -> cid:137  ES:-0.613636  NES:-2.279210  pv:0.0000000000
-NO.2 -> cid:91  ES:-0.602273  NES:-2.284496  pv:-0.0006931818
-NO.3 -> cid:90  ES:-0.465083  NES:-1.796902  pv:-0.0071681814
-NO.4 -> cid:77  ES:-0.446281  NES:-1.704311  pv:-0.0097188015
-NO.5 -> cid:237  ES:-0.427066  NES:-1.622913  pv:-0.0089128094
-NO.6 -> cid:268  ES:-0.423760  NES:-1.613431  pv:-0.0100869846
-NO.7 -> cid:17  ES:-0.418388  NES:-1.555209  pv:-0.0177227268
-NO.8 -> cid:124  ES:-0.377893  NES:-1.405311  pv:-0.0274190063
-NO.9 -> cid:52  ES:-0.375826  NES:-1.398214  pv:-0.0236545448
-NO.10 -> cid:60  ES:-0.374380  NES:-1.423725  pv:-0.0251080551
-NO.11 -> cid:247  ES:-0.370041  NES:-1.397852  pv:-0.0228958721
-NO.12 -> cid:89  ES:-0.367562  NES:-1.428832  pv:-0.0219681835
-NO.13 -> cid:63  ES:-0.365289  NES:-1.379106  pv:-0.0240452442
-NO.14 -> cid:135  ES:-0.359504  NES:-1.388710  pv:-0.0260508270
-NO.15 -> cid:270  ES:-0.356818  NES:-1.336288  pv:-0.0287752094
+
+NO.1 -> SampleConditions: cid:LJP001_HS578T_6H:BRD-K56343971-001-04-9:0.4;    cell_line:    HS578T;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    durati  ES:-0.229569  NES:-1.821155  pv:-0.0023933623 
+
+NO.2 -> SampleConditions: cid:CPC006_HEC108_6H:BRD-U88459701-000-01-8:10;    cell_line:    HEC108;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duratio  ES:-0.219655  NES:-1.762991  pv:-0.0029483190
+
+NO.3 -> SampleConditions: cid:CPC006_SNUC5_6H:BRD-K56343971-001-02-3:10;    cell_line:     SNUC5;    perturbation:    vemurafenib;    perturbation type:    trt_cp;    duration  ES:-0.202629  NES:-1.648118  pv:-0.0058889213
+
+NO.4 -> SampleConditions: cid:CPC004_A375_6H:BRD-A51714012-001-03-1:10;    cell_line:      A375;    perturbation:    venlafaxine;    perturbation type:    trt_cp;    duration:  ES:-0.194224  NES:-1.559712  pv:-0.0068219395
+
+NO.5 -> SampleConditions: cid:CPC006_SNGM_6H:BRD-U88459701-000-01-8:10;    cell_line:      SNGM;    perturbation:   atorvastatin;    perturbation type:    trt_cp;    duration:  ES:-0.192112  NES:-1.541771  pv:-0.0081038799
+
 finish GSEA time by MPI: 0.1705 s
-input the GeneSet(split by space):
 ```
 
 Then you can input the GeneSet again to continue to complete GSEA approach,
 or, you can input `exit` to stop this tool as below:
 ```shell
-input the GeneSet(split by space):
+input the path of file that has GeneSet until 'exit'(each line has a Gene Symbol/name):
 exit
 ```
