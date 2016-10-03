@@ -2,8 +2,8 @@
 # quick_search_demo #
 
 This shell script uses `runPreGSEAbyMatlab.sh` or `runparaPreGSEAbyMatlab.sh` to parse original profile 
-data first, then, three C Tools, which you can chose, of Quick_Search implemented original GSEA approach 
-with GeneSet and Profiles and show the topN results will be used. 
+data first, then, three C Tools of Quick_Search implemented original GSEA approach 
+with GeneSet and Profiles are supposed to be chosen to perform and show the topN results. 
 
 There is one parameter you should notice to input when execute the script.
 
@@ -13,6 +13,7 @@ There is one parameter you should notice to input when execute the script.
 
 which tools to be chosen is decided by your need. However, there are still some parameters should be setted 
 in command line example when you use these tools. An example of how to set these parameters is given in this script. 
-you can easily change them in your need.
+you can easily change them in your need. 
 
 The detailed usage of these tools is described in `docs\Tools\quick_search_*.md`.
+Also, you can see the detail usage in `tutorial`.

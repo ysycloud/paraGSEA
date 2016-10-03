@@ -2,10 +2,7 @@
 # cluster_demo #
 
 This shell script uses `runPreGSEAbyMatlab.sh` or `runparaPreGSEAbyMatlab.sh` to parse original profile 
-data first, then, three C Tools, which you can chose, of ES_Matrix which compare two gene profile sets 
-to get an Enrichment Score matrix of every gene profile pairs and write out an ES Matrix in a distributed 
-way will be used. Finally, two C Tools, which you can chose, of cluster using ES Matrix as an input 
-and write out a clustering flag vector in the root node will be used.
+data first, then, three C Tools of ES_Matrix which compare two gene profile sets to get an Enrichment Score matrix of every gene profile pairs are supposed to be chosen to perform and write out an ES Matrix in a distributed way. Finally, two C Tools of cluster using ES Matrix as an input are also supposed to be chosen to perform and write out clustering results in the root node.
 
 There are two parameters you should notice to input when execute the script.
 
@@ -19,6 +16,7 @@ in command line example when you use these tools. An example of how to set these
 you can easily change them in your need.
 
 The detailed usage of these tools is described in `docs\Tools\ES_Matrix_ompi_*.md` and `docs\Tools\Cluster_*_ompi.md`.
+Also, you can see the detail usage in `tutorial`.
 
 However, there are still some things you must notice when you set these parameters:
 
