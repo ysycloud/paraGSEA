@@ -115,11 +115,13 @@ for i = 1:n
 	if ( isCell || ismember(ds.cdesc{i,cindex(1)},cell_id_set) ) && ( isPert || ismember(ds.cdesc{i,cindex(2)}, pert_set) ) && ( isType || ismember(ds.cdesc{i,cindex(3)}, pert_type_set) ) && ( isDura || dura_now == duration ) && ( isCon || con_now == concentration )
 		count = count+1;  %count the number of fit profile
 		o = [mat(:,i),probe];
-		o = sortrows(o,1);
-		for j = 1:m-1   %write out the profile
-			fprintf(fid1,'%5g\t',o(j,2));
+		o = sortrows(o,1);		
+		strprofile='';
+		for j = 1:m-1   %merge the profile string
+			strprofile=sprintf('%s%5g\t',strprofile,o(j,2));
 		end
-		fprintf(fid1,'%5g\n',o(m,2));
+		strprofile=sprintf('%s%5g\n',strprofile,o(m,2));
+		fprintf(fid1,'%s',strprofile);  %write out proile
 		fprintf(fid2,'%10d\n',i);   %write out cid number
 	end
 end
