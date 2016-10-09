@@ -286,7 +286,7 @@ int main(int argc,char *argv[])
 			if(siglen==0)
 			{
 				getchar();    //remove the Enter from stdin
-				printf("There is no gene be hitted, please make sure the GeneSet have at least onr Gene in Profile!\n");
+				printf("There is no gene be hitted, please make sure the GeneSet have at least one Gene in Profile!\n");
 				printf("input the GeneSet until 'exit'( a string of each Gene Symbol split by space ):\n");
 				scanf("%[^\n]",gsStr);
 				continue;
@@ -297,7 +297,7 @@ int main(int argc,char *argv[])
 			if(siglen==0)
 			{
 				getchar();    //remove the Enter from stdin
-				printf("There is no gene be hitted, please make sure the GeneSet have at least onr Gene in Profile!\n");
+				printf("There is no gene be hitted, please make sure the GeneSet have at least one Gene in Profile!\n");
 				printf("input the path of file that has GeneSet until 'exit'(each line has a Gene Symbol/name):\n");
 				scanf("%s",gsStr);
 				continue;
