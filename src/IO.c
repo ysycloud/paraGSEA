@@ -296,7 +296,7 @@ void readGeneListFile(char genelist[][12] ,int *line, char path[])
 void getByteOffsetFile(char path1[],char path2[])
 {
 	FILE *fp1,*fp2;
-	char str[100];
+	char str[L1000_CONDITION_LEN];
 	if((fp1=fopen(path1,"r"))==NULL)
 	{
 		printf("can not open %s file\n",path1);
