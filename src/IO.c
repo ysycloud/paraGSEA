@@ -277,6 +277,41 @@ int ReadMatrixFile(char path[],int LineLength,int BeginLine,int EndLine,int prof
 	return 0;
 }
 
+void getGeneListFile(char path1[],int gene_symbol_col,char path2[])
+{
+	FILE *fp1,*fp2;
+	char str[GENE_INFO_LEN];
+
+	char *saveptr;
+	char c[] = "\t";
+
+	if((fp1=fopen(path1,"r"))==NULL)
+	{
+		printf("can not open %s file",path1);
+		exit(0);
+	}
+	if((fp2=fopen(path2,"w"))==NULL)
+	{
+		printf("can not open %s file",path2);
+		exit(0);
+	}
+	fgets(str, GENE_INFO_LEN , fp1);  //remove the head
+	
+	while(fgets(str, GENE_INFO_LEN , fp1)!= NULL)  //read every line
+	{
+		char *p = strtok_r(str,c,&saveptr);
+		
+		int cnt = 0;
+		
+		while(++cnt < gene_symbol_col)
+			p = strtok_r(NULL,c,&saveptr);		
+		fprintf( fp2, "%s\n", p); 
+	}
+
+	fclose(fp1);
+	fclose(fp2);
+}
+
 void readGeneListFile(char genelist[][12] ,int *line, char path[])
 {
 	FILE *fp;

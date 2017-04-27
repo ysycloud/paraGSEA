@@ -18,6 +18,7 @@ void getGeneSetbyFile(short gs[],int *count, char filename[], char reference[]);
 int ReadMatrixFilePara(char path[], int *profilenum1, int *profilenum2, int *LineLength);
 int ReadMatrixFile(char path[],int LineLength,int BeginLine,int EndLine,int profilenum1, int profilenum2, float **Matrix);
 void WritetxtClusterResult(int classflag[] ,int len, int cluster, char writepath[], char cidfile[], char referencedirectory[]);
+void getGeneListFile(char path1[],int gene_symbol_col, char path2[]);
 void readGeneListFile(char genelist[][12] ,int *line, char path[]);
 void getByteOffsetFile(char path1[],char path2[]);
 long readByteOffsetFile(char path[],int row_num);

@@ -9,6 +9,7 @@
 #define Global_ES_SIZE 10000
 #define permutation_SIZE 1000
 #define L1000_LEN 1000
+#define GENE_INFO_LEN 200
 #define L1000_CONDITION_LEN 250
 #define FileName_LEN 150
 
