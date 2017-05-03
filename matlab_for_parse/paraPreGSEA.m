@@ -145,9 +145,9 @@ parfor i=1:cores
 			o = [mat(:,begin+j),probe];
 			o = sortrows(o,1);
 			for k = 1:m-1	%write out the profile
-				fprintf(fid1(i),'%5g\t',o(k,2));
+				fprintf(fid1(i),'%5d\t',o(k,2));
 			end
-			fprintf(fid1(i),'%5g\n',o(m,2));
+			fprintf(fid1(i),'%5d\n',o(m,2));
 			fprintf(fid2(i),'%10d\n',begin+j);	 %write out cid number
 		end
 	end
@@ -157,7 +157,7 @@ end
 
 count = sum(lcount);
 fid = fopen(file_name, 'w');  %file point
-fprintf(fid,'%10g\t%10g\n', count,m);
+fprintf(fid,'%10d\t%10d\n', count,m);
 fclose(fid);
 toc
 

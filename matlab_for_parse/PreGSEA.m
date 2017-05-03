@@ -118,14 +118,14 @@ for i = 1:n
 		o = sortrows(o,1);		
 		strprofile='';
 		for j = 1:m-1   %merge the profile string
-			strprofile=sprintf('%s%5g\t',strprofile,o(j,2));
+			strprofile=sprintf('%s%5d\t',strprofile,o(j,2));
 		end
-		strprofile=sprintf('%s%5g\n',strprofile,o(m,2));
+		strprofile=sprintf('%s%5d\n',strprofile,o(m,2));
 		fprintf(fid1,'%s',strprofile);  %write out proile
 		fprintf(fid2,'%10d\n',i);   %write out cid number
 	end
 end
-fprintf(fid3,'%10g\t%10g\n', count,m);
+fprintf(fid3,'%10d\t%10d\n', count,m);
 toc
 
 fclose(fid1);
