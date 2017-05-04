@@ -53,38 +53,6 @@ ds = parse_gctx(file_input);
 mat = ds.mat;
 [m,n]=size(ds.mat);
 
-tic
-%check samples field number
-[cisin,cindex] = ismember(sample_conditions_chd, ds.chd);
-
-[~,fn] = size(cisin);
-if fn~=5   %only judge 5 fields
-	disp('[ Field Error ]sample conditions field number error, please make sure before generating a reference!');
-	clear;
-	return;
-end
-
-if cisin(1)==0
-	disp('cell line field name error, we will ignore cell_id_set');
-	isCell = 1;
-end
-if cisin(2)==0
-	disp('perturbation field name error, we will ignore pert_set');
-	isPert = 1;
-end
-if cisin(3)==0
-	disp('perturbation type field name error, we will ignore pert_type_set');
-	isType = 1;
-end
-if cisin(4)==0
-	disp('duration field name error, we will ignore duration');
-	isDura = 1;
-end
-if cisin(5)==0
-	disp('concentration field name error, we will ignore concentration');
-	isCon = 1;
-end
-
 probe=1:m;            %probe index
 probe=probe'; 
    
@@ -95,24 +63,11 @@ fid3 = fopen(file_name, 'w');
 %pre-sort and extract the fit profile
 count = 0;
 o=ones(m,2);
-for i = 1:n
+
+
+if isCell && isPert && isType && isDura && isCon   %no filter conditions
+	for i = 1:n
 	
-	if isDura == 0 
-		if isequal(class(ds.cdesc{i,cindex(4)}),'char')
-			dura_now = str2num(ds.cdesc{i,cindex(4)}(isstrprop(ds.cdesc{i,cindex(4)},'digit')));  %extract the number part
-		else
-			dura_now = ds.cdesc{i,cindex(4)};
-		end
-	end
-	if isCon == 0 
-		if isequal(class(ds.cdesc{i,cindex(4)}),'char')
-			con_now = str2num(ds.cdesc{i,cindex(5)}(isstrprop(ds.cdesc{i,cindex(5)},'digit')));  %extract the number part
-		else
-			con_now = ds.cdesc{i,cindex(5)};
-		end
-	end
-	
-	if ( isCell || ismember(ds.cdesc{i,cindex(1)},cell_id_set) ) && ( isPert || ismember(ds.cdesc{i,cindex(2)}, pert_set) ) && ( isType || ismember(ds.cdesc{i,cindex(3)}, pert_type_set) ) && ( isDura || dura_now == duration ) && ( isCon || con_now == concentration )
 		count = count+1;  %count the number of fit profile
 		o = [mat(:,i),probe];
 		o = sortrows(o,1);		
@@ -124,10 +79,74 @@ for i = 1:n
 		fprintf(fid1,'%s',strprofile);  %write out proile
 		fprintf(fid2,'%10d\n',i);   %write out cid number
 	end
+
+else
+	tic
+	%check samples field number
+	[cisin,cindex] = ismember(sample_conditions_chd, ds.chd);
+
+	[~,fn] = size(cisin);
+	if fn~=5   %only judge 5 fields
+		disp('[ Field Error ]sample conditions field number error, please make sure before generating a reference!');
+		clear;
+		return;
+	end
+
+	if cisin(1)==0
+		disp('cell line field name error, we will ignore cell_id_set');
+		isCell = 1;
+	end
+	if cisin(2)==0
+		disp('perturbation field name error, we will ignore pert_set');
+		isPert = 1;
+	end
+	if cisin(3)==0
+		disp('perturbation type field name error, we will ignore pert_type_set');
+		isType = 1;
+	end
+	if cisin(4)==0
+		disp('duration field name error, we will ignore duration');
+		isDura = 1;
+	end
+	if cisin(5)==0
+		disp('concentration field name error, we will ignore concentration');
+		isCon = 1;
+	end
+
+	for i = 1:n
+	
+		if isDura == 0 
+			if isequal(class(ds.cdesc{i,cindex(4)}),'char')
+				dura_now = str2num(ds.cdesc{i,cindex(4)}(isstrprop(ds.cdesc{i,cindex(4)},'digit')));  %extract the number part
+			else
+				dura_now = ds.cdesc{i,cindex(4)};
+			end
+		end
+		if isCon == 0 
+			if isequal(class(ds.cdesc{i,cindex(4)}),'char')
+				con_now = str2num(ds.cdesc{i,cindex(5)}(isstrprop(ds.cdesc{i,cindex(5)},'digit')));  %extract the number part
+			else
+				con_now = ds.cdesc{i,cindex(5)};
+			end
+		end
+	
+		if ( isCell || ismember(ds.cdesc{i,cindex(1)},cell_id_set) ) && ( isPert || ismember(ds.cdesc{i,cindex(2)}, pert_set) ) && ( isType || ismember(ds.cdesc{i,cindex(3)}, pert_type_set) ) && ( isDura || dura_now == duration ) && ( isCon || con_now == concentration )
+			count = count+1;  %count the number of fit profile
+			o = [mat(:,i),probe];
+			o = sortrows(o,1);		
+			strprofile='';
+			for j = 1:m-1   %merge the profile string
+				strprofile=sprintf('%s%5d\t',strprofile,o(j,2));
+			end
+			strprofile=sprintf('%s%5d\n',strprofile,o(m,2));
+			fprintf(fid1,'%s',strprofile);  %write out proile
+			fprintf(fid2,'%10d\n',i);   %write out cid number
+		end
+	end
 end
+
 fprintf(fid3,'%10d\t%10d\n', count,m);
 toc
-
 fclose(fid1);
 fclose(fid2);
 fclose(fid3);

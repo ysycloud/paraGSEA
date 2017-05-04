@@ -86,6 +86,7 @@ Usage:   quick_search_serial [options]
 
 #### V.I.II. Setting the MATLAB path:
 Run `cd paraGSEA/matlab_for_parse` or enter the `pathtool` command, click "Add with Subfolders...", and select the directory `paraGSEA/matlab_for_parse`.
+Or, if you cannot use Matlab by a visual way, you can just run `addpath('paraGSEA/matlab_for_parse')` after setup the Matlab environment to add the directory path.
 
 #### V.I.III. using by command line:
 After you set the MATLAB path, you should enter `matlab` in shell to start matlab environment.
