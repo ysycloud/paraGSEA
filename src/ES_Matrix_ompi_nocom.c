@@ -25,6 +25,7 @@ char *USAGE =
 "  general options:\n"
 "    -t --thread: the number of threads in per process_num. [ default 1 ]\n"
 "	 -l	--siglen: the length of Gene Expression Signature. [ default 50 ]\n"
+"	 -a	--loadtime: the load time of dataset2. [ default 1 (>=1)]\n"
 "\n"
 "  input/output options: \n"
 "    -1 --input1: a parsed profiles's file from pretreatment stage.\n"
@@ -50,10 +51,9 @@ int main(int argc,char *argv[])
 	int begin,end;
 	int parameternum;
 	int corenum;
-	int siglen;
+	int siglen;	
+	int load_time;
 	
-	int load_time = 1;	
-	triples2 = (struct Profile_triple **)malloc(load_time*sizeof(struct Profile_triple *));
 
 	double start,finish,duration;
 	
@@ -82,7 +82,8 @@ int main(int argc,char *argv[])
 	
 	// Unset flags (value -1).
 	corenum = -1;
-	siglen = -1;	
+	siglen = -1;
+	load_time = -1;
     // Unset options (value 'UNSET').
 	char * const UNSET = "unset";
     char * input1   = UNSET;
@@ -95,13 +96,14 @@ int main(int argc,char *argv[])
 		static struct option long_options[] = {
 			{"thread",             required_argument,        0, 't'},
 			{"siglen",             required_argument,        0, 'l'},
+			{"loadtime",           required_argument,        0, 'a'},
 			{"input1",             required_argument,        0, '1'},
 			{"input2",             required_argument,        0, '2'},
 			{"output",             required_argument,        0, 'o'},
 			{0, 0, 0, 0}
 		};
 
-		c = getopt_long(argc, argv, "t:l:1:2:o:",
+		c = getopt_long(argc, argv, "t:l:a:1:2:o:",
             long_options, &option_index);
 	
 		if(c==-1)	break;
@@ -211,6 +213,30 @@ int main(int argc,char *argv[])
 			}
 			break;
 			
+		case 'a':
+			if (load_time < 0) {
+				load_time = atoi(optarg);
+				if (load_time < 1) {
+					if(my_rank==0)
+					{
+						fprintf(stderr, "%s --load time must be a positive integer\n", ERRM);
+						Usage();
+					}		
+					MPI_Finalize();
+					exit(0);
+				}
+			}
+			else {
+				if(my_rank==0)
+				{
+					fprintf(stderr,"%s --load time set more " "than once\n", ERRM);
+					Usage();
+				}		
+				MPI_Finalize();
+				exit(0);
+			}
+			break;
+			
 		default:
 			// Cannot parse. //
 			if(my_rank==0)
@@ -227,6 +253,9 @@ int main(int argc,char *argv[])
 	if(siglen == -1)
 		siglen = 50;
 	
+	if(load_time == -1)
+		load_time = 1;
+	
 	if(output == UNSET)
 	{
 		if(my_rank==0)
@@ -235,6 +264,7 @@ int main(int argc,char *argv[])
 		exit(0);
 	}
 	
+	triples2 = (struct Profile_triple **)malloc(load_time*sizeof(struct Profile_triple *));
 	
 	//barrier all processes to compute time
 	MPI_Barrier(MPI_COMM_WORLD); 
