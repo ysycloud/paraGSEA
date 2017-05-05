@@ -8,9 +8,7 @@
 #include <omp.h>
 #include <unistd.h> 
 #include <getopt.h> 
-#include "RandomChange.h"
-#include "GSEA.h"
-#include "IO.h"
+#include "Tools.h"
 
 #define MAXITER 3000
 
@@ -38,9 +36,6 @@ char *USAGE =
 "    -r --reference: input a directory includes referenced files about genesymbols and cids. \n";
 
 void Usage();
-void split_data(int size, int n, int rank, int* begin, int* end, int* local_n); 
-int cmpset(int *set1,int *set2,int n);
-int isInSet(int **set1,int *set2,int n,int iter);
 
 int main(int argc,char *argv[])
 {	
@@ -686,41 +681,6 @@ int main(int argc,char *argv[])
 	free(cluster_center);
 	
 	MPI_Finalize();
-	return 0;
-}
-
-void split_data(int size, int n, int my_rank, int* begin, int* end, int* local_n)
-{
-	*local_n = size / n;  
-	int leave = size % n;
-	if(my_rank < leave){
-		(*local_n)++;   
-		*begin = my_rank*(*local_n);
-	}else{	
-		*begin = my_rank*(*local_n) + leave; 
-	}	 
-	*end = *begin + *local_n;
-}
-
-//compare two set
-int cmpset(int *set1,int *set2,int n)
-{
-	int i;
-	quiksortINT(set1,0,n-1);
-	quiksortINT(set2,0,n-1);
-	for(i=0;i<n;i++)
-		if(set1[i]!=set2[i])
-			return 0;
-	return 1;
-}
-
-//is set2 in set1
-int isInSet(int **set1,int *set2,int n,int iter)
-{
-	int i;
-	for(i=iter-1;i>=0;i--)
-		if(cmpset(set1[i],set2,n)==1)
-			return 1;
 	return 0;
 }
 

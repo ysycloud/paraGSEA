@@ -12,6 +12,7 @@
 
 int ReadFilePara(char path[], int *profilenum, int *genelen, int *LineLength);
 int ReadFile(char path[],int LineLength,int BeginLine,int EndLine,int profilenum, int genelen, short **profileSet);
+int ReadFile_new(char path[],int LineLength,int BeginLine,int EndLine,int profilenum, int genelen, short **profileSet);
 void WritetxtResult(int sourceBegin ,int sourceEnd, int matlen, char writepath[], float **ES_Matrix);
 void getGeneSet(short gs[],int *count, char gsStr[], char reference[]);
 void getGeneSetbyFile(short gs[],int *count, char filename[], char reference[]);

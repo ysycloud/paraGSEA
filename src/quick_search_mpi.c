@@ -7,9 +7,7 @@
 #include <unistd.h> 
 #include <getopt.h> 
 #include "mpi.h"
-#include "RandomChange.h"
-#include "GSEA.h"
-#include "IO.h"
+#include "Tools.h"
 
 #define ERRM "quick search error:"
 

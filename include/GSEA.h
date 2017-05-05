@@ -33,6 +33,9 @@ void quiksort_gsea(struct GSEA_RESULT gsea[],int low,int high);
 float quickGeneSet(float isgs[], int len,int sig);
 void getIndex(short s[],short indexS[],int len);
 float ES_GeneSet(short gs[], short indexS[],int len,int sig);
+
+void GetRandomSequence(int total,int size , float* Seq);
+void changePosition(float *positions , int size);
 void getGlobalES(int len,int sig,float global_ES[]);
 void GSEA(short gs[], short indexS[],int len,int sig, float *ES, float *NES, double *pv, float global_ES[]);
 

@@ -3,7 +3,6 @@
 #include <string.h> 
 #include <math.h> 
 #include "IO.h"
-#include "RandomChange.h"
 #include "GSEA.h"
 
 //read profile dataset and get the relative parameters
@@ -39,6 +38,7 @@ int ReadFilePara(char path[], int *profilenum, int *genelen, int *LineLength)
 }
 
 //read part of profile file and load to profileSet array
+//file£ºbeginline->endline =>  profileSet : beginline->endline; (profileSet should have profilenum line)
 int ReadFile(char path[],int LineLength,int BeginLine,int EndLine,int profilenum, int genelen, short **profileSet)
 { 
 	FILE *fp; 
@@ -76,6 +76,55 @@ int ReadFile(char path[],int LineLength,int BeginLine,int EndLine,int profilenum
 			//p = strsep(&StrLine,c);			
 		}
 		line++;
+		if(line>=EndLine) break;
+	}
+	fclose(fp);
+	free(StrLine);
+	return 0;
+}
+
+//read part of profile file and load to profileSet array(new)
+//file£ºbeginline->endline =>  profileSet : 0->(endline-beginline); ( profileSet can be smaller )
+int ReadFile_new(char path[],int LineLength,int BeginLine,int EndLine,int profilenum, int genelen, short **profileSet)
+{ 
+	FILE *fp; 
+	char *StrLine; 
+	char *saveptr;
+	char c[] = "\t";
+	int line,col,new_line;
+	int i,j;
+	
+	StrLine = (char *)malloc((LineLength+1)*sizeof(char));
+	
+	//read File
+	if((fp = fopen(path,"r")) == NULL) 
+	{ 
+		printf("file %s error!\n", path); 
+		return -1; 
+	} 
+	fgets(StrLine,256,fp);
+	line = BeginLine;
+	new_line = 0;
+	
+	fseek(fp,BeginLine*(LineLength),SEEK_CUR); 
+	while (!feof(fp)) 
+    { 
+		fgets(StrLine,LineLength+1,fp);  //read one line
+		col = 0;
+		if( line<profilenum && col< genelen )  
+			profileSet[new_line][col++] = atoi(strtok_r(StrLine,c,&saveptr));
+			//profileSet[line][col++] = atoi(strsep(&StrLine,c));
+		char *p = strtok_r(NULL,c,&saveptr);
+		//char *p = strsep(&StrLine,c);
+		while(p)
+		{
+			if( line< profilenum &&col< genelen )
+				profileSet[new_line][col++] = atoi(p);
+			p = strtok_r(NULL,c,&saveptr);
+			//p = strsep(&StrLine,c);			
+		}
+		line++;
+		new_line++;
 		if(line>=EndLine) break;
 	}
 	fclose(fp);
