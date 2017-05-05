@@ -10,7 +10,6 @@
 #include <omp.h>
 #include "Tools.h"
 
-
 #define ERRM "ES Matrix error:"
 
 char *USAGE =
@@ -40,7 +39,7 @@ int main(int argc,char *argv[])
 	int genelen;
 	int profilenum1,profilenum2;
 	int linelen1,linelen2;
-	struct Profile_triple *triples1,*triples2;
+	struct Profile_triple *triples1,**triples2;
 	float **local_ES_Matrix;		//part of the ES_Matrix in this process
 	int	my_rank;   /* My process rank           */
     int	p;         /* The number of processes   */
@@ -52,6 +51,9 @@ int main(int argc,char *argv[])
 	int parameternum;
 	int corenum;
 	int siglen;
+	
+	int load_time = 1;	
+	triples2 = (struct Profile_triple **)malloc(load_time*sizeof(struct Profile_triple *));
 
 	double start,finish,duration;
 	
@@ -269,76 +271,94 @@ int main(int argc,char *argv[])
 	triples1 = (struct Profile_triple *)malloc(sizeof(struct Profile_triple)*local_P);	
 	getTriples(local_P, genelen, siglen, profilenum1, linelen1, begin, end, input1, triples1);
 	
-	/********************para load profile dataset2 by openmp******************************/
-	//allocate the triples memory for dataset2
-	triples2 = (struct Profile_triple *)malloc(sizeof(struct Profile_triple)*profilenum2);
-	#pragma omp parallel num_threads(corenum)
-	{
-		int local_t;	//the data number of each thread must hand
-		int begin_t,end_t;
-		int threadID = omp_get_thread_num();
-		
-		// compute the local size 、up boundary and down boundary for every thread in dataset2
-		split_data(profilenum2, corenum, threadID, &begin_t, &end_t, &local_t);
-		
-		// compute the begin_t to end_t triples
-		getPartTriples(genelen, siglen, profilenum2, linelen2, begin_t, end_t, input2, triples2);		
-	}
 	
-	MPI_Barrier(MPI_COMM_WORLD);
-	if(my_rank == 0){
-		GET_TIME(finish);
-		//compute the IO time
-		duration = finish-start;     
-		printf("loading IO and prework time in no communication way: %.4f s\n",duration);
-
-		printf("Paral compute the ES_Matrix is Starting...!\n");
-		GET_TIME(start);
-	}
-	
-	/*
-	if(my_rank == 0){
-		int k;
-		for(k=0;k<siglen;k++)
-			printf("%d ",triples1[0].gsUp[k]);
-		printf("\n");
-		for(k=0;k<genelen;k++)
-			printf("%d ",triples2[profilenum2-1].index[k]);
-		printf("\n");
-	}
-	*/
-	
-	/********************para compute the part of ES_Matrix******************************/
 	//allocate the local_ES_Matrix memory
 	local_ES_Matrix = (float **)malloc(local_P*sizeof(float *));
 	for(i=0;i<local_P;i++)
 		local_ES_Matrix[i] = (float *)malloc(profilenum2*sizeof(float));
-	#pragma omp parallel num_threads(corenum)
-	{
-		int k,t;
-		int local_t;	//the data number of each thread must hand
-		int begin_t,end_t;
-		int threadID = omp_get_thread_num();
-		
-		// compute the local size 、up boundary and down boundary for every thread in dataset2
-		split_data(profilenum2, corenum, threadID, &begin_t, &end_t, &local_t);
-		
-		// compute the part of the ES matrix
-		for(k=0;k<local_P;k++)
-			for(t=begin_t;t<end_t;t++)
-				local_ES_Matrix[k][t] = ES_Profile_triple(triples1[k],triples2[t],genelen,siglen);
-	}
 	
-	MPI_Barrier(MPI_COMM_WORLD);
-	if(my_rank == 0){
-		GET_TIME(finish);
-		//compute the compute time
-		duration = finish-start;     
-		printf("Paral compute the ES_Matrix time: %.4f s\n",duration);
+	int current_time = 0;
+	int begin_localfile2, end_localfile2, len_localfile2;
+	while( current_time < load_time )
+	{
+		/********************para load profile dataset2 by openmp******************************/
+		split_data(profilenum2, load_time, current_time, &begin_localfile2, &end_localfile2, &len_localfile2);
+		//allocate the triples memory for local dataset2
+		triples2[current_time] = (struct Profile_triple *)malloc(sizeof(struct Profile_triple)*len_localfile2);
+		#pragma omp parallel num_threads(corenum)
+		{
+			int local_t;	//the data number of each thread must hand
+			int begin_t,end_t;
+			int threadID = omp_get_thread_num();
 		
-		printf("Writing file is Starting...!\n");
-		GET_TIME(start);
+			// compute the local size 、up boundary and down boundary for every thread in dataset2
+			split_data(len_localfile2, corenum, threadID, &begin_t, &end_t, &local_t);
+		
+			// compute the begin_t to end_t triples
+			getPartTriples(genelen, siglen, len_localfile2, linelen2, begin_t, end_t, input2, triples2[current_time]);		
+		}
+		
+		MPI_Barrier(MPI_COMM_WORLD);
+		if(my_rank == 0){
+			GET_TIME(finish);
+			//compute the IO time
+			duration = finish-start;     
+			printf("phase %d -->  loading IO and prework time in no communication way: %.4f s\n", current_time+1, duration);
+
+			printf("phase %d -->  Paral compute the ES_Matrix is Starting...!\n", current_time+1);
+			GET_TIME(start);
+		}
+		
+		
+		/*
+		if(my_rank == 0){
+			int k;
+			for(k=0;k<siglen;k++)
+				printf("%d ",triples1[0].gsUp[k]);
+			printf("\n");
+			for(k=0;k<genelen;k++)
+				printf("%d ",triples2[current_time][profilenum2-1].index[k]);
+			printf("\n");
+		}
+		*/
+	
+		/********************para compute the part of ES_Matrix******************************/
+		
+		#pragma omp parallel num_threads(corenum)
+		{
+			int k,t;
+			int local_t;	//the data number of each thread must hand
+			int begin_t,end_t;
+			int threadID = omp_get_thread_num();
+		
+			// compute the local size 、up boundary and down boundary for every thread in dataset2
+			split_data(len_localfile2, corenum, threadID, &begin_t, &end_t, &local_t);
+		
+			// compute the part of the ES matrix
+			for(k=0;k<local_P;k++)
+				for(t=begin_t;t<end_t;t++)
+					local_ES_Matrix[k][begin_localfile2 + t] = ES_Profile_triple(triples1[k],triples2[current_time][t],genelen,siglen);
+		}
+	
+		MPI_Barrier(MPI_COMM_WORLD);
+		if(my_rank == 0){
+			GET_TIME(finish);
+			//compute the compute time
+			duration = finish-start;     
+			printf(" phase %d --> Paral compute the ES_Matrix time: %.4f s\n", current_time+1, duration);
+		
+			if(current_time==load_time-1)
+			{
+				printf("Writing file is Starting...!\n");
+				GET_TIME(start);
+			}		
+		}
+			
+		free(triples2[current_time]);
+		current_time++;	
 	}
+
+	
 	
 	/*
 	if(my_rank == 0){
