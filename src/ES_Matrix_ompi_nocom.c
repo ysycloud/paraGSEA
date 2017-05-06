@@ -378,10 +378,9 @@ int main(int argc,char *argv[])
 			printf(" phase %d --> Paral compute the ES_Matrix time: %.4f s\n", current_time+1, duration);
 		
 			if(current_time==load_time-1)
-			{
 				printf("Writing file is Starting...!\n");
-				GET_TIME(start);
-			}		
+			
+			GET_TIME(start);		
 		}
 			
 		free(triples2[current_time]);
