@@ -191,7 +191,7 @@ List of arguments:
 	 a directory include some reference data files we generate from pretreatment stage
 	 
 
-  > mpirun [options] [-n PROCESS_NUM] [-ppn PERNUM] [-hostfile HOSTFILE] ES_Matrix_ompi_* [options] [-1 INPUT_FILE1] [-2 INPUT_FILE2] [-l SIGLEN] [-t THREAD_NUMBER] [-o OUTPUT_FILE]
+  > mpirun [options] [-n PROCESS_NUM] [-ppn PERNUM] [-hostfile HOSTFILE] ES_Matrix_ompi_* [options] [-1 INPUT_FILE1] [-2 INPUT_FILE2] [-l SIGLEN] [-t THREAD_NUMBER] [-a LOAD_TIME][-o OUTPUT_FILE]
   
   **-n** *mpi parameter*
 
@@ -224,6 +224,11 @@ List of arguments:
 
 	 Define the length of Gene Expression Signature.
 	 must be a positive value	 
+	 
+  **-a or --load_time** *load time of file2*
+
+	 Define the load time of file2.
+	 must be a positive value
 	 
   **-o or --output** *output file*
   
@@ -285,13 +290,13 @@ the detail usage of each C Tool is shown below.
 #mpirun -n 2 -ppn 2 -hostfile example/hostfile quick_search_mpi -i data/data_for_test.txt -n 15 -s data/data_for_test_cidnum.txt -r data/Reference
 
 #param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_nocom -t 4 -l 50 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_nocom -t 4 -l 50 -a 2 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
 
 #param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_p2p -t 4 -l 50 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_p2p -t 4 -l 50 -a 2 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
 
 #param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_cocom -t 4 -l 50 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_cocom -t 4 -l 50 -a 2 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
 
 #param list :process_num pernum hostfile thread_num cluster_num filename outfilename
 #mpirun -n 2 -ppn 2 -hostfile example/hostfile Cluster_KMediods_ompi -t 4 -c 10 -i data/ES_Matrix_test -o data/Cluster_result_test.txt -s data/data_for_test_cidnum.txt -r data/Reference
@@ -476,10 +481,11 @@ the detail usage of each C Tool is shown below.
 ## VII. Using Problem
 1. When we get a new profile file keeps in correct format with a ‘gctx’ or ‘gct’ suffix to analysis, we must generate some reference data first to facilitate the main follow-up work of C Tools.
 2. Because of the inefficient IO of Matlab, when the original profile file is too large, the pretreatment operation may take a long time. You may need to be patient. However, Once parsed, it can be reused many times. Also, there is parallel way are provided to accelerate the pretreatment operation if the multi-cores environment is supported in your machine.
-3. the program needs a GeneSet as an input in quick_search part after loading the file. We provided two ways to support the GeneSet input. One is inputting the GeneSet directly which is splitted by space and the other is inputting a file path where including a GeneSet. Most of time, the second way may be more convenient. 
-4. When we want to execute the Cluster operator, we must note that input matrix should include the same identity of rows and columns, which means the program that calculates ES Matrix is supposed to use same two file as its input. Only in this way can we get the similarity of each profile pair.
-5. When we want to execute the Cluster operator, we must also note that the MPI Settings and hostfile should not be changed compared to the program that calculates ES Matrix. Because the ES_Matrix is stored in distributed way, if you change these settings, each process can not find the right ES matrix blocks. Therefore, if you want to avoid problem 4 and problem 5, you can easily execute the `example/cluster_demo.sh`.
-6. If you set the number of clusters too big, clustering algorithm may not converge quickly.
+3. the program needs a GeneSet as an input in quick_search part after loading the file. We provided two ways to support the GeneSet input. One is inputting the GeneSet directly which is splitted by space and the other is inputting a file path where including a GeneSet. Most of time, the second way may be more convenient.
+4. Because the file2 will be redundant in every node, we recommend that you can use the smaller input file as the file2. If the file2 is still too big to burden by single node, there is another parameter `-a --load_time` to load file2 through several times. After each block of file2 is loaded and calculated, the memory of this block will be free. By this way, we can ease the memory pressure. However, consider the overall performance, we are supposed to set the `load_time` as small as possible.
+5. When we want to execute the Cluster operator, we must note that input matrix should include the same identity of rows and columns, which means the program that calculates ES Matrix is supposed to use same two file as its input. Only in this way can we get the similarity of each profile pair.
+6. When we want to execute the Cluster operator, we must also note that the MPI Settings and hostfile should not be changed compared to the program that calculates ES Matrix. Because the ES_Matrix is stored in distributed way, if you change these settings, each process can not find the right ES matrix blocks. Therefore, if you want to avoid problem 4 and problem 5, you can easily execute the `example/cluster_demo.sh`.
+7. If you set the number of clusters too big, clustering algorithm may not converge quickly.
 
 
 ## VIII. License
