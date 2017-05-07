@@ -26,6 +26,7 @@ char *USAGE =
 "  general options:\n"
 "    -t --thread: the number of threads in per process_num. [ default 1 ]\n"
 "	 -l	--siglen: the length of Gene Expression Signature. [ default 50 ]\n"
+"	 -a	--loadtime: the load time of dataset2. [ default 1 (>=1)]\n"
 "\n"
 "  input/output options: \n"
 "    -1 --input1: a parsed profiles's file from pretreatment stage.\n"
@@ -43,7 +44,7 @@ int main(int argc,char *argv[])
 	int genelen;
 	int profilenum1,profilenum2;
 	int linelen1,linelen2;
-	struct Profile_triple *triples1,*triples2;
+	struct Profile_triple *triples1,**triples2,**local_triples2;
 	float **local_ES_Matrix;		//part of the ES_Matrix in this process
 	int	my_rank;   /* My process rank           */
     int	p;         /* The number of processes   */
@@ -56,6 +57,7 @@ int main(int argc,char *argv[])
 	int begin_d2,end_d2,local_P_d2;
 	int corenum;
 	int siglen;
+	int load_time;
 	int parameternum;
 	double start,finish,duration;
 	
@@ -84,7 +86,8 @@ int main(int argc,char *argv[])
 	
 	// Unset flags (value -1).
 	corenum = -1;
-	siglen = -1;	
+	siglen = -1;
+	load_time = -1;	
     // Unset options (value 'UNSET').
 	char * const UNSET = "unset";
     char * input1   = UNSET;
@@ -97,13 +100,14 @@ int main(int argc,char *argv[])
 		static struct option long_options[] = {
 			{"thread",             required_argument,        0, 't'},
 			{"siglen",             required_argument,        0, 'l'},
+			{"loadtime",           required_argument,        0, 'a'},
 			{"input1",             required_argument,        0, '1'},
 			{"input2",             required_argument,        0, '2'},
 			{"output",             required_argument,        0, 'o'},
 			{0, 0, 0, 0}
 		};
 
-		c = getopt_long(argc, argv, "t:l:1:2:o:",
+		c = getopt_long(argc, argv, "t:l:a:1:2:o:",
             long_options, &option_index);
 	
 		if(c==-1)	break;
@@ -212,6 +216,30 @@ int main(int argc,char *argv[])
 				exit(0);
 			}
 			break;
+		
+		case 'a':
+			if (load_time < 0) {
+				load_time = atoi(optarg);
+				if (load_time < 1) {
+					if(my_rank==0)
+					{
+						fprintf(stderr, "%s --load time must be a positive integer\n", ERRM);
+						Usage();
+					}		
+					MPI_Finalize();
+					exit(0);
+				}
+			}
+			else {
+				if(my_rank==0)
+				{
+					fprintf(stderr,"%s --load time set more " "than once\n", ERRM);
+					Usage();
+				}		
+				MPI_Finalize();
+				exit(0);
+			}
+			break;
 			
 		default:
 			// Cannot parse. //
@@ -229,6 +257,9 @@ int main(int argc,char *argv[])
 	if(siglen == -1)
 		siglen = 50;
 	
+	if(load_time == -1)
+		load_time = 1;
+	
 	if(output == UNSET)
 	{
 		if(my_rank==0)
@@ -236,6 +267,9 @@ int main(int argc,char *argv[])
 		MPI_Finalize();
 		exit(0);
 	}
+	
+	triples2 = (struct Profile_triple **)malloc(load_time*sizeof(struct Profile_triple *));
+	local_triples2 = (struct Profile_triple **)malloc(load_time*sizeof(struct Profile_triple *));
 	
 	//barrier all processes to compute time
 	MPI_Barrier(MPI_COMM_WORLD); 
@@ -273,103 +307,131 @@ int main(int argc,char *argv[])
 	getTriples(local_P, genelen, siglen, profilenum1, linelen1, begin, end, input1, triples1);
 	Build_derived_type(&triples1[0],&triple_mpi_t);  //derive the new MPI Type
 	
-	// compute the local size 、up boundary and down boundary for every process in dataset2
-	split_data(profilenum2, p, my_rank, &begin_d2, &end_d2, &local_P_d2);
-	
-	//allocate the triples memory for tmp local dataset2
-	struct Profile_triple* local_triples2 = (struct Profile_triple *)malloc(sizeof(struct Profile_triple)*local_P_d2);
-	getTriples(local_P_d2, genelen, siglen, profilenum2, linelen2, begin_d2, end_d2, input2, local_triples2);
-	
-	//allocate the triples memory for dataset2 in all process
-	triples2 = (struct Profile_triple *)malloc(sizeof(struct Profile_triple)*profilenum2);
-	
-	/*****************Allgather part of data2's triple in all process**************/
-	if(profilenum2 % p == 0){ //can split blanced
-		MPI_Allgather(local_triples2,local_P_d2,triple_mpi_t,triples2,local_P_d2,triple_mpi_t,MPI_COMM_WORLD);
-		free(local_triples2);
-	}else{	//can not split blanced 
-		if(my_rank == 0){
-			/*****************gather data2's triple in process0**************/
-			int leave = profilenum2 % p;
-			//tmp memory for processes before leave
-			struct Profile_triple *tmp1 = (struct Profile_triple*)malloc(local_P_d2*sizeof(struct Profile_triple));
-			//tmp memory for processes after leave
-			struct Profile_triple *tmp2 = (struct Profile_triple*)malloc((local_P_d2-1)*sizeof(struct Profile_triple));
-			//copy local triples vector in process0 to global triples vector 
-			memcpy(triples2,local_triples2,local_P_d2*sizeof(struct Profile_triple));
-			/********receive and copy data2's local triple vector in other processes to global triple vector******/
-			for(i=1; i<p; i++){
-				if(i < leave){
-					MPI_Recv(tmp1 , local_P_d2, triple_mpi_t, i, tag, MPI_COMM_WORLD, &status);
-					memcpy(&triples2[i*local_P_d2],tmp1,local_P_d2*sizeof(struct Profile_triple));
-				}else{
-					MPI_Recv(tmp2 , local_P_d2-1, triple_mpi_t, i, tag, MPI_COMM_WORLD, &status);
-					memcpy(&triples2[i*(local_P_d2-1)+leave],tmp2,(local_P_d2-1)*sizeof(struct Profile_triple));
-				}	
-			}
-			free(tmp1);
-			free(tmp2);							
-		}else{
-			MPI_Send(local_triples2, local_P_d2, triple_mpi_t, 0, tag, MPI_COMM_WORLD);
-		}
-		free(local_triples2);
-		//Bcast the dataset2‘s triples to all process
-		MPI_Bcast( triples2, profilenum2, triple_mpi_t, 0 ,MPI_COMM_WORLD);
-	}
-	 	
-	MPI_Barrier(MPI_COMM_WORLD);
-	if(my_rank == 0){
-		GET_TIME(finish);
-		//compute the IO time
-		duration = finish-start;     
-		printf("loading IO and prework time in collective comunication way: %.4f s\n",duration);
-
-		printf("Paral compute the ES_Matrix is Starting...!\n");
-		GET_TIME(start);
-	}
-	
-	/*
-	if(my_rank == 0){
-		int k;
-		for(k=0;k<siglen;k++)
-			printf("%d ",triples1[0].gsUp[k]);
-		printf("\n");
-		for(k=0;k<genelen;k++)
-			printf("%d ",triples2[profilenum2-1].index[k]);
-		printf("\n");
-	}
-	*/
-	
-	/********************para compute the part of ES_Matrix******************************/
 	//allocate the local_ES_Matrix memory
 	local_ES_Matrix = (float **)malloc(local_P*sizeof(float *));
 	for(i=0;i<local_P;i++)
 		local_ES_Matrix[i] = (float *)malloc(profilenum2*sizeof(float));
-	#pragma omp parallel num_threads(corenum)
-	{
-		int k,t;
-		int local_t;	//the data number of each thread must hand
-		int begin_t,end_t;
-		int threadID = omp_get_thread_num();
-		
-		// compute the local size 、up boundary and down boundary for every thread in dataset2
-		split_data(profilenum2, corenum, threadID, &begin_t, &end_t, &local_t);
-		
-		// compute the part of the ES matrix
-		for(k=0;k<local_P;k++)
-			for(t=begin_t;t<end_t;t++)
-				local_ES_Matrix[k][t] = ES_Profile_triple(triples1[k],triples2[t],genelen,siglen);
-	}
 	
-	MPI_Barrier(MPI_COMM_WORLD);
-	if(my_rank == 0){
-		GET_TIME(finish);
-		//compute the compute time
-		duration = finish-start;     
-		printf("Paral compute the ES_Matrix time : %.4f s\n",duration);
+	int current_time = 0;
+	int begin_localfile2, end_localfile2, len_localfile2;
+	
+	while( current_time < load_time )
+	{
+		/********************para load profile dataset2 by openmp******************************/
+		split_data(profilenum2, load_time, current_time, &begin_localfile2, &end_localfile2, &len_localfile2);
+		//allocate the triples memory for dataset2
+		triples2[current_time] = (struct Profile_triple *)malloc(sizeof(struct Profile_triple)*len_localfile2);
+	
+		// compute the local size 、up boundary and down boundary for every process in dataset2
+		split_data(len_localfile2, p, my_rank, &begin_d2, &end_d2, &local_P_d2);
+	
+		//allocate the triples memory for tmp local dataset2
+		local_triples2[current_time] = (struct Profile_triple *)malloc(sizeof(struct Profile_triple)*local_P_d2);
 		
-		printf("Writing file is Starting...!\n");
-		GET_TIME(start);
+		/********************every process para load profile each-time dataset2 by openmp******************************/		
+		#pragma omp parallel num_threads(corenum)
+		{
+			int local_t;	//the data number of each thread must hand
+			int begin_t,end_t;
+			int threadID = omp_get_thread_num();
+		
+			// compute the local size 、up boundary and down boundary for every thread in dataset2
+			split_data(local_P_d2, corenum, threadID, &begin_t, &end_t, &local_t);
+		
+			// compute the begin_t to end_t triples
+			getFreeTriples(genelen, siglen, profilenum2, linelen2, begin_localfile2 + begin_d2 + begin_t, begin_t, local_t, input2, local_triples2[current_time]);		
+		}
+	
+	
+		/*****************Allgather part of data2's triple in all process**************/
+		if(len_localfile2 % p == 0){ //can split blanced
+			MPI_Allgather(local_triples2[current_time],local_P_d2,triple_mpi_t,triples2[current_time],local_P_d2,triple_mpi_t,MPI_COMM_WORLD);
+			free(local_triples2[current_time]);
+		}else{	//can not split blanced 
+			if(my_rank == 0){
+				/*****************gather data2's triple in process0**************/
+				int leave = len_localfile2 % p;
+				//tmp memory for processes before leave
+				struct Profile_triple *tmp1 = (struct Profile_triple*)malloc(local_P_d2*sizeof(struct Profile_triple));
+				//tmp memory for processes after leave
+				struct Profile_triple *tmp2 = (struct Profile_triple*)malloc((local_P_d2-1)*sizeof(struct Profile_triple));
+				//copy local triples vector in process0 to global triples vector 
+				memcpy(triples2[current_time],local_triples2[current_time],local_P_d2*sizeof(struct Profile_triple));
+				/********receive and copy data2's local triple vector in other processes to global triple vector******/
+				for(i=1; i<p; i++){
+					if(i < leave){
+						MPI_Recv(tmp1 , local_P_d2, triple_mpi_t, i, tag, MPI_COMM_WORLD, &status);
+						memcpy(&triples2[current_time][i*local_P_d2],tmp1,local_P_d2*sizeof(struct Profile_triple));
+					}else{
+						MPI_Recv(tmp2 , local_P_d2-1, triple_mpi_t, i, tag, MPI_COMM_WORLD, &status);
+						memcpy(&triples2[current_time][i*(local_P_d2-1)+leave],tmp2,(local_P_d2-1)*sizeof(struct Profile_triple));
+					}	
+				}
+				free(tmp1);
+				free(tmp2);							
+			}else{
+				MPI_Send(local_triples2[current_time], local_P_d2, triple_mpi_t, 0, tag, MPI_COMM_WORLD);
+			}
+			free(local_triples2[current_time]);
+			//Bcast the dataset2‘s triples to all process
+			MPI_Bcast( triples2[current_time], len_localfile2, triple_mpi_t, 0 ,MPI_COMM_WORLD);
+		}
+	 	
+		MPI_Barrier(MPI_COMM_WORLD);
+		if(my_rank == 0){
+			GET_TIME(finish);
+			//compute the IO time
+			duration = finish-start;     
+			printf("phase %d -->  loading IO and prework time in collective comunication way: %.4f s\n", current_time+1, duration);
+
+			printf("phase %d -->  Paral compute the ES_Matrix is Starting...!\n", current_time+1);
+			GET_TIME(start);
+		}
+	
+		/*
+		if(my_rank == 0){
+			int k;
+			for(k=0;k<siglen;k++)
+				printf("%d ",triples1[0].gsUp[k]);
+			printf("\n");
+			for(k=0;k<genelen;k++)
+				printf("%d ",triples2[current_time][len_localfile2-1].index[k]);
+			printf("\n");
+		}
+		*/
+	
+		/********************para compute the part of ES_Matrix******************************/
+		#pragma omp parallel num_threads(corenum)
+		{
+			int k,t;
+			int local_t;	//the data number of each thread must hand
+			int begin_t,end_t;
+			int threadID = omp_get_thread_num();
+		
+			// compute the local size 、up boundary and down boundary for every thread in dataset2
+			split_data(len_localfile2, corenum, threadID, &begin_t, &end_t, &local_t);
+		
+			// compute the part of the ES matrix
+			for(k=0;k<local_P;k++)
+				for(t=begin_t;t<end_t;t++)
+					local_ES_Matrix[k][begin_localfile2 + t] = ES_Profile_triple(triples1[k],triples2[current_time][t],genelen,siglen);
+		}
+	
+		MPI_Barrier(MPI_COMM_WORLD);
+		if(my_rank == 0){
+			GET_TIME(finish);
+			//compute the compute time
+			duration = finish-start;     
+			printf("phase %d --> Paral compute the ES_Matrix time: %.4f s\n", current_time+1, duration);
+		
+			if(current_time==load_time-1)
+				printf("Writing file is Starting...!\n");
+			
+			GET_TIME(start);		
+		}
+			
+		free(triples2[current_time]);
+		current_time++;	
 	}
 	
 /*

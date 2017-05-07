@@ -67,6 +67,28 @@ void getPartTriples(int genelen, int siglen, int profilenum, int linelen, int be
 	free(profileSet);		
 }
 
+//file:begin1->begin1+len => triples: begin2->begin2+len  
+void getFreeTriples(int genelen, int siglen, int profilenum, int linelen, int begin1, int begin2, int len, char *file, struct Profile_triple * triples)
+{
+	int i;
+	//allocate the temp memory
+	short **profileSet = (short **)malloc(len*sizeof(short *));
+	for(i=0;i<len;i++)
+		profileSet[i] = (short *)malloc(genelen*sizeof(short));	
+	
+	//read file and get the proper data
+	ReadFile_new(file, linelen, begin1, begin1 + len, profilenum, genelen, profileSet);
+	
+	//get the triple for every profile	
+	for(i=0;i<len;i++)
+		triples[begin2+i] = getTriple(profileSet[i], genelen, siglen);
+	
+	//free the temp memory
+	for(i=0;i<len;i++)
+		free(profileSet[i]);
+	free(profileSet);		
+}
+
 /*
 //read the begin to end line part of profile file and get their triples  
 void getTriples(int local_P, int genelen, int siglen, int profilenum, int linelen, int begin, int end,  char *file, struct Profile_triple * triples)

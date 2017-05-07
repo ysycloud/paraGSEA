@@ -325,7 +325,8 @@ int main(int argc,char *argv[])
 			split_data(len_localfile2, corenum, threadID, &begin_t, &end_t, &local_t);
 		
 			// compute the begin_t to end_t triples
-			getPartTriples(genelen, siglen, len_localfile2, linelen2, begin_t, end_t, input2, triples2[current_time]);		
+			getFreeTriples(genelen, siglen, profilenum2, linelen2, begin_localfile2 + begin_t, begin_t, local_t, input2, triples2[current_time]);
+			//getPartTriples(genelen, siglen, profilenum2, linelen2, begin_t, end_t,  input2, triples2[current_time]);
 		}
 		
 		MPI_Barrier(MPI_COMM_WORLD);
@@ -375,7 +376,7 @@ int main(int argc,char *argv[])
 			GET_TIME(finish);
 			//compute the compute time
 			duration = finish-start;     
-			printf(" phase %d --> Paral compute the ES_Matrix time: %.4f s\n", current_time+1, duration);
+			printf("phase %d --> Paral compute the ES_Matrix time: %.4f s\n", current_time+1, duration);
 		
 			if(current_time==load_time-1)
 				printf("Writing file is Starting...!\n");
@@ -387,7 +388,6 @@ int main(int argc,char *argv[])
 		current_time++;	
 	}
 
-	
 	
 	/*
 	if(my_rank == 0){
