@@ -27,6 +27,7 @@ char *USAGE =
 "    -t --thread: the number of threads in per process_num. [ default 1 ]\n"
 "	 -l	--siglen: the length of Gene Expression Signature. [ default 50 ]\n"
 "	 -a	--loadtime: the load time of dataset2. [ default 1 (>=1)]\n"
+"	 -p	--proportion: the proportion of dataset be used . [ default 1 (0,1]]\n"
 "\n"
 "  input/output options: \n"
 "    -1 --input1: a parsed profiles's file from pretreatment stage.\n"
@@ -57,7 +58,7 @@ int main(int argc,char *argv[])
 	int corenum;
 	int siglen;
 	int parameternum;
-	
+	float proportion;
 	int load_time;
 	double start,finish,duration;
 	
@@ -88,6 +89,7 @@ int main(int argc,char *argv[])
 	corenum = -1;
 	siglen = -1;
 	load_time = -1;
+	proportion = -1;
     // Unset options (value 'UNSET').
 	char * const UNSET = "unset";
     char * input1   = UNSET;
@@ -101,13 +103,14 @@ int main(int argc,char *argv[])
 			{"thread",             required_argument,        0, 't'},
 			{"siglen",             required_argument,        0, 'l'},
 			{"loadtime",           required_argument,        0, 'a'},
+			{"proportion",         required_argument,        0, 'p'},
 			{"input1",             required_argument,        0, '1'},
 			{"input2",             required_argument,        0, '2'},
 			{"output",             required_argument,        0, 'o'},
 			{0, 0, 0, 0}
 		};
 
-		c = getopt_long(argc, argv, "t:l:a:1:2:o:",
+		c = getopt_long(argc, argv, "t:l:a:p:1:2:o:",
             long_options, &option_index);
 	
 		if(c==-1)	break;
@@ -241,6 +244,30 @@ int main(int argc,char *argv[])
 			}
 			break;
 			
+		case 'p':
+			if (proportion < 0) {
+				proportion = atof(optarg);
+				if (proportion > 1 || proportion <= 0) {
+					if(my_rank==0)
+					{
+						fprintf(stderr, "%s -- proportion must be kept in (0,1]\n", ERRM);
+						Usage();
+					}		
+					MPI_Finalize();
+					exit(0);
+				}
+			}
+			else {
+				if(my_rank==0)
+				{
+					fprintf(stderr,"%s --proportion set more " "than once\n", ERRM);
+					Usage();
+				}		
+				MPI_Finalize();
+				exit(0);
+			}
+			break;
+			
 		default:
 			// Cannot parse. //
 			if(my_rank==0)
@@ -259,6 +286,9 @@ int main(int argc,char *argv[])
 	
 	if(load_time == -1)
 		load_time = 1;
+
+	if(proportion == -1)
+		proportion = 1;
 	
 	if(output == UNSET)
 	{
@@ -280,6 +310,9 @@ int main(int argc,char *argv[])
 	//read file parameters in all processes
 	ReadFilePara(input1, &profilenum1, &genelen, &linelen1);
 	ReadFilePara(input2, &profilenum2, &genelen, &linelen2);
+	
+	profilenum1 *= proportion;
+	profilenum2 *= proportion;
 	
 	//input file check
 	if( profilenum1 <= 0 || genelen <= 0)
