@@ -4,7 +4,8 @@
 #ifndef _MY_GSEA_H_
 #define _MY_GSEA_H_
 
-#define MAX_GENE 22300
+//#define MAX_GENE 22300
+#define MAX_GENE 1000
 #define MAX_GENESET 250 
 #define Global_ES_SIZE 10000
 #define permutation_SIZE 1000

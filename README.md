@@ -230,6 +230,11 @@ List of arguments:
 	 Define the load time of file2.
 	 must be a positive value
 	 
+  **-p or --proportion** *proportion of dataset be used*
+
+	 Define the proportion of dataset be used.
+	 must be a positive value between 0 and 1
+	 
   **-o or --output** *output file*
   
 	 Define the output file ,distributed in every nodes ,with ES Matrix
@@ -290,13 +295,13 @@ the detail usage of each C Tool is shown below.
 #mpirun -n 2 -ppn 2 -hostfile example/hostfile quick_search_mpi -i data/data_for_test.txt -n 15 -s data/data_for_test_cidnum.txt -r data/Reference
 
 #param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_nocom -t 4 -l 50 -a 2 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_nocom -t 4 -l 50 -a 2 -p 1 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
 
 #param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_p2p -t 4 -l 50 -a 2 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_p2p -t 4 -l 50 -a 2 -p 1 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
 
 #param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_cocom -t 4 -l 50 -a 2 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_cocom -t 4 -l 50 -a 2 -p 1 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
 
 #param list :process_num pernum hostfile thread_num cluster_num filename outfilename
 #mpirun -n 2 -ppn 2 -hostfile example/hostfile Cluster_KMediods_ompi -t 4 -c 10 -i data/ES_Matrix_test -o data/Cluster_result_test.txt -s data/data_for_test_cidnum.txt -r data/Reference
