@@ -299,7 +299,7 @@ int main(int argc,char *argv[])
 		
 		triples1 = (struct Profile_triple **)malloc(sizeof(struct Profile_triple*)*30);
 		
-		for(i=0;i<100;i++)
+		for(i=0;i<1000;i++)
 		{
 			/*****read the local part file of dataset1 in every process and get their triples****************/
 			triples1[i] = (struct Profile_triple *)malloc(sizeof(struct Profile_triple)*profilenum1);	
@@ -310,7 +310,7 @@ int main(int argc,char *argv[])
 
 	}
 	
-	for(i=0;i<30;i++)
+	for(i=0;i<1000;i++)
 		free(triples1[i]);
 	//free the memory
 	free(triples1);
