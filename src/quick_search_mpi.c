@@ -251,9 +251,28 @@ int main(int argc,char *argv[])
 	
 	if(my_rank == 0){
 		printf("profilenum:%d\t genelen:%d\n",profilenum,genelen);
-		//malloc global GSEA para Vector for process0
-		gsea_result = (struct GSEA_RESULT*)malloc(profilenum*sizeof(struct GSEA_RESULT));
+		
+		printf("Memory check......\n");	
 	}
+	
+	unsigned long memavail = memoryAvailable(0);
+	unsigned long memneed = 2*sizeof(short)*(profilenum/p+1)*genelen + profilenum*sizeof(struct GSEA_RESULT);
+	
+	if(my_rank == 0 )
+	{
+		printf("Available Memory:      %ld\n", memavail);		
+		printf("Needed Memory:      %ld\n", memneed);
+		
+		if(memavail < memneed)
+			printf("available memory is not enough!!! Please use more nodes!!!\n");
+		else
+			//malloc global GSEA para Vector for process0
+			gsea_result = (struct GSEA_RESULT*)malloc(profilenum*sizeof(struct GSEA_RESULT));
+	}
+	
+	if(memavail < memneed)	
+		return;
+	
 			
 	// compute the local size ¡¢up boundary and down boundary for every process	
 	local_n = profilenum / p;  

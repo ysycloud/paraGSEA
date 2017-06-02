@@ -207,6 +207,18 @@ int main(int argc,char *argv[])
 	
 	printf("profilenum:%d\t genelen:%d\n",profilenum,genelen);
 	
+    printf("Memory check......\n");
+	unsigned long memavail = memoryAvailable(0);
+	printf("Available Memory:      %ld\n", memavail);
+	unsigned long memneed = 2*sizeof(short)*profilenum*genelen + profilenum*sizeof(struct GSEA_RESULT);
+	printf("Needed Memory:      %ld\n", memneed);
+	
+	if(memavail < memneed)
+	{
+		printf("available memory is not enough!!! Please use MPI version and more nodes!!!\n");
+		return;
+	}
+	
 	//malloc profile dataset memory
 	profileSet = (short **)malloc(profilenum*sizeof(short *));
 	for(i=0;i<profilenum;i++)

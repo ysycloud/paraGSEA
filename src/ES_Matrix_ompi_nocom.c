@@ -327,6 +327,15 @@ int main(int argc,char *argv[])
 		MPI_Finalize();
 		exit(0);
 	}
+	
+	printf("Memory check......");
+	unsigned long memavail = memoryAvailable(0);
+	printf("Available Memory:      %ld\n", memavail);
+	unsigned long memneed = 2*sizeof(short)*profilenum*genelen + profilenum*sizeof(struct GSEA_RESULT);
+	printf("Needed Memory:      %ld\n", memneed);
+	
+	int memneed
+	if(memavail > memneed)
 
 	// compute the local size 、up boundary and down boundary for every process in dataset1
 	split_data(profilenum1, p, my_rank, &begin, &end, &local_P);

@@ -163,3 +163,32 @@ int isInSet(int **set1,int *set2,int n,int iter)
 			return 1;
 	return 0;
 }
+
+//test Available RAM
+/******
+0:byte
+1:KB
+2:MB
+3:GB
+******/
+unsigned long memoryAvailable(int base)
+{
+	struct sysinfo si;
+    sysinfo(&si);
+	unsigned long ram = si.freeram;
+	switch (base){
+		case 0:
+			return ram;
+		case 1:
+			return ram/1024;
+		case 2:
+			return ram/1024/1024;
+		case 3:
+			return ram/1024/1024/1024;
+	}
+    //printf("Totalram:       %ld\n", si.totalram/1024/1024/1024);
+    //printf("Available:      %ld\n", si.freeram/1024/1024/1024);
+}
+
+
+
