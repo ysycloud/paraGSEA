@@ -326,6 +326,7 @@ the detail usage of each C Tool is shown below.
 | File | Description | Format|
 | ---- | ----------- |--------|
 | modzs_n272x978.gctx | original profile file from LINCS Dataset| HDF5 |
+| GSE70138_Broad_LINCS_Level2_GEX_n78980x978.gct.gz | original profile file from LINCS Dataset used for case study in paper | compressing format "gz" of HDF5 |
 | Gene_List.txt | all gene names of every profile in original order recorded in HDF5 source file | one gene name(symbol) per line |
 | Samples_Condition.txt | treatment conditions of all profiles in original order recorded in HDF5 source file | one profile's conditions per line |
 | Samples_RowByteOffset.txt | Bytes offsets of every line in `Samples_Condition.txt` | every offset value is splitted by `\t` |
