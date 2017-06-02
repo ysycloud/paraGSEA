@@ -191,7 +191,7 @@ List of arguments:
 	 a directory include some reference data files we generate from pretreatment stage
 	 
 
-  > mpirun [options] [-n PROCESS_NUM] [-ppn PERNUM] [-hostfile HOSTFILE] ES_Matrix_ompi_* [options] [-1 INPUT_FILE1] [-2 INPUT_FILE2] [-l SIGLEN] [-t THREAD_NUMBER] [-a LOAD_TIME][-o OUTPUT_FILE]
+  > mpirun [options] [-n PROCESS_NUM] [-ppn PERNUM] [-hostfile HOSTFILE] ES_Matrix_ompi_* [options] [-1 INPUT_FILE1] [-2 INPUT_FILE2] [-l SIGLEN] [-t THREAD_NUMBER] [-a LOAD_TIME] [-p PROPORTION] [-w WRITE] [-o OUTPUT_FILE]
   
   **-n** *mpi parameter*
 
@@ -234,13 +234,18 @@ List of arguments:
 
 	 Define the proportion of dataset be used.
 	 must be a positive value between 0 and 1
+
+  **-w or --write** *whether output results*
+
+	 decide whether output results.
+	 must not be a negative value
 	 
   **-o or --output** *output file*
   
 	 Define the output file ,distributed in every nodes ,with ES Matrix
 
 
-  > mpirun [options] [-n PROCESS_NUM] [-ppn PERNUM] [-hostfile HOSTFILE] Cluster_KMediods*_ompi [options] [-i INPUT_FILE] [-t THREAD_NUMBER] [-c CLUSTER_NUMBERS] [-o OUTPUT_FILE] [-s SAMPLE_SEQUENCE_NUMBER_FILE] [-r REFERENCE_DATA_DIRECTORY]
+  > mpirun [options] [-n PROCESS_NUM] [-ppn PERNUM] [-hostfile HOSTFILE] Cluster_KMediods*_ompi [options] [-i INPUT_FILE] [-t THREAD_NUMBER] [-c CLUSTER_NUMBERS] [-w WRITE] [-o OUTPUT_FILE] [-s SAMPLE_SEQUENCE_NUMBER_FILE] [-r REFERENCE_DATA_DIRECTORY]
   
   **-n** *mpi parameter*
 
@@ -269,6 +274,11 @@ List of arguments:
 
 	 Define the number of clusters we want to get.
 	 must be a positive value	 
+
+  **-w or --write** *whether output results*
+
+	 decide whether output results.
+	 must not be a negative value
 	 
   **-o or --output** *output file*
   
@@ -295,19 +305,19 @@ the detail usage of each C Tool is shown below.
 #mpirun -n 2 -ppn 2 -hostfile example/hostfile quick_search_mpi -i data/data_for_test.txt -n 15 -s data/data_for_test_cidnum.txt -r data/Reference
 
 #param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_nocom -t 4 -l 50 -a 2 -p 1 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_nocom -t 4 -l 50 -a 2 -p 1 -w 1 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
 
 #param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_p2p -t 4 -l 50 -a 2 -p 1 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_p2p -t 4 -l 50 -a 2 -p 1 -w 1 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
 
 #param list :process_num pernum hostfile thread_num siglen filename1 filename2 outfilename
-#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_cocom -t 4 -l 50 -a 2 -p 1 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile ES_Matrix_ompi_cocom -t 4 -l 50 -a 2 -p 1 -w 1 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
 
 #param list :process_num pernum hostfile thread_num cluster_num filename outfilename
-#mpirun -n 2 -ppn 2 -hostfile example/hostfile Cluster_KMediods_ompi -t 4 -c 10 -i data/ES_Matrix_test -o data/Cluster_result_test.txt -s data/data_for_test_cidnum.txt -r data/Reference
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile Cluster_KMediods_ompi -t 4 -c 10 -w 1 -i data/ES_Matrix_test -o data/Cluster_result_test.txt -s data/data_for_test_cidnum.txt -r data/Reference
 
 #param list :process_num pernum hostfile thread_num cluster_num filename outfilename
-#mpirun -n 2 -ppn 2 -hostfile example/hostfile Cluster_KMediods++_ompi -t 4 -c 10 -i data/ES_Matrix_test -o data/Cluster_result_test.txt -s data/data_for_test_cidnum.txt -r data/Reference
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile Cluster_KMediods++_ompi -t 4 -c 10 -w 1 -i data/ES_Matrix_test -o data/Cluster_result_test.txt -s data/data_for_test_cidnum.txt -r data/Reference
 ```
 
 **Note:** 
@@ -503,4 +513,4 @@ paraGSEA is licensed under the GNU General Public License, version 3
 ## VIIII. Contact
 Any Question could be sent to the following E-mails:
 
-pittacus@gmail.com, pengshaoliang1979@163.com, cloudysy109@126.com
+pittacus@gmail.com, pengshaoliang1979@163.com, cloudysy109@gmail.com

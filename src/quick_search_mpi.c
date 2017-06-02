@@ -255,13 +255,13 @@ int main(int argc,char *argv[])
 		printf("Memory check......\n");	
 	}
 	
-	unsigned long memavail = memoryAvailable(0);
-	unsigned long memneed = 2*sizeof(short)*(profilenum/p+1)*genelen + profilenum*sizeof(struct GSEA_RESULT);
+	unsigned long memavail = memoryAvailable(1);
+	unsigned long memneed = (2*sizeof(short)*(profilenum/p+1)*genelen + profilenum*sizeof(struct GSEA_RESULT))/1024;
 	
 	if(my_rank == 0 )
 	{
-		printf("Available Memory:      %ld\n", memavail);		
-		printf("Needed Memory:      %ld\n", memneed);
+		printf("Available Memory:      %ld KB\n", memavail);		
+		printf("Needed Memory:      %ld KB\n", memneed);
 		
 		if(memavail < memneed)
 			printf("available memory is not enough!!! Please use more nodes!!!\n");

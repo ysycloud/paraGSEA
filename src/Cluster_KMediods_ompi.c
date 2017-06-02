@@ -28,7 +28,7 @@ char *USAGE =
 "  general options:\n"
 "    -t --thread: the number of threads in per process_num. [ default 1 ]\n"
 "	 -c	--cluster: the number of clusters we want to get. [ default 5 ]\n"
-				
+"	 -w	--write: whether output the results . [ default 1]\n"				
 "\n"
 "  input/output options: \n"
 "    -i --input1: distributed ES_Matrix file we get from stage 2(Compare Profiles)\n"
@@ -65,6 +65,7 @@ int main(int argc,char *argv[])
 	int parameternum;
 	int corenum;
 	int cluster_center_num;
+	int ifwrite;
 
 	double start,finish,duration;
 	
@@ -95,7 +96,8 @@ int main(int argc,char *argv[])
 	
 	// Unset flags (value -1).
 	corenum = -1;
-	cluster_center_num = -1;	
+	cluster_center_num = -1;
+	ifwrite = -1;	
     // Unset options (value 'UNSET').
 	char * const UNSET = "unset";
     char * input   = UNSET;
@@ -109,6 +111,7 @@ int main(int argc,char *argv[])
 		static struct option long_options[] = {
 			{"thread",            	required_argument,        0, 't'},
 			{"cluster",             required_argument,       0, 'c'},
+			{"write",              required_argument,        0, 'w'},
 			{"input",             required_argument,         0, 'i'},
 			{"sample",             required_argument,        0, 's'},
 			{"reference",			required_argument,        0, 'r'},
@@ -116,7 +119,7 @@ int main(int argc,char *argv[])
 			{0, 0, 0, 0}
 		};
 
-		c = getopt_long(argc, argv, "t:c:i:o:s:r:",
+		c = getopt_long(argc, argv, "t:c:w:i:o:s:r:",
             long_options, &option_index);
 	
 		if(c==-1)	break;
@@ -242,6 +245,21 @@ int main(int argc,char *argv[])
 				exit(0);
 			}
 			break;
+
+		case 'w':
+			if (ifwrite < 0) {
+				ifwrite = atof(optarg);
+			}
+			else {
+				if(my_rank==0)
+				{
+					fprintf(stderr,"%s --write set more " "than once\n", ERRM);
+					Usage();
+				}		
+				MPI_Finalize();
+				exit(0);
+			}
+			break;
 			
 		default:
 			// Cannot parse. //
@@ -258,6 +276,9 @@ int main(int argc,char *argv[])
 	
 	if(cluster_center_num == -1)
 		cluster_center_num = 5;
+
+	if(ifwrite == -1)
+		ifwrite = 1;
 	
 	if((fp=fopen(sample,"r"))==NULL)
 	{
@@ -557,7 +578,11 @@ int main(int argc,char *argv[])
 		
 	MPI_Barrier(MPI_COMM_WORLD);
 	if(my_rank == 0){
-		WritetxtClusterResult(global_classflag ,profilenum,cluster_center_num , output, sample, reference);
+		
+		if(ifwrite==1)
+			WritetxtClusterResult(global_classflag ,profilenum,cluster_center_num , output, sample, reference);
+		else
+			printf("Just run for test, no results output\n");
 		GET_TIME(finish);
 		//compute the Write time
 		duration = finish-start;     

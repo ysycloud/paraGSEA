@@ -27,6 +27,7 @@ char *USAGE =
 "	 -l	--siglen: the length of Gene Expression Signature. [ default 50 ]\n"
 "	 -a	--loadtime: the load time of dataset2. [ default 1 (>=1)]\n"
 "	 -p	--proportion: the proportion of dataset be used . [ default 1 (0,1]]\n"
+"	 -w	--write: whether output the results . [ default 1]\n"
 "\n"
 "  input/output options: \n"
 "    -1 --input1: a parsed profiles's file from pretreatment stage.\n"
@@ -55,6 +56,7 @@ int main(int argc,char *argv[])
 	int siglen;	
 	int load_time;
 	float proportion;
+	int ifwrite;
 	
 
 	double start,finish,duration;
@@ -87,6 +89,7 @@ int main(int argc,char *argv[])
 	siglen = -1;
 	load_time = -1;
 	proportion = -1;
+	ifwrite = -1;
     // Unset options (value 'UNSET').
 	char * const UNSET = "unset";
     char * input1   = UNSET;
@@ -101,13 +104,14 @@ int main(int argc,char *argv[])
 			{"siglen",             required_argument,        0, 'l'},
 			{"loadtime",           required_argument,        0, 'a'},
 			{"proportion",         required_argument,        0, 'p'},
+			{"write",              required_argument,        0, 'w'},
 			{"input1",             required_argument,        0, '1'},
 			{"input2",             required_argument,        0, '2'},
 			{"output",             required_argument,        0, 'o'},
 			{0, 0, 0, 0}
 		};
 
-		c = getopt_long(argc, argv, "t:l:a:p:1:2:o:",
+		c = getopt_long(argc, argv, "t:l:a:p:w:1:2:o:",
             long_options, &option_index);
 	
 		if(c==-1)	break;
@@ -264,6 +268,21 @@ int main(int argc,char *argv[])
 				exit(0);
 			}
 			break;
+		
+		case 'w':
+			if (ifwrite < 0) {
+				ifwrite = atof(optarg);
+			}
+			else {
+				if(my_rank==0)
+				{
+					fprintf(stderr,"%s --write set more " "than once\n", ERRM);
+					Usage();
+				}		
+				MPI_Finalize();
+				exit(0);
+			}
+			break;
 			
 		default:
 			// Cannot parse. //
@@ -286,6 +305,9 @@ int main(int argc,char *argv[])
 	
 	if(proportion == -1)
 		proportion = 1;
+	
+	if(ifwrite == -1)
+		ifwrite = 1;
 	
 	if(output == UNSET)
 	{
@@ -328,18 +350,43 @@ int main(int argc,char *argv[])
 		exit(0);
 	}
 	
-	printf("Memory check......");
-	unsigned long memavail = memoryAvailable(0);
-	printf("Available Memory:      %ld\n", memavail);
-	unsigned long memneed = 2*sizeof(short)*profilenum*genelen + profilenum*sizeof(struct GSEA_RESULT);
-	printf("Needed Memory:      %ld\n", memneed);
 	
-	int memneed
-	if(memavail > memneed)
-
 	// compute the local size 、up boundary and down boundary for every process in dataset1
 	split_data(profilenum1, p, my_rank, &begin, &end, &local_P);
 	
+	if(my_rank==0)
+		printf("Memory check......\n");
+	
+	unsigned long memavail = memoryAvailable(1);
+	
+	unsigned long memneed = (sizeof(struct Profile_triple)*(local_P+profilenum2/load_time) + local_P*profilenum2*sizeof(float))/1024;
+	
+	unsigned long memallneed = (sizeof(struct Profile_triple)*(profilenum1+profilenum2) + profilenum1*profilenum2*sizeof(float))/1024;
+	
+	if(my_rank==0)
+	{
+		printf("Available Memory:      %ld KB\n", memavail);
+		printf("Needed Memory:      %ld KB\n", memneed);
+		printf("All Needed Memory:      %ld KB\n", memallneed);
+	}
+
+	unsigned long mem1 = (sizeof(struct Profile_triple)*(local_P+profilenum2/load_time))/1024;
+	unsigned long mem2 = profilenum1*profilenum2*sizeof(float)/1024;
+	
+	int nodenum = (int)(mem2/(memavail-mem1)+1);
+	if( memneed > memavail )
+	{
+		if( my_rank==0 )
+		{
+			//printf("mem1:      %ld KB\n", mem1);
+			//printf("mem2:      %ld KB\n", mem2);
+			printf("available memory is not enough to store all results, recommend to use more than %d nodes!!!\n", nodenum);
+		}
+		MPI_Finalize();
+		exit(0);
+	}
+	
+		
 	/*****read the local part file of dataset1 in every process and get their triples****************/
 	triples1 = (struct Profile_triple *)malloc(sizeof(struct Profile_triple)*local_P);	
 	getTriples(local_P, genelen, siglen, profilenum1, linelen1, begin, end, input1, triples1);
@@ -422,7 +469,8 @@ int main(int argc,char *argv[])
 			printf("phase %d --> Paral compute the ES_Matrix time: %.4f s\n", current_time+1, duration);
 		
 			if(current_time==load_time-1)
-				printf("Writing file is Starting...!\n");
+				if(ifwrite==1)
+					printf("Writing file is Starting...!\n");
 			
 			GET_TIME(start);		
 		}
@@ -441,16 +489,23 @@ int main(int argc,char *argv[])
 	}
 	*/
 	
-	char Res[128];
-	sprintf(Res,"%s_%d.txt",output,my_rank);
-	WritetxtResult(0, local_P, profilenum2, Res, local_ES_Matrix);
+	if(ifwrite==1)
+	{
+		char Res[128];
+		sprintf(Res,"%s_%d.txt",output,my_rank);
+		WritetxtResult(0, local_P, profilenum2, Res, local_ES_Matrix);
 	
-	MPI_Barrier(MPI_COMM_WORLD);
-	if(my_rank == 0){
-		GET_TIME(finish);
-		//compute the write time
-		duration = finish-start;     
-		printf("Write Result spent: %.4f s\n",duration);
+		MPI_Barrier(MPI_COMM_WORLD);
+		if(my_rank == 0){
+			GET_TIME(finish);
+			//compute the write time
+			duration = finish-start;     
+			printf("Write Result spent: %.4f s\n",duration);
+		}
+	}else{
+		if(my_rank == 0){   
+			printf("Just run for test, no results output\n");
+		}
 	}
 	
 	//free the memory

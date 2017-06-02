@@ -208,10 +208,10 @@ int main(int argc,char *argv[])
 	printf("profilenum:%d\t genelen:%d\n",profilenum,genelen);
 	
     printf("Memory check......\n");
-	unsigned long memavail = memoryAvailable(0);
-	printf("Available Memory:      %ld\n", memavail);
-	unsigned long memneed = 2*sizeof(short)*profilenum*genelen + profilenum*sizeof(struct GSEA_RESULT);
-	printf("Needed Memory:      %ld\n", memneed);
+	unsigned long memavail = memoryAvailable(1);
+	printf("Available Memory:      %ld KB\n", memavail);
+	unsigned long memneed = (2*sizeof(short)*profilenum*genelen + profilenum*sizeof(struct GSEA_RESULT))/1024;
+	printf("Needed Memory:      %ld KB\n", memneed);
 	
 	if(memavail < memneed)
 	{
