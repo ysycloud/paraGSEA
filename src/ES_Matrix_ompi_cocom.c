@@ -48,6 +48,7 @@ int main(int argc,char *argv[])
 	int linelen1,linelen2;
 	struct Profile_triple *triples1,**triples2,**local_triples2;
 	float **local_ES_Matrix;		//part of the ES_Matrix in this process
+	float *ES_test;  //ES used for testing without writing
 	int	my_rank;   /* My process rank           */
     int	p;         /* The number of processes   */
     int source,dest;  
@@ -387,8 +388,15 @@ int main(int argc,char *argv[])
 			//printf("mem2:      %ld KB\n", mem2);
 			printf("available memory is not enough to store all results, recommend to use more than %d nodes!!!\n", nodenum);
 		}
-		MPI_Finalize();
-		exit(0);
+		if(ifwrite==1){
+			MPI_Finalize();
+			exit(0);
+		}else{
+			if( my_rank==0 )
+			{
+				printf("because we are just testing without writing, we will continue!!!\n");
+			}
+		}
 	}
 	
 	/*****read the local part file of dataset1 in every process and get their triples****************/
@@ -396,10 +404,16 @@ int main(int argc,char *argv[])
 	getTriples(local_P, genelen, siglen, profilenum1, linelen1, begin, end, input1, triples1);
 	Build_derived_type(&triples1[0],&triple_mpi_t);  //derive the new MPI Type
 	
-	//allocate the local_ES_Matrix memory
-	local_ES_Matrix = (float **)malloc(local_P*sizeof(float *));
-	for(i=0;i<local_P;i++)
-		local_ES_Matrix[i] = (float *)malloc(profilenum2*sizeof(float));
+	
+	if(ifwrite==1)
+	{
+		//not test, then allocate the local_ES_Matrix memory
+		local_ES_Matrix = (float **)malloc(local_P*sizeof(float *));
+		for(i=0;i<local_P;i++)
+			local_ES_Matrix[i] = (float *)malloc(profilenum2*sizeof(float));
+	}else{
+		ES_test = (float *)malloc(corenum*sizeof(float));
+	}
 	
 	int current_time = 0;
 	int begin_localfile2, end_localfile2, len_localfile2;
@@ -501,9 +515,15 @@ int main(int argc,char *argv[])
 			split_data(len_localfile2, corenum, threadID, &begin_t, &end_t, &local_t);
 		
 			// compute the part of the ES matrix
-			for(k=0;k<local_P;k++)
-				for(t=begin_t;t<end_t;t++)
-					local_ES_Matrix[k][begin_localfile2 + t] = ES_Profile_triple(triples1[k],triples2[current_time][t],genelen,siglen);
+			if(ifwrite==1){
+				for(k=0;k<local_P;k++)
+					for(t=begin_t;t<end_t;t++)
+						local_ES_Matrix[k][begin_localfile2 + t] = ES_Profile_triple(triples1[k],triples2[current_time][t],genelen,siglen);
+			}else{ //just calculate for testing
+				for(k=0;k<local_P;k++)
+					for(t=begin_t;t<end_t;t++)
+						ES_test[threadID] = ES_Profile_triple(triples1[k],triples2[current_time][t],genelen,siglen);
+			}
 		}
 	
 		MPI_Barrier(MPI_COMM_WORLD);
@@ -553,9 +573,14 @@ int main(int argc,char *argv[])
 	}
 	
 	//free the memory
-	for(i=0;i<local_P;i++)
-		free(local_ES_Matrix[i]);
-	free(local_ES_Matrix);
+	if(ifwrite==1)
+	{
+		for(i=0;i<local_P;i++)
+			free(local_ES_Matrix[i]);
+		free(local_ES_Matrix);
+	}else{
+		free(ES_test);
+	}
 	free(triples1);
 	free(triples2);
 	
