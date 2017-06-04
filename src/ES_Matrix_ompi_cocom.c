@@ -365,9 +365,9 @@ int main(int argc,char *argv[])
 	
 	unsigned long memavail = memoryAvailable(1);
 	
-	unsigned long memneed = (sizeof(struct Profile_triple)*(local_P+profilenum2/load_time) + local_P*profilenum2*sizeof(float))/1024;
+	unsigned long memneed = sizeof(struct Profile_triple)/1024*(local_P+profilenum2/load_time) + local_P/1024*profilenum2*sizeof(float);
 	
-	unsigned long memallneed = (sizeof(struct Profile_triple)*(profilenum1+profilenum2) + profilenum1*profilenum2*sizeof(float))/1024;
+	unsigned long memallneed = sizeof(struct Profile_triple)/1024*(profilenum1+profilenum2) + profilenum1/1024*profilenum2*sizeof(float);
 	
 	if(my_rank==0)
 	{
@@ -376,8 +376,8 @@ int main(int argc,char *argv[])
 		printf("All Needed Memory:      %ld KB\n", memallneed);
 	}
 
-	unsigned long mem1 = (sizeof(struct Profile_triple)*(local_P+profilenum2/load_time))/1024;
-	unsigned long mem2 = profilenum1*profilenum2*sizeof(float)/1024;
+	unsigned long mem1 = sizeof(struct Profile_triple)/1024*(local_P+profilenum2/load_time);
+	unsigned long mem2 = profilenum1/1024*profilenum2*sizeof(float);
 	
 	int nodenum = (int)(mem2/(memavail-mem1)+1);
 	if( memneed > memavail )
