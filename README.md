@@ -19,7 +19,7 @@ paraGSEA implements a MPI and OpenMP-Based parallel GSEA algorithm for multi-cor
 
 Many studies have been conducted using gene expression profile similarity to identify functional connections among genes and drugs. While working well for query single gene set in reference of small datasets, its scalability and computation performance is poor in large scale datasets. Here we propose paraGSEA, a parallel computing framework for large scale transcriptomics data analysis. In the process of pairwise similarity metric generation and expression profile clustering, time and space complexity are greatly reduced through elimination of redundant GSEA calculations and optimization of parallel procedures. The framework can be executed on multi-CPU or multi-core computing systems in an efficient manner.
 
-In general, We used the 1ktools(https://github.com/cmap/l1ktools) tools to parse the .gctx file which stored gene profile data defined by Lincs(CMap) based on HDF5 file format. We used Matlab to parse the .gctx(.gct) file、extract the gene profile sets and write to .txt file. C will read the file 、complete parallel GSEA and write out the results in some suitable files.
+In general, We used the 1ktools(https://github.com/cmap/l1ktools) tools to parse the .gctx(.gct) file which stored gene profile data defined by Lincs(CMap) based on HDF5 file format. We used Matlab to parse the .gctx(.gct) file、extract the gene profile sets and write to .txt file. C will read the file 、complete parallel GSEA and write out the results in some suitable files.
 
 There mainly parts of work and several optimizations are implemented in paraGSEA.
 
@@ -31,7 +31,7 @@ There mainly parts of work and several optimizations are implemented in paraGSEA
 
 ## II. Benchmark
 
-With all these optimizations, paraGSEA can attains a 50x speedup compared with original GSEA algorithm in calculating single Enrichment Score. Also, we adopted an global perturbation and random sampling strategy to manage computing expanses in calculate statistical metric of GSEA so that we improved the performance around 100 fold. Moreover, Because of the good data partitioning and communication strategy, the Tools obtained excellent scalability. If the amount of data is large enough, The Tools will keep near linear speedup as the increase of computing nodes.
+With all these optimizations, paraGSEA can attains up to two orders of magnitude faster than original GSEA algorithm in calculating single Enrichment Score. Also, we adopted an global perturbation and random sampling strategy to manage computing expanses in calculate statistical metric of GSEA so that we improved the performance around 100 fold. Moreover, Because of the good data partitioning and communication strategy, the Tools obtained excellent scalability. If the amount of data is large enough, The Tools will keep near linear speedup as the increase of computing nodes.
 
 ## III. Compilation and installation
 
