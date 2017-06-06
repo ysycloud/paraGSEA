@@ -125,7 +125,7 @@ int main(int argc,char *argv[])
 	
 	if((fp=fopen(input2,"r"))==NULL)
 	{
-		fprintf(stderr, "[ param error : -2 ] can not open gene inst file: '%s' !\n", input2);
+		fprintf(stderr, "[ param error : -2 ] can not open inst info file: '%s' !\n", input2);
 		exit(0);
 	}
 	fclose(fp);
