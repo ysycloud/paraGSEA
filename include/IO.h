@@ -21,7 +21,7 @@ int ReadMatrixFile(char path[],int LineLength,int BeginLine,int EndLine,int prof
 void WritetxtClusterResult(int classflag[] ,int len, int cluster, char writepath[], char cidfile[], char referencedirectory[]);
 void getGeneListFile(char path1[],int gene_symbol_col, char path2[]);
 void readGeneListFile(char genelist[][12] ,int *line, char path[]);
-void getByteOffsetFile(char path1[],char path2[]);
+void getConditionReference(char path1[],char path2[],char path3[]);
 long readByteOffsetFile(char path[],int row_num);
 void getSampleConditions(char path[], long offset, char conditions[]);
 

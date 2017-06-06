@@ -377,35 +377,40 @@ void readGeneListFile(char genelist[][12] ,int *line, char path[])
 	fclose(fp);
 }
 
-void getByteOffsetFile(char path1[],char path2[])
+void getConditionReference(char path1[],char path2[],char path3[])
 {
-	FILE *fp1,*fp2;
+	FILE *fp1,*fp2,*fp3;
 	char str[L1000_CONDITION_LEN];
 	if((fp1=fopen(path1,"r"))==NULL)
 	{
-		printf("can not open %s file\n",path1);
+		printf("can not open %s file",path1);
 		exit(0);
 	}
 	if((fp2=fopen(path2,"w"))==NULL)
 	{
-		printf("can not open %s file\n",path2);
+		printf("can not open %s file",path2);
 		exit(0);
 	}
-	
-	int line=0;
+	if((fp3=fopen(path3,"w"))==NULL)
+	{
+		printf("can not open %s file",path3);
+		exit(0);
+	}
 
 	long offset=0;
 
-	fprintf( fp2, "%10d\t", offset );
+	fgets(str, L1000_CONDITION_LEN , fp1);  //remove the head
 
 	while(fgets(str, L1000_CONDITION_LEN , fp1)!= NULL)  //read every line
 	{
-		offset = ftell(fp1);		
-		fprintf( fp2, "%10d\t", offset );   
+		fprintf( fp3, "%10d\n", offset);
+		fprintf( fp2, "%s", str);
+		offset = ftell(fp2);		
 	}
 
 	fclose(fp1);
 	fclose(fp2);
+	fclose(fp3);
 }
 
 

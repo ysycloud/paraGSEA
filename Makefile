@@ -1,6 +1,6 @@
 #programs,flags,etc.
 INCLUDE	=	-I include
-TARGET	=	bin/quick_search_serial bin/quick_search_omp bin/quick_search_mpi bin/ES_Matrix_ompi_nocom bin/ES_Matrix_ompi_p2p bin/ES_Matrix_ompi_cocom bin/Cluster_KMediods_ompi bin/Cluster_KMediods++_ompi
+TARGET	=	bin/getReferences bin/quick_search_serial bin/quick_search_omp bin/quick_search_mpi bin/ES_Matrix_ompi_nocom bin/ES_Matrix_ompi_p2p bin/ES_Matrix_ompi_cocom bin/Cluster_KMediods_ompi bin/Cluster_KMediods++_ompi
 
 #ALL Phony Targets
 .PHONY:	everything	clean	all
@@ -12,7 +12,13 @@ clean:
 all:	clean everything
 install: 
 	install bin/* /usr/bin/
-
+	
+bin/getReferences:	src/getReferences.c	\
+			src/GSEA.c include/GSEA.h	\
+			src/Tools.c include/Tools.h	\
+			src/IO.c include/IO.h
+	gcc $(INCLUDE) -g -o bin/getReferences src/getReferences.c src/GSEA.c src/Tools.c src/IO.c
+	
 bin/quick_search_serial:	src/quick_search_serial.c	\
 			src/GSEA.c include/GSEA.h	\
 			src/Tools.c include/Tools.h	\
