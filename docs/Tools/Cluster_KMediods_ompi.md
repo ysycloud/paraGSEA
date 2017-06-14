@@ -120,7 +120,7 @@ Paral KMediods compute the Cluster Centers Spent: 0.2829 s
 
 There is also no more need of you to input anything in command line. However,
 the cluster results will be written to file `data/Cluster_result_test.txt` 
-in root process.
+in root process if the ‘-w’ parameter is 0.
 
 For Example:
 
