@@ -21,15 +21,24 @@ A sample `Shell script` file is given below that makes use of `quick_search_omp`
 ./bin/quick_search_omp -i data/data_for_test.txt -t 4 -n 5 -s data/data_for_test_cidnum.txt -r data/Reference
 ```
 
-It may will produce the following output:
+It may produce the following output:
 ```shell
 Profile Set is Loading...!
 profilenum:272	 genelen:978
+Memory check......
+Available Memory:      522318932 KB
+Needed Memory:      1045 KB
 loading IO and prework time by openmp: 0.0267 s
 which way do you want to input the GeneSet( 0 -> standard input , others -> file input ):
 ```
 
-Then you can choose which way do you want to input the GeneSet. 
+if Available Memory is less than Needed Memory, It will produce the following output:
+```shell
+available memory is not enough!!! Please use MPI version and more nodes!!!
+```
+and finish the program.
+
+If Available Memory is enough, you can choose which way do you want to input the GeneSet. 
 Choosing 0, then you must input a gene set directly. 
 
 For example:

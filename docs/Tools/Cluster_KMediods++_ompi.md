@@ -16,6 +16,7 @@ There are several parameters should be setted in command line example.
 | -hostfile hostfile | list the IP or Hostname of nodes |
 | -t --thread | define the maximum number of parallel threads |
 | -c --cluster | define the number of clusters we want to get |
+| -w --write | decide whether output the results |
 | -i --input | distributed ES_Matrix file we get from stage 2(Compare Profiles) |
 | -o --output | define the output cluster result file of every profiles in root node |
 | -s --sample | a text file include sample sequence numbers which are extracted from pretreatment stage |
@@ -24,7 +25,7 @@ There are several parameters should be setted in command line example.
 A sample `Shell script` file is given below that makes use of `Cluster_KMediods++_ompi`.
 
 ```shell
-mpirun -n 2 -ppn 2 -hostfile example/hostfile Cluster_KMediods++_ompi -t 4 -c 8 -i data/ES_Matrix_test -o data/Cluster_result_test.txt  -s data/data_for_test_cidnum.txt -r data/Reference
+mpirun -n 2 -ppn 2 -hostfile example/hostfile Cluster_KMediods++_ompi -t 4 -c 8 -w 1 -i data/ES_Matrix_test -o data/Cluster_result_test.txt  -s data/data_for_test_cidnum.txt -r data/Reference
 ```
 
 the example hostfile just has one record as below:
@@ -214,6 +215,15 @@ Init cluster centers is:
 63 140 174 192 248 262 264 270 
 82th iteraction cluster_center_new is:
 63 140 174 192 248 262 264 270 
+Paral KMediods++ compute the Cluster Centers Spent: 0.8762 s
+```
+
+If the `-w` parameter is 0, it will output:
+```shell
+Just run for test, no results output
+```
+before
+```shell
 Paral KMediods++ compute the Cluster Centers Spent: 0.8762 s
 ```
 

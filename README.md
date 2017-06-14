@@ -89,7 +89,6 @@ Run `cd paraGSEA/matlab_for_parse` or enter the `pathtool` command, click "Add w
 Or, if you cannot use Matlab by a visual way, you can just run `addpath('paraGSEA/matlab_for_parse')` after setup the Matlab environment to add the directory path.
 
 #### V.I.III. using by command line:
-After you set the MATLAB path, you should enter `matlab` in shell to start matlab environment.
 
 In order to provide user-friendly parsed method to allow user set their own conditions of profile they need, we must generate some reference data to facilitate our main work. There is a Matlab script in ‘paraGSEA/matlab_for_parse’ directory named `genReferenceforNewDataSet.m` to help us finish this work. The Only thing we need to do is just setting some field names and file path. There is a example below. More detail have been told in `tutorial`. 
 
@@ -124,7 +123,7 @@ cat ../data/data_for_test_cidnum.txt_* >> ../data/data_for_test_cidnum.txt
 rm -f ../data/data_for_test.txt_* ../data/data_for_test_cidnum.txt_*
 ```
 
-**Note:** the number of cores must be smaller than the actual core number in your system. And after the parse work, you shoul merge every parts of output file into a whole file like the shell script shown above.
+**Note:** the number of cores must be smaller than the actual core number in your system. And after the parse work, you should merge every parts of output file into a whole file like the shell script shown above.
 
 #### V.I.V. Tools:
 
@@ -148,6 +147,7 @@ rm -f ../data/data_for_test.txt_* ../data/data_for_test_cidnum.txt_*
 
 #### V.II.II. Tools(Source file list):
 
+* [**getReferences.c**](docs/Tools/getReferences.md) generate some reference data for new data set to facilitate main work when the `rhd` and `chd` structs have been splited from some new datasets (mainly `.gctx`) of LINCS to be separate text files.
 * [**quick_search_serial.c**](docs/Tools/quick_search_serial.md) read the .txt file 、complete GSEA and show the topN results in a serial way.
 * [**quick_search_omp.c**](docs/Tools/quick_search_omp.md) read the .txt file 、complete parallel GSEA by OpenMP and show the topN results.
 * [**quick_search_mpi.c**](docs/Tools/quick_search_mpi.md) read the .txt file 、complete parallel GSEA by MPI and show the topN results.
@@ -158,6 +158,7 @@ rm -f ../data/data_for_test.txt_* ../data/data_for_test_cidnum.txt_*
 * [**Cluster_KMediods++_ompi.c**](docs/Tools/Cluster_KMediods++_ompi.md) read the ES_Matrix file 、complete a general clustering algorithm like K-Mediods by MPI/OpenMP, but let the distance between initial cluster centers as far as possible.
 
 #### V.II.III. Demo:
+* [**runGetReferencesLinux.sh**](runGetReferencesLinux.sh): run Executable files in Linux to generate some reference data when the `rhd` and `chd` structs have been splited from some new datasets (mainly `.gctx`) of LINCS to be separate text files.
 * [**runParalESLinux.sh**](runParaGSEALinux.sh): run Executable files in Linux.
 
 #### V.II.V. Running paraGSEA:
@@ -313,10 +314,10 @@ the detail usage of each C Tool is shown below.
 #param list : -n process_num; -t thread_num; -l siglen; -1 filename1; -2 filename2; -p proportion; -w ifwrite; -o outfilename
 #mpirun -n 2 -ppn 2 -hostfile example/hostfile bin/ES_Matrix_ompi_cocom -t 4 -l 50 -a 2 -p 1 -w 1 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
 
-#param list : -n process_num; -t thread_num; -c cluster_num; -w ifwrite; -i filename; -o outfilename
+#param list : -n process_num; -t thread_num; -c cluster_num; -w ifwrite; -i filename; -o outfilename -s sample number file; -r reference directory
 #mpirun -n 2 -ppn 2 -hostfile example/hostfile bin/Cluster_KMediods_ompi -t 4 -c 5 -w 1 -i data/ES_Matrix_test -o data/Cluster_result_test.txt  -s data/data_for_test_cidnum.txt -r data/Reference
 
-#param list : -n process_num; -t thread_num; -c cluster_num; -w ifwrite; -i filename; -o outfilename
+#param list : -n process_num; -t thread_num; -c cluster_num; -w ifwrite; -i filename; -o outfilename -s sample number file; -r reference directory
 #mpirun -n 2 -ppn 2 -hostfile example/hostfile bin/Cluster_KMediods++_ompi -t 4 -c 5 -w 1 -i data/ES_Matrix_test -o data/Cluster_result_test.txt  -s data/data_for_test_cidnum.txt -r data/Reference
 ```
 
