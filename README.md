@@ -147,7 +147,7 @@ rm -f ../data/data_for_test.txt_* ../data/data_for_test_cidnum.txt_*
 
 #### V.II.II. Tools(Source file list):
 
-* [**getReferences.c**](docs/Tools/getReferences.md) generate some reference data for new data set to facilitate main work when the `rhd` and `chd` structs have been splited from some new datasets (mainly `.gctx`) of LINCS to be separate text files.
+* [**getReferences.c**](docs/Tools/genReferences.md) generate some reference data for new data set to facilitate main work when the `rhd` and `chd` structs have been splited from some new datasets (mainly `.gctx`) of LINCS to be separate text files.
 * [**quick_search_serial.c**](docs/Tools/quick_search_serial.md) read the .txt file 、complete GSEA and show the topN results in a serial way.
 * [**quick_search_omp.c**](docs/Tools/quick_search_omp.md) read the .txt file 、complete parallel GSEA by OpenMP and show the topN results.
 * [**quick_search_mpi.c**](docs/Tools/quick_search_mpi.md) read the .txt file 、complete parallel GSEA by MPI and show the topN results.
@@ -338,6 +338,7 @@ the detail usage of each C Tool is shown below.
 | ---- | ----------- |--------|
 | modzs_n272x978.gctx | original profile file from LINCS Dataset| HDF5 |
 | GSE70138_Broad_LINCS_Level2_GEX_n78980x978.gct.gz | original profile file from LINCS Dataset used for case study in paper | compressing format "gz" of HDF5 |
+| GSE92742_INFO.tar.gz | 'gene_info' and 'inst_info' txt files of LINCS phase I dataset and the corresponding reference data gotten by C tool 'getReferences'  | compressing format "gz" of GSE92742_INFO directory |
 | Gene_List.txt | all gene names of every profile in original order recorded in HDF5 source file | one gene name(symbol) per line |
 | Samples_Condition.txt | treatment conditions of all profiles in original order recorded in HDF5 source file | one profile's conditions per line |
 | Samples_RowByteOffset.txt | Bytes offsets of every line in `Samples_Condition.txt` | every offset value is splitted by `\t` |

@@ -32,7 +32,7 @@ However, there is a thing we must notice:
 you'd better keep the formula `process_num = pernum * number of IP(Hostname) list in hostfile` 
 correct.
 
-It may will produce the following output:
+It may produce the following output:
 ```shell
 Profile Set is Loading...!
 profilenum:272	 genelen:978
@@ -43,7 +43,7 @@ loading IO and prework time by MPI: 0.0244 s
 which way do you want to input the GeneSet( 0 -> standard input , others -> file input ):
 ```
 
-if Available Memory is less than Needed Memory, It will produce the following output:
+If Available Memory is less than Needed Memory, it will produce the following output:
 ```shell
 available memory is not enough!!! Please use more nodes!!!
 ```

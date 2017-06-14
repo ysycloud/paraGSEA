@@ -11,17 +11,21 @@ n=3
 ppn=3
 thread_num=5
 siglen=50
+loadtime=1
+proportion=1
+ifwrite1=1
 cluster_num=5
+ifwrite2=1
 
 #calculate the similarity(ES) matrix
 case "$matrix_way" in
-	0)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_nocom -t $thread_num -l $siglen -1 "../data/data_for_test.txt" -2 "../data/data_for_test.txt" -o "../data/ES_Matrix_tmp";;
-	1)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_p2p -t $thread_num -l $siglen -1 "../data/data_for_test.txt" -2 "../data/data_for_test.txt" -o "../data/ES_Matrix_tmp";;
-	2)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_cocom -t $thread_num -l $siglen -1 "../data/data_for_test.txt" -2 "../data/data_for_test.txt" -o "../data/ES_Matrix_tmp";;
+	0)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_nocom -t $thread_num -l $siglen -a $loadtime -p $proportion -w $ifwrite1 -1 "../data/data_for_test.txt" -2 "../data/data_for_test.txt" -o "../data/ES_Matrix_tmp";;
+	1)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_p2p -t $thread_num -l $siglen -a $loadtime -p $proportion -w $ifwrite1 -1 "../data/data_for_test.txt" -2 "../data/data_for_test.txt" -o "../data/ES_Matrix_tmp";;
+	2)mpirun -n $n -ppn $ppn -hostfile hostfile ES_Matrix_ompi_cocom -t $thread_num -l $siglen -a $loadtime -p $proportion -w $ifwrite1 -1 "../data/data_for_test.txt" -2 "../data/data_for_test.txt" -o "../data/ES_Matrix_tmp";;
 esac
 
 #cluster
 case "$cluster_way" in
-	0)mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods_ompi -t $thread_num -c $cluster_num -i "../data/ES_Matrix_tmp" -o $outputfile -s ../data/data_for_test_cidnum.txt -r ../data/Reference;;
-	1)mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods++_ompi -t $thread_num -c $cluster_num -i "../data/ES_Matrix_tmp" -o $outputfile -s ../data/data_for_test_cidnum.txt -r ../data/Reference;;
+	0)mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods_ompi -t $thread_num -c $cluster_num -w $ifwrite2 -i "../data/ES_Matrix_tmp" -o $outputfile -s ../data/data_for_test_cidnum.txt -r ../data/Reference;;
+	1)mpirun -n $n -ppn $ppn -hostfile hostfile Cluster_KMediods++_ompi -t $thread_num -c $cluster_num -w $ifwrite2 -i "../data/ES_Matrix_tmp" -o $outputfile -s ../data/data_for_test_cidnum.txt -r ../data/Reference;;
 esac

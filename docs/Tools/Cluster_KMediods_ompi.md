@@ -115,7 +115,7 @@ Just run for test, no results output
 ```
 before
 ```shell
-Paral KMediods++ compute the Cluster Centers Spent: 0.8762 s
+Paral KMediods compute the Cluster Centers Spent: 0.2829 s
 ```
 
 There is also no more need of you to input anything in command line. However,

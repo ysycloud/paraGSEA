@@ -44,7 +44,7 @@ However, there are some things we must notice:
 4. If you set the number of clusters too big, clustering algorithm may not converge quickly.
 
 
-It may will produce the following output:
+It may produce the following output:
 ```shell
 Matrix is Loading...!
 loading IO and prework time : 0.0168 s

@@ -31,7 +31,7 @@ loading IO and prework time: 0.0237 s
 which way do you want to input the GeneSet( 0 -> standard input , others -> file input ):
 ```
 
-if Available Memory is less than Needed Memory, It will produce the following output:
+If Available Memory is less than Needed Memory, it will produce the following output:
 ```shell
 available memory is not enough!!! Please use MPI version and more nodes!!!
 ```
