@@ -10,7 +10,7 @@
 #include <getopt.h> 
 #include "Tools.h"
 
-#define MAXITER 3000
+#define MAXHIST 10000
 
 #define ERRM "Cluster error:"
 
@@ -59,6 +59,8 @@ int main(int argc,char *argv[])
 	int *cluster_center;
 	int isbreak=0;
 	int iternum=0;
+	int histnum=0;
+	int ismaxhist=0;
 	
 	int leave,global_begin;
 	int **cluster_centers_history;
@@ -313,8 +315,8 @@ int main(int argc,char *argv[])
 	if(my_rank == 0){
 		
 		//max iteration correspond to a cluster centers set
-		cluster_centers_history = (int **)malloc(MAXITER*sizeof(int*));
-		for(i=0;i<MAXITER;i++)
+		cluster_centers_history = (int **)malloc(MAXHIST*sizeof(int*));
+		for(i=0;i<MAXHIST;i++)
 			cluster_centers_history[i] = (int *)malloc(cluster_center_num*sizeof(int));
 		
 		printf("Matrix is Loading...!\n");
@@ -493,9 +495,9 @@ int main(int argc,char *argv[])
 	{
 		if(my_rank==0)
 		{	
-			memcpy(cluster_centers_history[iternum],cluster_center,cluster_center_num*sizeof(int));				
+			memcpy(cluster_centers_history[histnum],cluster_center,cluster_center_num*sizeof(int));				
 		}
-		
+		histnum++;
 		iternum++;
 		/***************************paral split the class***********************************/
 		#pragma omp parallel num_threads(corenum)
@@ -667,9 +669,22 @@ int main(int argc,char *argv[])
 				printf("%d ",cluster_center_new[i]);
 			printf("\n");
 			
-			if(isInSet(cluster_centers_history,cluster_center_new,cluster_center_num,iternum)||iternum>=MAXITER){
-				isbreak = 1;
+			if(ismaxhist == 1){
+				if(isInSet(cluster_centers_history,cluster_center_new,cluster_center_num,MAXHIST)){
+					isbreak = 1;
+				}
+			}else{
+				if(isInSet(cluster_centers_history,cluster_center_new,cluster_center_num,histnum)){
+					isbreak = 1;
+				}
 			}
+			
+			if(histnum >= MAXHIST)
+			{
+				histnum = 0;
+				ismaxhist = 1;
+			}
+				
 			memcpy(cluster_center,cluster_center_new,cluster_center_num*sizeof(int));	
 		}
 		MPI_Bcast( &isbreak, 1, MPI_INT, 0 ,MPI_COMM_WORLD);
@@ -693,7 +708,7 @@ int main(int argc,char *argv[])
 	//free the memory
 	if(my_rank == 0)
 	{
-		for(i=0;i<MAXITER;i++)
+		for(i=0;i<MAXHIST;i++)
 			free(cluster_centers_history[i]);
 		free(cluster_centers_history);
 	}	
