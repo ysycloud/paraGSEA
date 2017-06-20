@@ -331,12 +331,18 @@ int main(int argc,char *argv[])
 	//printf("%d\t%d\t%d\n",local_profilenum,profilenum,linelen);
 	
 	//input file check
-	if( local_profilenum <= 0 || profilenum <= 0)
+	if( local_profilenum <= 0 || profilenum <= 0 || linelen<=0)
 	{
 		if(my_rank==0)
 			fprintf(stderr,"this file input is not exist!\n");
 		MPI_Finalize();
 		exit(0);
+	}
+	
+	if(my_rank == 0)
+	{
+		printf("profile number: %d\n",profilenum);
+		printf("cluster number: %d\n",cluster_center_num);
 	}
 	
 	//calculate the global begin line of profiles in each process

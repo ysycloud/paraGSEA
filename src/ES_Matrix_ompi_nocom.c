@@ -351,6 +351,12 @@ int main(int argc,char *argv[])
 		exit(0);
 	}
 	
+	if(my_rank==0)
+	{
+		printf("Genelen:	%d\n", genelen);
+		printf("Profiles1 length:	%d\n", profilenum1);
+		printf("Profiles2 length:	%d\n", profilenum2);
+	}
 	
 	// compute the local size 、up boundary and down boundary for every process in dataset1
 	split_data(profilenum1, p, my_rank, &begin, &end, &local_P);

@@ -323,7 +323,6 @@ int main(int argc,char *argv[])
 		GET_TIME(start);
 	}
 	
-	
 	char myfile[128];
 	sprintf(myfile,"%s_%d.txt",input,my_rank);
 	
@@ -338,6 +337,12 @@ int main(int argc,char *argv[])
 			fprintf(stderr,"this file input is not exist!\n");
 		MPI_Finalize();
 		exit(0);
+	}
+	
+	if(my_rank == 0)
+	{
+		printf("profile number: %d\n",profilenum);
+		printf("cluster number: %d\n",cluster_center_num);
 	}
 	
 	//calculate the global begin line of profiles in each process
