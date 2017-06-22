@@ -10,8 +10,7 @@
 #include <omp.h>
 #include "Tools.h"
 
-
-#define MAXHIST 10000
+#define MAXHIST 5000
  
 #define ERRM "Cluster error:"
 
