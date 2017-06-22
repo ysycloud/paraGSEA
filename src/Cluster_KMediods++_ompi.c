@@ -472,7 +472,7 @@ int main(int argc,char *argv[])
 			//find the farest least center
 			for(i=0;i<profilenum;i++)
 			{
-				if(global_leastcenter[i]<far)
+				if(global_leastcenter[i]<=far)
 				{
 					far = global_leastcenter[i];
 					currentInitCenter = i;
