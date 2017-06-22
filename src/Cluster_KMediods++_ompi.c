@@ -10,7 +10,7 @@
 #include <getopt.h> 
 #include "Tools.h"
 
-#define MAXHIST 5000
+#define MAXHIST 3000
 
 #define ERRM "Cluster error:"
 
@@ -675,11 +675,11 @@ int main(int argc,char *argv[])
 			printf("\n");
 			
 			if(ismaxhist == 1){
-				if(isInSet(cluster_centers_history,cluster_center_new,cluster_center_num,MAXHIST)){
+				if(isInSet(cluster_centers_history,cluster_center_new,cluster_center_num,MAXHIST)||iternum>=MAXHIST){
 					isbreak = 1;
 				}
 			}else{
-				if(isInSet(cluster_centers_history,cluster_center_new,cluster_center_num,histnum)){
+				if(isInSet(cluster_centers_history,cluster_center_new,cluster_center_num,histnum)||iternum>=MAXHIST){
 					isbreak = 1;
 				}
 			}

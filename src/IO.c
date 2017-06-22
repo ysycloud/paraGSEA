@@ -149,8 +149,8 @@ void WritetxtResult(int sourceBegin ,int sourceEnd, int matlen, char writepath[]
 	
 	for( i=sourceBegin; i < sourceEnd; i++){
 		for( j=0; j < matlen-1; j++)
-			fprintf(fp,"%5.3f\t",ES_Matrix[i][j]);
-		fprintf(fp,"%5.3f\n",ES_Matrix[i][j]);
+			fprintf(fp,"%5.6f\t",ES_Matrix[i][j]);
+		fprintf(fp,"%5.6f\n",ES_Matrix[i][j]);
 	}	
 	fclose(fp);
 }
