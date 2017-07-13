@@ -12,15 +12,16 @@ end
 
 if ~exist('file_input')
 	file_input='../data/modzs_n272x978.gctx';
+    %file_input='../data/GSE92742_Broad_LINCS_Level2_GEX_delta_n49216x978.gctx';
 	%file_input='../data/GSE70138_Broad_LINCS_Level2_GEX_n78980x978_2015-06-30.gct';
 end
 
 if ~exist('file_name')
-	file_name='../data/data_for_test.txt';
+	file_name='../data/data_for_test_delta.txt';
 end
 
 if ~exist('file_name_cidnum')
-	file_name_cidnum='../data/data_for_test_cidnum.txt';
+	file_name_cidnum='../data/data_for_test_cidnum_delta.txt';
 end
 
 isCell = 0;

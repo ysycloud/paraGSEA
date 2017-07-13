@@ -274,7 +274,7 @@ int ReadMatrixFilePara(char path[], int *profilenum1, int *profilenum2, int *Lin
 	*profilenum1 = atoi(strtok(Str,c));
 	*profilenum2 = atoi(strtok(NULL,c));
 	
-	strlength = ((*profilenum2)+1)*6; 
+	strlength = ((*profilenum2)+1)*10; 
 	StrLine = (char*)malloc(strlength*sizeof(char));
 
 	fgets(StrLine,strlength,fp);
