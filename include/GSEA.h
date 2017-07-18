@@ -14,10 +14,20 @@
 #define L1000_CONDITION_LEN 250
 #define FileName_LEN 150
 
+struct original_Profile{
+	short id;
+	float expression;
+};
+
 struct Profile_triple{
 	short gsUp[MAX_GENESET];
 	short gsDown[MAX_GENESET];
 	short index[MAX_GENE];
+	int cid;
+};
+
+struct ES_RESULT{
+	float ES;
 	int cid;
 };
 
@@ -30,7 +40,9 @@ struct GSEA_RESULT{
 
 void quiksortINT(int a[],int low,int high);
 void quiksort(float a[],int low,int high);
-void quiksort_gsea(struct GSEA_RESULT gsea[],int low,int high);
+void quiksort_profile(struct original_Profile *profile, int low,int high);
+void quiksort_es(struct ES_RESULT *es,int low,int high);
+void quiksort_gsea(struct GSEA_RESULT *gsea,int low,int high);
 float quickGeneSet(float isgs[], int len,int sig);
 void getIndex(short s[],short indexS[],int len);
 float ES_GeneSet(short gs[], short indexS[],int len,int sig);

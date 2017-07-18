@@ -3,7 +3,6 @@
 #include <string.h> 
 #include <math.h> 
 #include "IO.h"
-#include "GSEA.h"
 
 //read profile dataset and get the relative parameters
 int ReadFilePara(char path[], int *profilenum, int *genelen, int *LineLength)
@@ -160,9 +159,9 @@ void getGeneSet(short gs[],int *count, char gsStr[], char reference[])
 {
 	short existflag[MAX_GENE];
 	short gstmp[MAX_GENESET];
-	char genelist[L1000_LEN][12];
+	char genelist[L1000_LEN][25];
 	char c[] = " ", *p;
-	char gene[12];
+	char gene[25];
 	int line;
 	int tmp,i,j;
 	*count = 0;
@@ -220,9 +219,8 @@ void getGeneSetbyFile(short gs[],int *count, char filename[], char reference[])
 {
 	short existflag[MAX_GENE];
 	short gstmp[MAX_GENESET];
-	char genelist[L1000_LEN][12];
-	char genesetlist[MAX_GENESET][12];
-	char gene[12];
+	char genelist[L1000_LEN][25];
+	char genesetlist[MAX_GENESET][25];
 	int line1,line2;
 	int tmp,i,j;
 	*count = 0;
@@ -250,6 +248,89 @@ void getGeneSetbyFile(short gs[],int *count, char filename[], char reference[])
 	}
 	//get gs 
 	memcpy(gs,gstmp,(*count)*sizeof(short));
+}
+
+
+//get profile from text file input
+void getProfile(short profile[], int *count, char filename[], char reference[])
+{
+	short existflag[MAX_GENE];
+	short pftmp[MAX_GENE];
+	char genelist[L1000_LEN][25];
+	char targetprofilegenelist[L1000_LEN][25];
+	int line1,line2;
+	int tmp,i,j;
+	*count = 0;
+	
+	//initial flag vector
+	memset(existflag, 0, MAX_GENE * sizeof(short));
+	readGeneListFile(genelist, &line1, reference);
+	readGeneListFile(targetprofilegenelist, &line2, filename);
+
+	//get pftmp and profile count,remove the repeat elements
+	for(j=0;j<line2;j++)
+	{
+		for(i=0;i<line1;i++)
+		{
+			if(strcmp(targetprofilegenelist[j],genelist[i])==0)
+			{
+				if(existflag[i+1]==0)
+				{	//this gene not input
+					pftmp[(*count)++] = i+1;
+					existflag[pftmp[(*count)-1]] = 1;
+					break;
+				}
+			}
+		}
+	}
+	//get profile 
+	memcpy(profile,pftmp,(*count)*sizeof(short));
+}
+
+//get profile from text file with expression levels
+void getProfilewithExpression(struct original_Profile *profile, int *count, char filename[], char reference[])
+{
+	short existflag[MAX_GENE];
+	char genelist[L1000_LEN][25];
+	char targetprofilegenelist[L1000_LEN][25];
+	char c[] = "\t";
+	char gene[25];
+	int line1,line2;
+	int tmp,i,j,k;
+	*count = 0;
+	
+	//initial flag vector
+	memset(existflag, 0, MAX_GENE * sizeof(short));
+	readGeneListFile(genelist, &line1, reference);
+	readGeneListFile(targetprofilegenelist, &line2, filename);
+
+	//get profile and count,remove the repeat elements
+	for(j=0;j<line2;j++)
+	{
+		
+		strcpy(gene,strtok(targetprofilegenelist[j],c));
+		//printf("%s\n",gene);
+		
+		k=0;
+		while(gene[k++]!='\0');
+		gene[k-1]='\n';
+		gene[k]='\0';		
+		
+		for(i=0;i<line1;i++)
+		{
+			if(strcmp(gene,genelist[i])==0)
+			{
+				if(existflag[i+1]==0)
+				{	//this gene not input
+					profile[(*count)++].id = i+1;
+					existflag[i+1] = 1;
+					profile[(*count)-1].expression = atof(strtok(NULL,c));	
+					break;
+				}
+			}
+		}
+		
+	}
 }
 
 //read Matrix txt dataset and get the relative parameters
@@ -361,7 +442,7 @@ void getGeneListFile(char path1[],int gene_symbol_col,char path2[])
 	fclose(fp2);
 }
 
-void readGeneListFile(char genelist[][12] ,int *line, char path[])
+void readGeneListFile(char genelist[][25] ,int *line, char path[])
 {
 	FILE *fp;
 	if((fp=fopen(path,"r"))==NULL)
@@ -371,7 +452,7 @@ void readGeneListFile(char genelist[][12] ,int *line, char path[])
 	}
 	*line=0;
 
-	while(fgets(genelist[(*line)++], 20, fp)!= NULL);
+	while(fgets(genelist[(*line)++],30 , fp)!= NULL);
 	(*line)--;
 
 	fclose(fp);
@@ -403,7 +484,7 @@ void getConditionReference(char path1[],char path2[],char path3[])
 
 	while(fgets(str, L1000_CONDITION_LEN , fp1)!= NULL)  //read every line
 	{
-		fprintf( fp3, "%10d\n", offset);
+		fprintf( fp3, "%10ld\n", offset);
 		fprintf( fp2, "%s", str);
 		offset = ftell(fp2);		
 	}

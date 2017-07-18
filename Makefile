@@ -1,6 +1,6 @@
 #programs,flags,etc.
 INCLUDE	=	-I include
-TARGET	=	bin/getReferences bin/quick_search_serial bin/quick_search_omp bin/quick_search_mpi bin/ES_Matrix_ompi_nocom bin/ES_Matrix_ompi_p2p bin/ES_Matrix_ompi_cocom bin/Cluster_KMediods_ompi bin/Cluster_KMediods++_ompi
+TARGET	=	bin/getReferences bin/quick_search_serial bin/quick_search_omp bin/quick_search_mpi bin/quick_search_profile bin/ES_Matrix_ompi_nocom bin/ES_Matrix_ompi_p2p bin/ES_Matrix_ompi_cocom bin/Cluster_KMediods_ompi bin/Cluster_KMediods++_ompi
 
 #ALL Phony Targets
 .PHONY:	everything	clean	all
@@ -36,6 +36,12 @@ bin/quick_search_mpi:	src/quick_search_mpi.c	\
 			src/Tools.c include/Tools.h	\
 			src/IO.c include/IO.h
 	mpicc $(INCLUDE) -g -o bin/quick_search_mpi src/quick_search_mpi.c src/GSEA.c src/Tools.c src/IO.c
+
+bin/quick_search_profile:	src/quick_search_profile.c	\
+			src/GSEA.c include/GSEA.h	\
+			src/Tools.c include/Tools.h	\
+			src/IO.c include/IO.h
+	mpicc $(INCLUDE) -g -o bin/quick_search_profile src/quick_search_profile.c src/GSEA.c src/Tools.c src/IO.c
 	
 bin/ES_Matrix_ompi_nocom:	src/ES_Matrix_ompi_nocom.c	\
 			src/GSEA.c include/GSEA.h	\

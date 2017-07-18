@@ -61,8 +61,64 @@ void quiksort(float a[],int low,int high)
     }
 }
 
+//quicksort the expression for original profile strucrure
+void quiksort_profile(struct original_Profile *profile, int low,int high)
+{
+    int i = low;
+    int j = high;  
+    struct original_Profile temp = profile[i]; 
+  
+    if( low < high)
+    {          
+        while(i < j) 
+        {
+            while((profile[j].expression >= temp.expression) && (i < j)) 
+                j--; 
+            profile[i] = profile[j];
+            while((profile[i].expression <= temp.expression) && (i < j))
+                i++;
+			profile[j] = profile[i];
+        }
+        profile[i] = temp;
+        quiksort_profile(profile,low,i-1);
+        quiksort_profile(profile,j+1,high);
+    }
+    else
+    {
+        return;
+    }
+}
+
+//quicksort the ES for ES strucrure
+void quiksort_es(struct ES_RESULT *es,int low,int high)
+{
+    int i = low;
+    int j = high;  
+    struct ES_RESULT temp = es[i]; 
+  
+    if( low < high)
+    {          
+        while(i < j) 
+        {
+            while((es[j].ES >= temp.ES) && (i < j)) 
+                j--; 
+            es[i] = es[j];
+            while((es[i].ES <= temp.ES) && (i < j))
+                i++;
+			es[j] = es[i];
+        }
+        es[i] = temp;
+        quiksort_es(es,low,i-1);
+        quiksort_es(es,j+1,high);
+    }
+    else
+    {
+        return;
+    }
+}
+
 //quicksort the ES for GSEA strucrure
-void quiksort_gsea(struct GSEA_RESULT gsea[],int low,int high)
+void quiksort_gsea(struct GSEA_RESULT *gsea,int low,int high)
 {
     int i = low;
     int j = high;  
