@@ -151,6 +151,7 @@ rm -f ../data/data_for_test.txt_* ../data/data_for_test_cidnum.txt_*
 * [**quick_search_serial.c**](docs/Tools/quick_search_serial.md) read the .txt file 、complete GSEA and show the topN results in a serial way.
 * [**quick_search_omp.c**](docs/Tools/quick_search_omp.md) read the .txt file 、complete parallel GSEA by OpenMP and show the topN results.
 * [**quick_search_mpi.c**](docs/Tools/quick_search_mpi.md) read the .txt file 、complete parallel GSEA by MPI and show the topN results.
+* [**quick_search_profile.c**](docs/Tools/quick_search_profile.md) read the .txt file as profile libary、input a profile, complete parallel enrichment score calculation by MPI/OpenMP and show the topN results.
 * [**ES_Matrix_ompi_nocom.c**](docs/Tools/ES_Matrix_ompi_nocom.md) read the .txt file 、complete parallel computing ES_Matrix and write out the results by MPI/OpenMP with no communication.
 * [**ES_Matrix_ompi_p2p.c**](docs/Tools/ES_Matrix_ompi_p2p.md) read the .txt file 、complete parallel computing ES_Matrix and write out the results by MPI/OpenMP with point to point communication.
 * [**ES_Matrix_ompi_cocom.c**](docs/Tools/ES_Matrix_ompi_cocom.md) read the .txt file 、complete parallel computing ES_Matrix and write out the results by MPI/OpenMP with collective communication.

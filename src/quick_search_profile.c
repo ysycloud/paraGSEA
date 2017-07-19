@@ -376,7 +376,7 @@ int main(int argc,char *argv[])
 	
 	if(my_rank == 0){		
 		
-		printf("which type of profile do you want to input ( 0 -> gene symbol list, others -> gene symbols and their expression levels ):");
+		printf("which type of profile do you want to input ( 0 -> sorted gene symbol list, others -> gene symbols and their expression levels ):");
 		scanf("%d", &input_way);
 		printf("input the path of file that has target profile until 'exit'(each line has a Gene Symbol/name):\n");
 		scanf("%s",gsStr);

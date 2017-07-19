@@ -10,7 +10,7 @@
 #mpirun -n 2 -ppn 2 -hostfile example/hostfile bin/quick_search_mpi -i data/data_for_test.txt -n 8 -s data/data_for_test_cidnum.txt -r data/Reference
 
 #param list : -i filename; -n topn; -t thread_num; -l siglen; -s sample number file; -r reference directory
-#mpirun -n 2 -ppn 2 -hostfile example/hostfile bin/quick_search_profile  -i data/data_for_test.txt -l 50 -t 4 -n 8 -s data/data_for_test_cidnum.txt -r data/Reference
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile bin/quick_search_profile -i data/data_for_test.txt -l 50 -t 4 -n 8 -s data/data_for_test_cidnum.txt -r data/Reference
 
 #param list : -n process_num; -t thread_num; -l siglen; -1 filename1; -2 filename2; -p proportion; -w ifwrite; -o outfilename
 #mpirun -n 2 -ppn 2 -hostfile example/hostfile bin/ES_Matrix_ompi_nocom -t 4 -l 50 -a 2 -p 1 -w 1 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
