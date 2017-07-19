@@ -293,7 +293,7 @@ void getProfilewithExpression(struct original_Profile *profile, int *count, char
 	short existflag[MAX_GENE];
 	char genelist[L1000_LEN][25];
 	char targetprofilegenelist[L1000_LEN][25];
-	char c[] = "\t";
+	char c[] = "\t",*p;
 	char gene[25];
 	int line1,line2;
 	int tmp,i,j,k;
@@ -307,14 +307,8 @@ void getProfilewithExpression(struct original_Profile *profile, int *count, char
 	//get profile and count,remove the repeat elements
 	for(j=0;j<line2;j++)
 	{
-		
 		strcpy(gene,strtok(targetprofilegenelist[j],c));
-		//printf("%s\n",gene);
-		
-		k=0;
-		while(gene[k++]!='\0');
-		gene[k-1]='\n';
-		gene[k]='\0';		
+		//printf("%s",gene);	
 		
 		for(i=0;i<line1;i++)
 		{
@@ -324,7 +318,12 @@ void getProfilewithExpression(struct original_Profile *profile, int *count, char
 				{	//this gene not input
 					profile[(*count)++].id = i+1;
 					existflag[i+1] = 1;
-					profile[(*count)-1].expression = atof(strtok(NULL,c));	
+					p = strtok(NULL,c);
+					if(p)
+						profile[(*count)-1].expression = atof(p);					
+					else
+						profile[(*count)-1].expression = 0;
+					//printf("float::%f\n", profile[(*count)-1].expression);	
 					break;
 				}
 			}
