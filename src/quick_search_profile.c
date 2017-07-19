@@ -58,7 +58,6 @@ int main(int argc,char *argv[])
     int tag = 0;
     MPI_Status  status;
 	int local_n;	//the data number of each processes must hand
-	int leave;		//the leave data number come from the data can not be divided totally by process number
 	int parameternum;
 	double start,finish,duration;
 	
@@ -267,6 +266,12 @@ int main(int argc,char *argv[])
 	if(TopN==-1)
 		TopN = 10;
 	
+	if(corenum == -1)
+		corenum = 1;
+	
+	if(siglen == -1)
+		siglen = 50;
+	
 	if((fp=fopen(sample,"r"))==NULL)
 	{
 		if(my_rank==0)
@@ -330,29 +335,35 @@ int main(int argc,char *argv[])
 	}
 	
 	if(memavail < memneed)	
-		return;
-	
+		return;	
 			
-	// compute the local size 、up boundary and down boundary for every process	
-	local_n = profilenum / p;  
-	leave = profilenum % p;
-	int begin,end;
-	if(my_rank < leave){
-		local_n++;   
-		begin = my_rank*local_n;
-	}else{	
-		begin = my_rank*local_n + leave; 
-	}	 
-	end = begin + local_n;
+	// compute the local size 、up boundary and down boundary for every process
+	int begin,end;	
+	split_data(profilenum, p, my_rank, &begin, &end, &local_n);
+	int leave = profilenum % p;
 	
 	local_es = (struct ES_RESULT*)malloc(local_n*sizeof(struct ES_RESULT));
 	
-	/********************para load profile dataset by MPI******************************/
+	/********************para load profile dataset******************************/
 	//para read the file to local profileSet triple memory
+	profileSet = (struct Profile_triple *)malloc(sizeof(struct Profile_triple)*local_n);
+	
+	/********************para load profile dataset by openmp in every process******************************/
+	#pragma omp parallel num_threads(corenum)
+	{
+		int local_t;	//the data number of each thread must hand
+		int begin_t,end_t;
+		int threadID = omp_get_thread_num();
+		
+		// compute the local size 、up boundary and down boundary for every thread
+		split_data(local_n, corenum, threadID, &begin_t, &end_t, &local_t);
+		
+		// compute the begin_t to end_t triples(file:begin1->begin1+len => triples: begin2->begin2+len)
+		getFreeTriples(genelen, siglen, profilenum, linelen, begin+begin_t, begin_t, local_t, input, profileSet);
+	}
+	
 	//file:begin->end => triples: 0->local_P
-	profileSet = (struct Profile_triple *)malloc(sizeof(struct Profile_triple)*local_n);	
-	getTriples(local_n, genelen, siglen, profilenum, linelen, begin, end, input, profileSet);	
-
+	//getTriples(local_n, genelen, siglen, profilenum, linelen, begin, end, input, profileSet);	
 	/************************************************************************************/
 	
 	MPI_Barrier(MPI_COMM_WORLD);
@@ -360,7 +371,7 @@ int main(int argc,char *argv[])
 		GET_TIME(finish);
 		//compute the IO time
 		duration = finish-start;     
-		printf("loading IO and prework time by MPI: %.4f s\n",duration);		
+		printf("loading IO and prework time: %.4f s\n",duration);		
 	}
 	
 	if(my_rank == 0){		
@@ -412,13 +423,24 @@ int main(int argc,char *argv[])
 		}
 		searchProfile = getTriple(target_profile, genelen, siglen);
 		
-		//para using the GSEA algorithm for all process
-		for(i=0; i<local_n; i++){
-			
-			local_es[i].ES = ES_Profile_triple(searchProfile, profileSet[i], genelen, siglen);
-			local_es[i].cid = begin+i+1;
+		//para using the GSEA algorithm for all process by multi-thread way	
+		#pragma omp parallel num_threads(corenum)
+		{
+			int t_c;
+			int local_t;	//the data number of each thread must hand
+			int begin_t,end_t;
+			int threadID = omp_get_thread_num();
+		
+			// compute the local size 、up boundary and down boundary for every thread
+			split_data(local_n, corenum, threadID, &begin_t, &end_t, &local_t);
+				
+			for(t_c=begin_t; t_c<end_t; t_c++)
+			{		
+				local_es[t_c].ES = ES_Profile_triple(searchProfile, profileSet[t_c], genelen, siglen);
+				local_es[t_c].cid = begin+t_c+1;
+			}
 		}
-
+		
 		/*********************gather gsea to process0 in es_result*******************************/
 		Build_derived_type(&local_es[0],&es_mpi_t); //derive the new MPI Type
 		
@@ -480,7 +502,7 @@ int main(int argc,char *argv[])
 			GET_TIME(finish);
 			//compute the ES time 
 			duration = finish-start;     
-			printf("finish ES time by MPI: %.4f s\n",duration);
+			printf("finish ES time: %.4f s\n",duration);
 			
 			getchar();    //remove the Enter from stdin
 			//get the profile path

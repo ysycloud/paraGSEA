@@ -244,19 +244,10 @@ int main(int argc,char *argv[])
 			}
 		}else{
 			int local_n;	//the data number of each thread must hand
-			int leave;		//the leave data number come from the data can not be divided totally by thread number
-			local_n = profilenum / thread_count;  
-			leave = profilenum % thread_count;
 			int threadID = omp_get_thread_num();
 			int begin,end;
-			// compute the up boundary and down boundary for every thread	
-			if(threadID < leave){
-				local_n++;   
-				begin = threadID*local_n;
-			}else{	
-				begin = threadID*local_n + leave; 
-			}	 
-			end = begin + local_n;
+			
+			split_data(profilenum, thread_count, threadID, &begin, &end, &local_n);
 		
 			//para read the file to global profileSet memory
 			ReadFile(input, linelen, begin, end, profilenum, genelen, profileSet);
@@ -331,19 +322,10 @@ int main(int argc,char *argv[])
 				}
 			}else{
 				int local_n;	//the data number of each thread must hand
-				int leave;		//the leave data number come from the data can not be divided totally by thread number
-				local_n = profilenum / thread_count;  
-				leave = profilenum % thread_count;
-				int threadID=omp_get_thread_num();
 				int begin,end;
-				// compute the up boundary and down boundary for every thread
-				if(threadID < leave){
-					local_n++;   
-					begin = threadID*local_n;
-				}else{	
-					begin = threadID*local_n + leave; 
-				}	 
-				end = begin + local_n;
+				int threadID=omp_get_thread_num();
+				
+				split_data(profilenum, thread_count, threadID, &begin, &end, &local_n);
 				//para using the GSEA algorithm
 				for(k=begin; k<end; k++){
 					GSEA( gs, indexSet[k], genelen, siglen, &(gsea_result[k].ES), &(gsea_result[k].NES), &(gsea_result[k].pv), global_ES );

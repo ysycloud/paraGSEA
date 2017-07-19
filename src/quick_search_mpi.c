@@ -51,7 +51,6 @@ int main(int argc,char *argv[])
     int tag = 0;
     MPI_Status  status;
 	int local_n;	//the data number of each processes must hand
-	int leave;		//the leave data number come from the data can not be divided totally by process number
 	int parameternum;
 	double start,finish,duration;
 	
@@ -275,16 +274,9 @@ int main(int argc,char *argv[])
 	
 			
 	// compute the local size ¡¢up boundary and down boundary for every process	
-	local_n = profilenum / p;  
-	leave = profilenum % p;
 	int begin,end;
-	if(my_rank < leave){
-		local_n++;   
-		begin = my_rank*local_n;
-	}else{	
-		begin = my_rank*local_n + leave; 
-	}	 
-	end = begin + local_n;
+	int leave = profilenum % p;
+	split_data(profilenum, p, my_rank, &begin, &end, &local_n);
 	
 	//malloc profile dataset memory for all processes using local size
 	profileSet = (short **)malloc(local_n*sizeof(short *));

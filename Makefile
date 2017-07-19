@@ -41,7 +41,7 @@ bin/quick_search_profile:	src/quick_search_profile.c	\
 			src/GSEA.c include/GSEA.h	\
 			src/Tools.c include/Tools.h	\
 			src/IO.c include/IO.h
-	mpicc $(INCLUDE) -g -o bin/quick_search_profile src/quick_search_profile.c src/GSEA.c src/Tools.c src/IO.c
+	mpicc $(INCLUDE) -g -fopenmp -o bin/quick_search_profile src/quick_search_profile.c src/GSEA.c src/Tools.c src/IO.c
 	
 bin/ES_Matrix_ompi_nocom:	src/ES_Matrix_ompi_nocom.c	\
 			src/GSEA.c include/GSEA.h	\
