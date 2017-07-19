@@ -16,7 +16,7 @@
 
 struct original_Profile{
 	short id;
-	float expression;
+	double expression;
 };
 
 struct Profile_triple{

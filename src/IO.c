@@ -308,22 +308,25 @@ void getProfilewithExpression(struct original_Profile *profile, int *count, char
 	for(j=0;j<line2;j++)
 	{
 		strcpy(gene,strtok(targetprofilegenelist[j],c));
-		//printf("%s",gene);	
+		//printf("%s\n",gene);	
+		
+		k=0;
+		while(gene[k++]!='\0');
 		
 		for(i=0;i<line1;i++)
 		{
-			if(strcmp(gene,genelist[i])==0)
+			if(strncmp(gene,genelist[i],k-1)==0)
 			{
 				if(existflag[i+1]==0)
 				{	//this gene not input
 					profile[(*count)++].id = i+1;
-					existflag[i+1] = 1;
+					existflag[i+1] = 1;			
 					p = strtok(NULL,c);
 					if(p)
 						profile[(*count)-1].expression = atof(p);					
 					else
 						profile[(*count)-1].expression = 0;
-					//printf("float::%f\n", profile[(*count)-1].expression);	
+					//printf("double::%lf\n", profile[(*count)-1].expression);	
 					break;
 				}
 			}
