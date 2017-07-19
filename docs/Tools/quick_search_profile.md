@@ -138,16 +138,16 @@ input the path of file that has target profile until 'exit'(each line has a Gene
 
 If this file do not have the whole gene symbol in the library, there will be some notices and you should input again:
 ```shell
-This profile is too short, please make sure it has same %d genes with L1000 library profiles!
+This profile is too short, please make sure it has same 978 genes with L1000 library profiles!
 input the path of file that has target profile until 'exit'(each line has a Gene Symbol/name):
 ```
 
 
-If you choosing Others at first, you must input a file path of gene symbols and their expression levels (spilted by '\t'). 
+If you choosing Others at first, you must input a file path of gene symbols and their expression levels (spilted by `\t`). 
 
-If you still input "data/Profile" without expression levels, the expression levels will be regarded as 0 and get the same results.
+If you still input `data/Profile` without expression levels, the expression levels will be regarded as `0` and get the same results.
 
-And If you input the file with correct format, take "data/ProfilewithExpression.txt" as an example ,
+And If you input the file with correct format, take `data/ProfilewithExpression.txt` as an example ,
 ```shell
 PSME1	0.45252848
 ATF1	-0.018624753
