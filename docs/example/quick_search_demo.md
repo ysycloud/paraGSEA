@@ -9,7 +9,7 @@ There is one parameter you should notice to input when execute the script.
 
 | parameter name | Parameter function |
 | -------------- | ------------------ |
-| quick_search_way | which Tool do you chose to complete the GSEA analysis(0_serial,1_openmp,2_mpi) |
+| quick_search_way | which Tool do you chose to complete the GSEA analysis(0_serial,1_openmp,2_mpi,3_profile) |
 
 which tools to be chosen is decided by your need. However, there are still some parameters should be setted 
 in command line example when you use these tools. An example of how to set these parameters is given in this script. 

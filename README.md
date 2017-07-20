@@ -191,9 +191,9 @@ List of arguments:
   **-r or --reference** *reference data directory*
 
 	 a directory include some reference data files we generate from pretreatment stage
-	 
 
-  > mpirun [options] [-n PROCESS_NUM] [-ppn PERNUM] [-hostfile HOSTFILE] ES_Matrix_ompi_* [options] [-1 INPUT_FILE1] [-2 INPUT_FILE2] [-l SIGLEN] [-t THREAD_NUMBER] [-a LOAD_TIME] [-p PROPORTION] [-w WRITE] [-o OUTPUT_FILE]
+
+  > mpirun [options] [-n PROCESS_NUM] [-ppn PERNUM] [-hostfile HOSTFILE] quick_search_profile [options] [-i INPUT_FILE] [-n TOP_N_RECORDS] [-l SIGLEN] [-t THREAD_NUMBER] [-s SAMPLE_SEQUENCE_NUMBER_FILE] [-r REFERENCE_DATA_DIRECTORY]
   
   **-n** *mpi parameter*
 
@@ -208,6 +208,36 @@ List of arguments:
      list the IP or Hostname of nodes
 
 	 you'd better keep the formula correct : process_num = pernum * number of IP(Hostname) list in hostfile
+  
+  **-i or --input** *input file*
+
+     input a parsed profiles's file from pretreatment stage as searching library.
+
+  **-t or --thread** *threads*
+
+     Defines the maximum number of parallel threads.
+	 must be a positive value
+	 
+  **-l or --siglen** *signature length*
+
+	 Define the length of Gene Expression Signature.
+	 must be a positive value
+
+  **-n or --topn** *top N*
+
+	 Define the first and last N GSEA records ordered by ES.
+	 must be a positive value
+	 
+  **-s or --sample** *sample sequece number file*
+
+	 a text file include sample sequence numbers which are extracted from pretreatment stage.
+
+  **-r or --reference** *reference data directory*
+
+	 a directory include some reference data files we generate from pretreatment stage
+	 
+
+  > mpirun [options] [-n PROCESS_NUM] [-ppn PERNUM] [-hostfile HOSTFILE] ES_Matrix_ompi_* [options] [-1 INPUT_FILE1] [-2 INPUT_FILE2] [-l SIGLEN] [-t THREAD_NUMBER] [-a LOAD_TIME] [-p PROPORTION] [-w WRITE] [-o OUTPUT_FILE] 
   
   **-1 or --input1** *input file1*
 
@@ -248,20 +278,6 @@ List of arguments:
 
 
   > mpirun [options] [-n PROCESS_NUM] [-ppn PERNUM] [-hostfile HOSTFILE] Cluster_KMediods*_ompi [options] [-i INPUT_FILE] [-t THREAD_NUMBER] [-c CLUSTER_NUMBERS] [-w WRITE] [-o OUTPUT_FILE] [-s SAMPLE_SEQUENCE_NUMBER_FILE] [-r REFERENCE_DATA_DIRECTORY]
-  
-  **-n** *mpi parameter*
-
-      Total number of processes.
-	   
-  **-ppn** *mpi parameter*
-
-     the number of processes in each node.
-
-  **-hostfile** *mpi parameter*
-
-     list the IP or Hostname of nodes
-
-	 you'd better keep the formula correct : process_num = pernum * number of IP(Hostname) list in hostfile
   
   **-i or --input** *input file*
 
@@ -306,6 +322,9 @@ the detail usage of each C Tool is shown below.
 #param list : -i filename; -n topn; -s sample number file; -r reference directory
 #mpirun -n 2 -ppn 2 -hostfile example/hostfile bin/quick_search_mpi -i data/data_for_test.txt -n 8 -s data/data_for_test_cidnum.txt -r data/Reference
 
+#param list : -i filename; -n topn; -t thread_num; -l siglen; -s sample number file; -r reference directory
+#mpirun -n 2 -ppn 2 -hostfile example/hostfile bin/quick_search_profile -i data/data_for_test.txt -l 50 -t 4 -n 8 -s data/data_for_test_cidnum.txt -r data/Reference
+
 #param list : -n process_num; -t thread_num; -l siglen; -1 filename1; -2 filename2; -p proportion; -w ifwrite; -o outfilename
 #mpirun -n 2 -ppn 2 -hostfile example/hostfile bin/ES_Matrix_ompi_nocom -t 4 -l 50 -a 2 -p 1 -w 1 -1 data/data_for_test.txt -2 data/data_for_test.txt -o data/ES_Matrix_test
 
@@ -340,12 +359,14 @@ the detail usage of each C Tool is shown below.
 | modzs_n272x978.gctx | original profile file from LINCS Dataset| HDF5 |
 | GSE70138_Broad_LINCS_Level2_GEX_n78980x978.gct.gz | original profile file from LINCS Dataset used for case study in paper | compressing format "gz" of HDF5 |
 | GSE92742_INFO.tar.gz | 'gene_info' and 'inst_info' txt files of LINCS phase I dataset and the corresponding reference data gotten by C tool 'getReferences'  | compressing format "gz" of GSE92742_INFO directory |
-| Gene_List.txt | all gene names of every profile in original order recorded in HDF5 source file | one gene name(symbol) per line |
-| Samples_Condition.txt | treatment conditions of all profiles in original order recorded in HDF5 source file | one profile's conditions per line |
-| Samples_RowByteOffset.txt | Bytes offsets of every line in `Samples_Condition.txt` | every offset value is splitted by `\t` |
+| Reference/Gene_List.txt | all gene names of every profile in original order recorded in HDF5 source file | one gene name(symbol) per line |
+| Reference/Samples_Condition.txt | treatment conditions of all profiles in original order recorded in HDF5 source file | one profile's conditions per line |
+| Reference/Samples_RowByteOffset.txt | Bytes offsets of every line in `Samples_Condition.txt` | every offset value is splitted by `\t` |
+| GeneSet.txt | GeneSet example file | one gene name(symbol) per line |
+| Profile.txt | Profile example file | sorted profile file, one gene name(symbol) per line without expression level|
+| ProfilewithExpression.txt | Profile example file | one gene name(symbol) and its expression level per line, spilted by `\t` |
 | data_for_test.txt | ranked profiles file in a sequence number format | first line : profile_number & profile_Length ; next profile_number lines : a ranked profile includes profile_Length genes in a sequence number format |
 | data_for_test_cidnum.txt | profile sequence number file corresponding to these profiles we extract in `data_for_test.txt` | one sequence number per line |
-| GeneSet.txt | GeneSet example file | one gene name(symbol) per line |
 | ES_Matrix_test_*.txt | ES Matrix file stored in distributed way ( ‘*’ will be replaced by process id )| first line : row_number & column_number ; next row_number lines : a Enrichment scores vector included column_number elements |
 | Cluster_result_test.txt | cluster result file | each line consists of a class label or a profile information |
 
@@ -445,6 +466,40 @@ the detail usage of each C Tool is shown below.
 	SPDEF
 	IGF1R
 	......
+
+####  VI.II.V. `Profile.txt`: ####
+	
+  This is a sorted Profile example file with the same format of `Gene_List.txt`, where presents as one gene name(symbol) per line.
+	
+  Example:
+  
+	PSME1
+	ATF1
+	RHEB
+	FOXO3
+	RHOA
+	IL1B
+	ASAH1
+	RALA
+	......
+
+####  VI.II.VI. `ProfilewithExpression.txt`: ####
+	
+  This is a Profile example file with its expression level, where presents as one gene name(symbol) with its expression level per line, spilted by `\t`.
+	
+  Example:
+  
+	PSME1	0.45252848
+	ATF1	-0.018624753
+	RHEB	0.32816789
+	FOXO3	1.4956889
+	RHOA	1.5585777
+	IL1B	-0.39951164
+	ASAH1	-0.28378099
+	RALA	-0.63659459
+	ARHGEF12	-0.11138941
+	......
+
 	
 ### VI.III Standard Input format of Compare Profiles:
   
